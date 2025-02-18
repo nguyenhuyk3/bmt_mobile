@@ -18,6 +18,7 @@ dependencies:
   flutter_bloc: ^9.0.0
   equatable: ^2.0.7
   formz: ^0.8.0
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -26,3 +27,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/google_logo.svg

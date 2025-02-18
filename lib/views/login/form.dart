@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
 import 'package:rent_transport_fe/bloc/bloc.dart';
 
 import '../../bloc/login/password/bloc.dart';
-
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -16,11 +16,7 @@ class LoginForm extends StatelessWidget {
         if (state.status.isFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(
-                content: Text('Đăng nhập thất bại'),
-              ),
-            );
+            ..showSnackBar(const SnackBar(content: Text('Đăng nhập thất bại')));
         }
       },
       child: Align(
@@ -29,11 +25,26 @@ class LoginForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _AccountInput(),
-            const Padding(padding: EdgeInsets.all(12)),
+
+            const Padding(padding: EdgeInsets.all(9)),
             _PasswordInput(),
-            const Padding(padding: EdgeInsets.all(12)),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [_ForgotPasswordButton()],
+            ),
+
+            const Padding(padding: EdgeInsets.all(5)),
             _LoginButton(),
-            _FacebookButton(),
+
+            const Padding(padding: EdgeInsets.all(9)),
+            _SignUpButton(),
+
+            const Padding(padding: EdgeInsets.all(5)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [_FacebookButton(), _GoogleButton()],
+            ),
           ],
         ),
       ),
@@ -44,8 +55,9 @@ class LoginForm extends StatelessWidget {
 class _AccountInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final displayError =
-        context.select((LoginBloc bloc) => bloc.state.account.displayError);
+    final displayError = context.select(
+      (LoginBloc bloc) => bloc.state.account.displayError,
+    );
 
     return TextField(
       key: const Key('loginForm_usernameInput_textField'),
@@ -58,10 +70,7 @@ class _AccountInput extends StatelessWidget {
         errorText: displayError != null ? 'Tài khoản không hợp lệ' : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1,
-          ),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
         ),
       ),
     );
@@ -71,8 +80,9 @@ class _AccountInput extends StatelessWidget {
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final displayError =
-        context.select((LoginBloc bloc) => bloc.state.password.displayError);
+    final displayError = context.select(
+      (LoginBloc bloc) => bloc.state.password.displayError,
+    );
 
     return BlocProvider(
       create: (context) => PasswordBloc(),
@@ -89,13 +99,13 @@ class _PasswordInput extends StatelessWidget {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.lock_rounded),
                 suffixIcon: IconButton(
-                  icon: Icon(state.obscureText
-                      ? Icons.visibility_off
-                      : Icons.visibility),
+                  icon: Icon(
+                    state.obscureText ? Icons.visibility_off : Icons.visibility,
+                  ),
                   onPressed: () {
-                    context
-                        .read<PasswordBloc>()
-                        .add(PasswordToggleVisibility());
+                    context.read<PasswordBloc>().add(
+                      PasswordToggleVisibility(),
+                    );
                   },
                 ),
                 labelText: 'Mật khẩu',
@@ -103,10 +113,7 @@ class _PasswordInput extends StatelessWidget {
                     displayError != null ? 'Mật khẩu không hợp lệ' : null,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: const BorderSide(
-                    color: Colors.red,
-                    width: 1,
-                  ),
+                  borderSide: const BorderSide(color: Colors.red, width: 1),
                 ),
               ),
             ),
@@ -117,11 +124,49 @@ class _PasswordInput extends StatelessWidget {
   }
 }
 
+class _ForgotPasswordButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/forgot-password');
+      },
+      child: const Text(
+        'Quên mật khẩu?',
+        style: TextStyle(color: Colors.black87, fontSize: 16),
+      ),
+    );
+  }
+}
+
+class _SignUpButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Bạn chưa có tài khoản?', style: TextStyle(fontSize: 18)),
+        TextButton(
+          onPressed: () {
+            // Điều hướng đến trang Đăng ký
+            Navigator.pushNamed(context, '/sign-up');
+          },
+          child: const Text(
+            'Đăng ký',
+            style: TextStyle(color: Colors.blue, fontSize: 16),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final isInProgressOrSuccess = context
-        .select((LoginBloc bloc) => bloc.state.status.isInProgressOrSuccess);
+    final isInProgressOrSuccess = context.select(
+      (LoginBloc bloc) => bloc.state.status.isInProgressOrSuccess,
+    );
 
     if (isInProgressOrSuccess) return const CircularProgressIndicator();
 
@@ -129,21 +174,21 @@ class _LoginButton extends StatelessWidget {
 
     return ElevatedButton(
       key: const Key('loginForm_continue_raisedButton'),
-      onPressed: isValid
-          ? () => context.read<LoginBloc>().add(const LoginSubmitted())
-          : null,
+      onPressed:
+          isValid
+              ? () => context.read<LoginBloc>().add(const LoginSubmitted())
+              : null,
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(const Color(0xFFF9E400)),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
-            side: const BorderSide(
-              color: Colors.transparent,
-              width: 1,
-            ),
+            side: const BorderSide(color: Colors.transparent, width: 1),
           ),
         ),
-        minimumSize: WidgetStateProperty.all(const Size(double.infinity, 0)),
+        minimumSize: WidgetStateProperty.all(
+          Size(double.infinity, MediaQuery.of(context).size.height * 0.06),
+        ),
       ),
       child: const Padding(
         padding: EdgeInsets.all(4),
@@ -171,23 +216,66 @@ class _FacebookButton extends StatelessWidget {
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
-            side: const BorderSide(
-              color: Colors.transparent,
-              width: 1,
-            ),
+            side: const BorderSide(color: Colors.transparent, width: 1),
           ),
         ),
         minimumSize: WidgetStateProperty.all(
-          Size(MediaQuery.of(context).size.width * 0.4,
-              MediaQuery.of(context).size.height * 0.06),
+          Size(
+            MediaQuery.of(context).size.width * 0.4,
+            MediaQuery.of(context).size.height * 0.06,
+          ),
         ),
       ),
       child: const Padding(
         padding: EdgeInsets.all(3),
-        child: Icon(
-          Icons.facebook,
-          color: Colors.blueAccent,
-          size: 25,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.facebook, color: Colors.blueAccent, size: 25),
+            Text(
+              'Facebook',
+              style: TextStyle(color: Colors.black87, fontSize: 16.0),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _GoogleButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      key: const Key('loginForm_google_login'),
+      onPressed: () => {},
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(Colors.white70),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+            side: const BorderSide(color: Colors.transparent, width: 1),
+          ),
+        ),
+        minimumSize: WidgetStateProperty.all(
+          Size(
+            MediaQuery.of(context).size.width * 0.4,
+            MediaQuery.of(context).size.height * 0.06,
+          ),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(3),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset('assets/icons/google_logo.svg', height: 24.0),
+            SizedBox(width: 12.0),
+            Text(
+              'Google',
+              style: TextStyle(color: Colors.black87, fontSize: 16.0),
+            ),
+          ],
         ),
       ),
     );

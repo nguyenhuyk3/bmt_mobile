@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
-import 'package:rent_transport_fe/bloc/bloc.dart';
-
-import '../../bloc/login/password/bloc.dart';
+import 'package:rent_transport_fe/bloc/bloc.export.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -43,7 +41,7 @@ class LoginForm extends StatelessWidget {
             const Padding(padding: EdgeInsets.all(5)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [_FacebookButton(), _GoogleButton()],
+              children: [_FacebookSignInButton(), _GoogleSignInButton()],
             ),
           ],
         ),
@@ -133,7 +131,11 @@ class _ForgotPasswordButton extends StatelessWidget {
       },
       child: const Text(
         'Quên mật khẩu?',
-        style: TextStyle(color: Colors.black87, fontSize: 16),
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }
@@ -148,12 +150,15 @@ class _SignUpButton extends StatelessWidget {
         const Text('Bạn chưa có tài khoản?', style: TextStyle(fontSize: 18)),
         TextButton(
           onPressed: () {
-            // Điều hướng đến trang Đăng ký
             Navigator.pushNamed(context, '/sign-up');
           },
           child: const Text(
             'Đăng ký',
-            style: TextStyle(color: Colors.blue, fontSize: 16),
+            style: TextStyle(
+              color: Colors.black87,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ],
@@ -205,7 +210,7 @@ class _LoginButton extends StatelessWidget {
   }
 }
 
-class _FacebookButton extends StatelessWidget {
+class _FacebookSignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -232,6 +237,7 @@ class _FacebookButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.facebook, color: Colors.blueAccent, size: 25),
+            SizedBox(width: 12.0),
             Text(
               'Facebook',
               style: TextStyle(color: Colors.black87, fontSize: 16.0),
@@ -243,7 +249,7 @@ class _FacebookButton extends StatelessWidget {
   }
 }
 
-class _GoogleButton extends StatelessWidget {
+class _GoogleSignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

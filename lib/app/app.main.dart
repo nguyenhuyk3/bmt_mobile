@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/bloc/bloc.dart';
-
-import 'package:user_repository/user_repository.dart';
+import 'package:rent_transport_fe/bloc/bloc.export.dart';
+import 'package:authentication_repository/authentication_repository.export.dart';
+import 'package:user_repository/user_repository.export.dart';
 
 import '../views/home/page.dart';
-import '../views/login/page.dart';
+import '../views/authentication/login/page.dart';
 import '../views/spash_view.dart';
 
 part 'app.view.dart';
@@ -49,12 +48,11 @@ class _MainAppState extends State<MainApp> {
       value: _authenticationRepository,
       child: BlocProvider(
         lazy: false,
-        create: (_) => AuthenticationBloc(
-          authenticationRepository: _authenticationRepository,
-          userRepository: _userRepository,
-        )..add(
-            AuthenticationSubscriptionRequested(),
-          ),
+        create:
+            (_) => AuthenticationBloc(
+              authenticationRepository: _authenticationRepository,
+              userRepository: _userRepository,
+            )..add(AuthenticationSubscriptionRequested()),
         child: const AppView(),
       ),
     );

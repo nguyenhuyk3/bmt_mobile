@@ -22,7 +22,7 @@ class _AppViewState extends State<AppView> {
         switch (settings.name) {
           case LOGIN_PAGE:
             return MaterialPageRoute(builder: (context) => LoginPage());
-          case SIGN_UP_STEP_ONE:
+          case REGISTER_STEP_ONE:
             return MaterialPageRoute(builder: (context) => StepOnePage());
           default:
             return MaterialPageRoute(builder: (context) => SplashPage());

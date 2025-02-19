@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
+import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/views/authentication/sign_up/sign_up.export.dart';
 import 'package:user_repository/user_repository.export.dart';
 
 import '../views/home/page.dart';
@@ -46,13 +48,23 @@ class _MainAppState extends State<MainApp> {
     */
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-        lazy: false,
-        create:
-            (_) => AuthenticationBloc(
-              authenticationRepository: _authenticationRepository,
-              userRepository: _userRepository,
-            )..add(AuthenticationSubscriptionRequested()),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            lazy: false,
+            create:
+                (_) => AuthenticationBloc(
+                  authenticationRepository: _authenticationRepository,
+                  userRepository: _userRepository,
+                )..add(AuthenticationSubscriptionRequested()),
+          ),
+          BlocProvider(
+            create:
+                (_) => LoginBloc(
+                  authenticationRepository: _authenticationRepository,
+                ),
+          ),
+        ],
         child: const AppView(),
       ),
     );

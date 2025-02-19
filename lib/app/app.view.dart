@@ -16,6 +16,18 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navigatorKey,
+      initialRoute: LOGIN_PAGE,
+
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case LOGIN_PAGE:
+            return MaterialPageRoute(builder: (context) => LoginPage());
+          case SIGN_UP_STEP_ONE:
+            return MaterialPageRoute(builder: (context) => StepOnePage());
+          default:
+            return MaterialPageRoute(builder: (context) => SplashPage());
+        }
+      },
       builder: (context, child) {
         return BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
@@ -37,7 +49,7 @@ class _AppViewState extends State<AppView> {
           child: child,
         );
       },
-      onGenerateRoute: (_) => SplashPage.route(),
+      // onGenerateRoute: (_) => SplashPage.route(),
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
+import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -53,19 +55,17 @@ class LoginForm extends StatelessWidget {
 class _AccountInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final displayError = context.select(
-      (LoginBloc bloc) => bloc.state.account.displayError,
-    );
+    final email = context.select((LoginBloc bloc) => bloc.state.account);
 
     return TextField(
-      key: const Key('loginForm_usernameInput_textField'),
+      key: const Key('loginForm_accountInput_textField'),
       onChanged: (username) {
         context.read<LoginBloc>().add(LoginAccountChanged(username));
       },
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.email_outlined),
         labelText: 'Tài khoản',
-        errorText: displayError != null ? 'Tài khoản không hợp lệ' : null,
+        errorText: ValidationErrorMessage.getAccountErrorMessage(email.error),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: const BorderSide(color: Colors.red, width: 1),
@@ -78,9 +78,7 @@ class _AccountInput extends StatelessWidget {
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final displayError = context.select(
-      (LoginBloc bloc) => bloc.state.password.displayError,
-    );
+    final password = context.select((LoginBloc bloc) => bloc.state.password);
 
     return BlocProvider(
       create: (context) => PasswordBloc(),
@@ -107,8 +105,9 @@ class _PasswordInput extends StatelessWidget {
                   },
                 ),
                 labelText: 'Mật khẩu',
-                errorText:
-                    displayError != null ? 'Mật khẩu không hợp lệ' : null,
+                errorText: ValidationErrorMessage.getPasswordErrorMessage(
+                  password.error,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: const BorderSide(color: Colors.red, width: 1),
@@ -150,7 +149,7 @@ class _SignUpButton extends StatelessWidget {
         const Text('Bạn chưa có tài khoản?', style: TextStyle(fontSize: 18)),
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/sign-up');
+            Navigator.pushNamed(context, SIGN_UP_STEP_ONE);
           },
           child: const Text(
             'Đăng ký',

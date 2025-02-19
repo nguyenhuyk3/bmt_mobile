@@ -38,7 +38,7 @@ class LoginForm extends StatelessWidget {
             _LoginButton(),
 
             const Padding(padding: EdgeInsets.all(9)),
-            _SignUpButton(),
+            _RegisterButton(),
 
             const Padding(padding: EdgeInsets.all(5)),
             Row(
@@ -140,7 +140,7 @@ class _ForgotPasswordButton extends StatelessWidget {
   }
 }
 
-class _SignUpButton extends StatelessWidget {
+class _RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -149,7 +149,7 @@ class _SignUpButton extends StatelessWidget {
         const Text('Bạn chưa có tài khoản?', style: TextStyle(fontSize: 18)),
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, SIGN_UP_STEP_ONE);
+            Navigator.pushNamed(context, REGISTER_STEP_ONE);
           },
           child: const Text(
             'Đăng ký',

@@ -17,7 +17,6 @@ class _AppViewState extends State<AppView> {
     return MaterialApp(
       navigatorKey: _navigatorKey,
       initialRoute: LOGIN_PAGE,
-
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case LOGIN_PAGE:

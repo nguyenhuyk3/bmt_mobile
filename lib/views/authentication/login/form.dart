@@ -19,34 +19,37 @@ class LoginForm extends StatelessWidget {
             ..showSnackBar(const SnackBar(content: Text('Đăng nhập thất bại')));
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _AccountInput(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          _AccountInput(),
+          const SizedBox(height: 20),
+          _PasswordInput(),
 
-            const Padding(padding: EdgeInsets.all(9)),
-            _PasswordInput(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [_ForgotPasswordButton()],
+          ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [_ForgotPasswordButton()],
-            ),
+          const Divider(thickness: 0.5, color: Colors.grey),
 
-            const Padding(padding: EdgeInsets.all(5)),
-            _LoginButton(),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [_FacebookLoginButton(), _GoogleLoginButton()],
+          ),
 
-            const Padding(padding: EdgeInsets.all(9)),
-            _RegisterButton(),
+          const SizedBox(height: 18),
+          _RegisterButton(),
 
-            const Padding(padding: EdgeInsets.all(5)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [_FacebookSignInButton(), _GoogleSignInButton()],
-            ),
-          ],
-        ),
+          Spacer(),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: _LoginButton(),
+          ),
+        ],
       ),
     );
   }
@@ -59,13 +62,16 @@ class _AccountInput extends StatelessWidget {
 
     return TextField(
       key: const Key('loginForm_accountInput_textField'),
-      onChanged: (username) {
-        context.read<LoginBloc>().add(LoginAccountChanged(username));
+      onChanged: (email) {
+        context.read<LoginBloc>().add(LoginAccountChanged(email));
       },
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.email_outlined),
         labelText: 'Tài khoản',
-        errorText: ValidationErrorMessage.getAccountErrorMessage(email.error),
+        errorText:
+            email.isPure
+                ? null
+                : ValidationErrorMessage.getAccountErrorMessage(email.error),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: const BorderSide(color: Colors.red, width: 1),
@@ -105,9 +111,12 @@ class _PasswordInput extends StatelessWidget {
                   },
                 ),
                 labelText: 'Mật khẩu',
-                errorText: ValidationErrorMessage.getPasswordErrorMessage(
-                  password.error,
-                ),
+                errorText:
+                    password.isPure
+                        ? null
+                        : ValidationErrorMessage.getPasswordErrorMessage(
+                          password.error,
+                        ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: const BorderSide(color: Colors.red, width: 1),
@@ -132,8 +141,8 @@ class _ForgotPasswordButton extends StatelessWidget {
         'Quên mật khẩu?',
         style: TextStyle(
           color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );
@@ -146,17 +155,21 @@ class _RegisterButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Bạn chưa có tài khoản?', style: TextStyle(fontSize: 18)),
+        const Text(
+          'Bạn chưa là thành viên?',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+        ),
         TextButton(
           onPressed: () {
             Navigator.pushNamed(context, REGISTER_STEP_ONE);
           },
           child: const Text(
-            'Đăng ký',
+            'Hãy đăng ký',
             style: TextStyle(
               color: Colors.black87,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.underline,
             ),
           ),
         ),
@@ -168,11 +181,11 @@ class _RegisterButton extends StatelessWidget {
 class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final isInProgressOrSuccess = context.select(
-      (LoginBloc bloc) => bloc.state.status.isInProgressOrSuccess,
-    );
+    // final isInProgressOrSuccess = context.select(
+    //   (LoginBloc bloc) => bloc.state.status.isInProgressOrSuccess,
+    // );
 
-    if (isInProgressOrSuccess) return const CircularProgressIndicator();
+    // if (isInProgressOrSuccess) return const CircularProgressIndicator();
 
     final isValid = context.select((LoginBloc bloc) => bloc.state.isValid);
 
@@ -183,7 +196,7 @@ class _LoginButton extends StatelessWidget {
               ? () => context.read<LoginBloc>().add(const LoginSubmitted())
               : null,
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(const Color(0xFFF9E400)),
+        backgroundColor: WidgetStateProperty.all(const Color(0xFF00FFAB)),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
@@ -199,8 +212,8 @@ class _LoginButton extends StatelessWidget {
         child: Text(
           'Đăng nhập',
           style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20.0,
+            color: Colors.white,
+            fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -209,24 +222,26 @@ class _LoginButton extends StatelessWidget {
   }
 }
 
-class _FacebookSignInButton extends StatelessWidget {
+class _FacebookLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       key: const Key('loginForm_facebook_login'),
       onPressed: () => {},
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Colors.white70),
+        backgroundColor: WidgetStateProperty.all(Color(0xFFFBFBFB)),
+        shadowColor: WidgetStateProperty.all(Colors.transparent),
+        elevation: WidgetStateProperty.all(0),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
-            side: const BorderSide(color: Colors.transparent, width: 1),
+            side: const BorderSide(color: Color(0xFFBCCCDC), width: 1),
           ),
         ),
         minimumSize: WidgetStateProperty.all(
           Size(
-            MediaQuery.of(context).size.width * 0.4,
-            MediaQuery.of(context).size.height * 0.06,
+            MediaQuery.of(context).size.width * 0.455,
+            MediaQuery.of(context).size.height * 0.05,
           ),
         ),
       ),
@@ -248,7 +263,7 @@ class _FacebookSignInButton extends StatelessWidget {
   }
 }
 
-class _GoogleSignInButton extends StatelessWidget {
+class _GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -256,16 +271,18 @@ class _GoogleSignInButton extends StatelessWidget {
       onPressed: () => {},
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(Colors.white70),
+        shadowColor: WidgetStateProperty.all(Colors.transparent),
+        elevation: WidgetStateProperty.all(0),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
-            side: const BorderSide(color: Colors.transparent, width: 1),
+            side: const BorderSide(color: Color(0xFFBCCCDC), width: 1),
           ),
         ),
         minimumSize: WidgetStateProperty.all(
           Size(
-            MediaQuery.of(context).size.width * 0.4,
-            MediaQuery.of(context).size.height * 0.06,
+            MediaQuery.of(context).size.width * 0.45,
+            MediaQuery.of(context).size.height * 0.05,
           ),
         ),
       ),

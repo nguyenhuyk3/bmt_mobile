@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
+import 'package:rent_transport_fe/bloc/register/bloc.dart';
 import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/views/authentication/login/login.export.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.export.dart';
 import 'package:user_repository/user_repository.export.dart';
 
 import '../views/home/page.dart';
-import '../views/authentication/login/page.dart';
+
 import '../views/spash_view.dart';
 
 part 'app.view.dart';
@@ -64,6 +66,7 @@ class _MainAppState extends State<MainApp> {
                   authenticationRepository: _authenticationRepository,
                 ),
           ),
+          BlocProvider(create: (_) => RegisterBloc()),
         ],
         child: const AppView(),
       ),

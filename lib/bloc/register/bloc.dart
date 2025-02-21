@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:rent_transport_fe/models/models.dart';
+import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
 
 part 'event.dart';
 part 'state.dart';
@@ -31,15 +32,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     final email = Account.dirty(event.email);
 
-    if (email.value == 'huy@gmail.com') {
-      emit(RegisterError(error: 'Email đã tồn tại'));
-
-      return;
-    }
-
-    _email = event.email;
-
-    emit(RegisterStepOne(email: Account.dirty(event.email)));
+    emit(RegisterStepOne(email: Account.dirty(email.value)));
   }
 
   Future<void> _onEmailSubmitted(
@@ -49,7 +42,26 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final currentState = state;
 
     if (currentState is RegisterStepOne) {
-      emit(RegisterStepTwo(otp: const Otp.pure()));
+      if (currentState.email.value == 'huy@gmail.com' ||
+          currentState.email.value == 'huy1@gmail.com') {
+        emit(
+          RegisterError(error: 'Email: ${currentState.email.value} đã tồn tại'),
+        );
+
+        return;
+      }
+
+      final error = ValidationErrorMessage.getAccountErrorMessage(
+        currentState.email.error,
+      );
+
+      if (error != null) {
+        emit(RegisterError(error: error));
+
+        return;
+      } else {
+        emit(RegisterStepTwo(otp: const Otp.pure()));
+      }
     }
   }
 

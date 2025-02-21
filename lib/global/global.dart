@@ -4,6 +4,8 @@ import 'package:logger/logger.export.dart';
 
 final logger = Logger();
 
+const MINIMUM_LENGTH_FOR_PASSWORD = 8;
+
 const LOGIN_PAGE = '/';
 
 const REGISTER_STEP_ONE = 'register-step-one';

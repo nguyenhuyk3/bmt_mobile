@@ -1,4 +1,7 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:formz/formz.dart';
+import 'package:rent_transport_fe/global/global.dart';
 
 enum PasswordValidationError { empty, tooShort }
 
@@ -6,13 +9,12 @@ class Password extends FormzInput<String, PasswordValidationError> {
   const Password.pure() : super.pure('');
   const Password.dirty([super.value = '']) : super.dirty();
 
-  final int _minLength = 8;
-
   @override
   PasswordValidationError? validator(String value) {
     if (value.isEmpty) return PasswordValidationError.empty;
 
-    if (value.length < _minLength) return PasswordValidationError.tooShort;
+    if (value.length < MINIMUM_LENGTH_FOR_PASSWORD)
+      return PasswordValidationError.tooShort;
 
     return null;
   }

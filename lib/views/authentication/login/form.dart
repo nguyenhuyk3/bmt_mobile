@@ -46,7 +46,7 @@ class LoginForm extends StatelessWidget {
           Spacer(),
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.only(bottom: 30),
             child: _LoginButton(),
           ),
         ],
@@ -196,7 +196,7 @@ class _LoginButton extends StatelessWidget {
               ? () => context.read<LoginBloc>().add(const LoginSubmitted())
               : null,
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(const Color(0xFF54C392)),
+        backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),

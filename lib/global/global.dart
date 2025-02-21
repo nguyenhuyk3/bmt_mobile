@@ -9,6 +9,8 @@ final logger = Logger();
 const MINIMUM_LENGTH_FOR_PASSWORD = 8;
 const LENGTH_OF_OTP = 6;
 
+const TIME_FOR_RESENDING_MAIL = 10;
+
 const LOGIN_PAGE = '/';
 
 const REGISTER_STEP_ONE = 'register-step-one';

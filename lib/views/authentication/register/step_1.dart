@@ -81,7 +81,7 @@ class _NextStepButton extends StatelessWidget {
         onPressed:
             () => {context.read<RegisterBloc>().add(RegisterEmailSubmitted())},
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xFF54C392)),
+          backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),

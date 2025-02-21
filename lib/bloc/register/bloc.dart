@@ -71,8 +71,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     final otp = Otp.dirty(event.otp);
 
-    print(state);
-
     emit(RegisterStepTwo(otp: Otp.dirty(otp.value)));
   }
 

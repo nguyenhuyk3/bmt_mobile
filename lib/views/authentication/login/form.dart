@@ -196,7 +196,7 @@ class _LoginButton extends StatelessWidget {
               ? () => context.read<LoginBloc>().add(const LoginSubmitted())
               : null,
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(const Color(0xFF00FFAB)),
+        backgroundColor: WidgetStateProperty.all(const Color(0xFF54C392)),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),

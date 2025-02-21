@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/register/bloc.dart';
+import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
 import 'step_2.dart';
 
@@ -9,13 +11,18 @@ class StepOnePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [_EmailInput(), SizedBox(height: 16), _NextStepButton()],
-        ),
+    return RegisterLayout(
+      isStepOne: true,
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          _EmailInput(),
+
+          const Spacer(),
+
+          _NextStepButton(),
+          const SizedBox(height: 30),
+        ],
       ),
     );
   }
@@ -31,7 +38,7 @@ class _EmailInput extends StatelessWidget {
 
     final currentState = context.read<RegisterBloc>().state;
 
-    print(currentState);
+    logger.i(currentState);
 
     return TextField(
       key: const Key('register_emailInput_textField'),
@@ -57,9 +64,15 @@ class _NextStepButton extends StatelessWidget {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         if (state is RegisterStepTwo) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => StepTwoPage()),
+            MaterialPageRoute(
+              builder:
+                  (_) => BlocProvider.value(
+                    value: context.read<RegisterBloc>(),
+                    child: StepTwoPage(),
+                  ),
+            ),
           );
         }
       },
@@ -68,7 +81,7 @@ class _NextStepButton extends StatelessWidget {
         onPressed:
             () => {context.read<RegisterBloc>().add(RegisterEmailSubmitted())},
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xFFF9E400)),
+          backgroundColor: WidgetStateProperty.all(const Color(0xFF54C392)),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
@@ -84,8 +97,8 @@ class _NextStepButton extends StatelessWidget {
           child: Text(
             'Gửi mã xác thực OTP',
             style: TextStyle(
-              color: Colors.black87,
-              fontSize: 20.0,
+              color: Colors.white,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),

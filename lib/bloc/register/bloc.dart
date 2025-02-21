@@ -71,25 +71,40 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     final otp = Otp.dirty(event.otp);
 
-    if (otp.value == '123456') {
-      emit(RegisterError(error: 'Otp không chính xác'));
+    print(state);
 
-      return;
-    }
-
-    emit(RegisterStepTwo(otp: otp));
+    emit(RegisterStepTwo(otp: Otp.dirty(otp.value)));
   }
 
   Future<void> _onOtpSubmitted(event, Emitter<RegisterState> emit) async {
     final currentState = state;
 
     if (currentState is RegisterStepTwo) {
-      emit(
-        RegisterStepThree(
-          password: const Password.pure(),
-          confirmedPassword: '',
-        ),
+      if (currentState.otp.value == '123456' ||
+          currentState.otp.value == '234567') {
+        emit(
+          RegisterError(error: 'Mã: ${currentState.otp.value} không hợp lệ!!'),
+        );
+
+        return;
+      }
+
+      final error = ValidationErrorMessage.getOtpErrorMessage(
+        currentState.otp.error,
       );
+
+      if (error != null) {
+        emit(RegisterError(error: error));
+
+        return;
+      } else {
+        emit(
+          RegisterStepThree(
+            password: const Password.pure(),
+            confirmedPassword: '',
+          ),
+        );
+      }
     }
   }
 

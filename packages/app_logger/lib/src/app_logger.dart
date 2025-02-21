@@ -3,19 +3,19 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
-class Logger {
-  static final Logger _instance = Logger._internal();
+class AppLogger {
+  static final AppLogger _instance = AppLogger._internal();
   File? _logFile;
   bool _isInitialized = false;
   final List<String> _pendingLogs = [];
 
   // Factory constructor to ensure singleton
-  factory Logger() {
+  factory AppLogger() {
     return _instance;
   }
 
   // Constructor private
-  Logger._internal() {
+  AppLogger._internal() {
     _init();
   }
 

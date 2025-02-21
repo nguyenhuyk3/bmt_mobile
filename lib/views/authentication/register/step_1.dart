@@ -24,19 +24,20 @@ class StepOnePage extends StatelessWidget {
 class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final currentState = context.watch<RegisterBloc>().state;
-    String error = '';
+    final error = context.select<RegisterBloc, String>((bloc) {
+      final state = bloc.state;
+      return state is RegisterError ? state.error : '';
+    });
 
-    if (currentState is RegisterError) {
-      error = currentState.error;
-    }
+    final currentState = context.read<RegisterBloc>().state;
+
+    print(currentState);
 
     return TextField(
-      key: const Key('signUp_emailInput_textField'),
+      key: const Key('register_emailInput_textField'),
       onChanged:
-          (email) => {
-            context.read<RegisterBloc>().add(RegisterEmailChanged(email)),
-          },
+          (email) =>
+              context.read<RegisterBloc>().add(RegisterEmailChanged(email)),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email_outlined),
         labelText: 'Email',
@@ -58,18 +59,12 @@ class _NextStepButton extends StatelessWidget {
         if (state is RegisterStepTwo) {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder:
-                  (_) => BlocProvider.value(
-                    value: context.read<RegisterBloc>(),
-                    child: StepTwoPage(),
-                  ),
-            ),
+            MaterialPageRoute(builder: (_) => StepTwoPage()),
           );
         }
       },
       child: ElevatedButton(
-        key: const Key('signUp_nextStepnextStep_raisedButton'),
+        key: const Key('register_nextStepTwo_raisedButton'),
         onPressed:
             () => {context.read<RegisterBloc>().add(RegisterEmailSubmitted())},
         style: ButtonStyle(

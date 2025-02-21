@@ -23,4 +23,17 @@ class ValidationErrorMessage {
         return null;
     }
   }
+
+  static String? getOtpErrorMessage(OtpValidationError? error) {
+    switch (error) {
+      case OtpValidationError.empty:
+        return "Otp không được để trống!!";
+      case OtpValidationError.incorrectSixDigits:
+        return "Mã Otp phải có đúng $LENGTH_OF_OTP kí tự!!";
+      case OtpValidationError.noTextAllowed:
+        return "Mã otp không được có chữ cái";
+      default:
+        return null;
+    }
+  }
 }

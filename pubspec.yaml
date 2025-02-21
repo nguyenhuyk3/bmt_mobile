@@ -11,14 +11,15 @@ dependencies:
     path: packages/authentication_repository
   user_repository:
     path: packages/user_repository
-  logger: 
-    path: packages/logger
+  app_logger: 
+    path: packages/app_logger
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
   equatable: ^2.0.7
   formz: ^0.8.0
   flutter_svg: ^2.0.9
+  logger: ^2.5.0
 
 dev_dependencies:
   flutter_test:

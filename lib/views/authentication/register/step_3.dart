@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
-import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/global/error.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
+
+import 'step_4.dart';
 
 class StepThreePage extends StatelessWidget {
   const StepThreePage({super.key});
@@ -34,7 +36,7 @@ class _PasswordInput extends StatelessWidget {
     final error = context.select<RegisterBloc, String>((bloc) {
       final state = bloc.state;
 
-      return state is RegisterError ? state.error : '';
+      return state is RegisterStepThree ? state.error : '';
     });
 
     return BlocProvider(
@@ -47,8 +49,16 @@ class _PasswordInput extends StatelessWidget {
             child: TextField(
               key: const Key('register_passwordInput_textField'),
               onChanged: (password) {
+                final currentState = context.read<RegisterBloc>().state;
+                final confirmedPassword =
+                    (currentState as RegisterStepThree?)?.confirmedPassword ??
+                    '';
+
                 context.read<RegisterBloc>().add(
-                  RegisterPasswordChanged(password: password),
+                  RegisterPasswordChanged(
+                    password: password,
+                    confirmedPassword: confirmedPassword,
+                  ),
                 );
               },
               obscureText: state.obscureText,
@@ -66,11 +76,9 @@ class _PasswordInput extends StatelessWidget {
                 ),
                 labelText: 'Mật khẩu',
                 errorText:
-                    error.isEmpty
-                        ? null
-                        : error.contains(
-                          CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED,
-                        )
+                    (error.isEmpty ||
+                            error == CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED ||
+                            error == EMPTY_CONFIRMED_PASSWORD_ERROR)
                         ? null
                         : error,
                 border: OutlineInputBorder(
@@ -90,9 +98,9 @@ class _ConfirmedPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final error = context.select<RegisterBloc, String>((bloc) {
-      final state = bloc.state;
+      final currentState = bloc.state;
 
-      return state is RegisterError ? state.error : '';
+      return currentState is RegisterStepThree ? currentState.error : '';
     });
 
     return BlocProvider(
@@ -104,9 +112,16 @@ class _ConfirmedPasswordInput extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.1,
             child: TextField(
               key: const Key('register_confirmedPasswordInput_textField'),
-              onChanged: (password) {
-                context.read<LoginBloc>().add(
-                  LoginPasswordChanged(password: password),
+              onChanged: (confirmedPassword) {
+                final currentState = context.read<RegisterBloc>().state;
+                final password =
+                    (currentState as RegisterStepThree?)?.password.value ?? '';
+
+                context.read<RegisterBloc>().add(
+                  RegisterPasswordChanged(
+                    password: password,
+                    confirmedPassword: confirmedPassword,
+                  ),
                 );
               },
               obscureText: state.obscureText,
@@ -142,18 +157,18 @@ class _NextStepButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
-        // if (state is RegisterStepThree) {
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder:
-        //           (_) => BlocProvider.value(
-        //             value: context.read<RegisterBloc>(),
-        //             child: StepThreePage(),
-        //           ),
-        //     ),
-        //   );
-        // }
+        if (state is RegisterStepFour) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (_) => BlocProvider.value(
+                    value: context.read<RegisterBloc>(),
+                    child: StepFourPage(),
+                  ),
+            ),
+          );
+        }
       },
       child: ElevatedButton(
         key: const Key('register_nextStepThree_raisedButton'),

@@ -5,7 +5,8 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/global/error.dart';
+import 'package:rent_transport_fe/global/other.dart';
 import 'package:rent_transport_fe/models/models.dart';
 import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
 
@@ -31,9 +32,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterEmailChanged event,
     Emitter<RegisterState> emit,
   ) async {
-    final email = Account.dirty(event.email);
-
-    emit(RegisterStepOne(email: Account.dirty(email.value)));
+    emit(RegisterStepOne(email: Account.dirty(event.email)));
   }
 
   Future<void> _onEmailSubmitted(
@@ -70,12 +69,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterOtpChanged event,
     Emitter<RegisterState> emit,
   ) async {
-    final otp = Otp.dirty(event.otp);
-
-    emit(RegisterStepTwo(otp: Otp.dirty(otp.value)));
+    emit(RegisterStepTwo(otp: Otp.dirty(event.otp)));
   }
 
-  Future<void> _onOtpSubmitted(event, Emitter<RegisterState> emit) async {
+  Future<void> _onOtpSubmitted(
+    RegisterOtpSubmitted event,
+    Emitter<RegisterState> emit,
+  ) async {
     final currentState = state;
 
     if (currentState is RegisterStepTwo) {
@@ -101,6 +101,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           RegisterStepThree(
             password: const Password.pure(),
             confirmedPassword: '',
+            error: '',
           ),
         );
       }
@@ -111,28 +112,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterPasswordChanged event,
     Emitter<RegisterState> emit,
   ) async {
-    final password = Password.dirty(event.password);
-
-    emit(RegisterStepThree(password: password, confirmedPassword: ''));
-
-    // final currentState = state;
-
-    // if (currentState is RegisterStepThree) {
-    //   if (currentState.password.value != currentState.confirmedPassword) {
-    //     emit(RegisterError(error: 'Mật khẩu không khớp'));
-
-    //     return;
-    //   }
-
-    //   _password = event.password;
-
-    //   emit(
-    //     RegisterStepThree(
-    //       password: Password.dirty(event.password),
-    //       confirmedPassword: currentState.confirmedPassword,
-    //     ),
-    //   );
-    // }
+    emit(
+      RegisterStepThree(
+        password: Password.dirty(event.password),
+        confirmedPassword: event.confirmedPassword,
+        error: '',
+      ),
+    );
   }
 
   Future<void> _onPasswordSubmitted(
@@ -148,12 +134,39 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       );
 
       if (error != null) {
-        emit(RegisterError(error: error));
+        emit(
+          RegisterStepThree(
+            password: password,
+            confirmedPassword: currentState.confirmedPassword,
+            error: error,
+          ),
+        );
+
+        return;
+      }
+
+      if (currentState.confirmedPassword.isEmpty) {
+        emit(
+          RegisterStepThree(
+            password: password,
+            confirmedPassword: currentState.confirmedPassword,
+            error: EMPTY_CONFIRMED_PASSWORD_ERROR,
+          ),
+        );
+
         return;
       }
 
       if (currentState.password.value != currentState.confirmedPassword) {
-        emit(RegisterError(error: CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED));
+        emit(
+          RegisterStepThree(
+            password: password,
+            confirmedPassword: currentState.confirmedPassword,
+            error: CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED,
+          ),
+        );
+      } else {
+        emit(RegisterStepFour(fullName: '', birthDate: ''));
       }
     }
   }
@@ -165,7 +178,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     emit(
       RegisterStepFour(
         fullName: event.fullName,
-        birthDate: event.birthDate,
+        birthDate: event.formattedBirthDate,
         sex: event.sex,
       ),
     );
@@ -177,7 +190,22 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     final currentState = state;
 
+    logger.i(currentState);
     if (currentState is RegisterStepFour) {
+      final fullName = currentState.fullName;
+
+      if (fullName.isEmpty) {
+        emit(
+          RegisterStepFour(
+            fullName: fullName,
+            birthDate: currentState.birthDate,
+            sex: currentState.sex,
+            error: EMPTY_FULL_NAME_ERROR,
+          ),
+        );
+
+        return;
+      }
       // final userData = {
       //   "email": _email,
       //   "password": _password,

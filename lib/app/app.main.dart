@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
-import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/global/route.dart';
 import 'package:rent_transport_fe/views/authentication/login/login.export.dart';
-import 'package:rent_transport_fe/views/authentication/register/step_3.dart';
+import 'package:rent_transport_fe/views/authentication/register/register.export.dart';
+import 'package:rent_transport_fe/views/authentication/register/step_2.dart';
 import 'package:user_repository/user_repository.export.dart';
 
 import '../views/home/page.dart';

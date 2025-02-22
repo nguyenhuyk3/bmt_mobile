@@ -1,4 +1,4 @@
-import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/global/other.dart';
 import 'package:rent_transport_fe/models/login/login.dart';
 
 class ValidationErrorMessage {

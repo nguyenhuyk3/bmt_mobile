@@ -1,7 +1,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:formz/formz.dart';
-import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/global/other.dart';
 
 enum PasswordValidationError { empty, tooShort }
 

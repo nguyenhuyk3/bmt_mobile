@@ -36,31 +36,36 @@ class RegisterStepTwo extends RegisterState {
 class RegisterStepThree extends RegisterState {
   final Password password;
   final String confirmedPassword;
+  final String error;
 
   const RegisterStepThree({
     required this.password,
     required this.confirmedPassword,
+    required this.error,
   }) : super(status: FormzSubmissionStatus.inProgress);
 
   @override
-  List<Object?> get props => [password, confirmedPassword];
+  List<Object?> get props => [password, confirmedPassword, error];
 }
 
 class RegisterStepFour extends RegisterState {
   final String fullName;
   final String birthDate;
   final String sex;
+  final String error;
 
   const RegisterStepFour({
     required this.fullName,
     required this.birthDate,
-    required this.sex,
+    this.sex = 'Nữ',
+    this.error = '',
   }) : super(status: FormzSubmissionStatus.inProgress);
 
   @override
-  List<Object?> get props => [fullName, birthDate, sex];
+  List<Object?> get props => [fullName, birthDate, sex, error];
 }
 
+// If other classes have one prop in class then this class will fit with them
 class RegisterError extends RegisterState {
   final String error;
 

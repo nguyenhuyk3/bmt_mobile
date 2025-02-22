@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
-import 'package:rent_transport_fe/global/global.dart';
+import 'package:rent_transport_fe/global/other.dart';
 import 'package:rent_transport_fe/utils/utils.export.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
@@ -15,6 +15,7 @@ class StepTwoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RegisterLayout(
+      allowBack: true,
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -135,7 +136,7 @@ class _NextStepButton extends StatelessWidget {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         if (state is RegisterStepThree) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder:

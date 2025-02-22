@@ -34,8 +34,12 @@ class RegisterOtpSubmitted extends RegisterEvent {}
 // Step 3
 class RegisterPasswordChanged extends RegisterEvent {
   final String password;
+  final String confirmedPassword;
 
-  const RegisterPasswordChanged({required this.password});
+  const RegisterPasswordChanged({
+    required this.password,
+    required this.confirmedPassword,
+  });
 
   @override
   List<Object?> get props => [password];
@@ -54,6 +58,10 @@ class RegisterInformationChanged extends RegisterEvent {
     required this.birthDate,
     required this.sex,
   });
+
+  String get formattedBirthDate {
+    return birthDate.split('T').first;
+  }
 
   @override
   List<Object?> get props => [fullName, birthDate, sex];

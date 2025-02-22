@@ -8,7 +8,7 @@ sealed class LoginEvent extends Equatable {
 }
 
 final class LoginAccountChanged extends LoginEvent {
-  const LoginAccountChanged(this.account);
+  const LoginAccountChanged({required this.account});
 
   final String account;
 
@@ -17,7 +17,7 @@ final class LoginAccountChanged extends LoginEvent {
 }
 
 final class LoginPasswordChanged extends LoginEvent {
-  const LoginPasswordChanged(this.password);
+  const LoginPasswordChanged({required this.password});
 
   final String password;
 

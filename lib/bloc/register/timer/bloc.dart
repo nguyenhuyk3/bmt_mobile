@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/global/global.dart';
-import 'package:rent_transport_fe/utils/utils.dart';
+import 'package:rent_transport_fe/utils/utils.export.dart';
 
 part 'event.dart';
 part 'state.dart';

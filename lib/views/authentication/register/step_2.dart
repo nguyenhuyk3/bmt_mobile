@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
 import 'package:rent_transport_fe/global/global.dart';
-import 'package:rent_transport_fe/utils/utils.dart';
+import 'package:rent_transport_fe/utils/utils.export.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
 import 'step_3.dart';
@@ -21,12 +21,14 @@ class StepTwoPage extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                flex: 3, // 80%
+                flex: 3, // 60%
                 child: _OtpInput(),
               ),
+
               const SizedBox(width: 10),
+
               Expanded(
-                flex: 2, // 20%
+                flex: 2, // 40%
                 child: _ResendOtpButton(),
               ),
             ],

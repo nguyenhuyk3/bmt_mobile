@@ -9,9 +9,13 @@ final logger = Logger();
 const MINIMUM_LENGTH_FOR_PASSWORD = 8;
 const LENGTH_OF_OTP = 6;
 
+// Err
+const CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED = 'Mật khẩu xác nhận không khớp!!';
+
 const TIME_FOR_RESENDING_MAIL = 10;
 
-const LOGIN_PAGE = '/';
+// Route
+const LOGIN_PAGE = 'login';
 
 const REGISTER_STEP_ONE = 'register-step-one';
 const REGISTER_STEP_TWO = 'register-step-two';

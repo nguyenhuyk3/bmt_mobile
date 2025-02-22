@@ -12,7 +12,6 @@ class Account extends FormzInput<String, AccountValidationError> {
 
   @override
   AccountValidationError? validator(String value) {
-    // TODO: implement validator
     if (value.isEmpty) return AccountValidationError.empty;
 
     if (!_emailRegex.hasMatch(value)) return AccountValidationError.invalid;

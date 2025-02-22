@@ -63,7 +63,7 @@ class _AccountInput extends StatelessWidget {
     return TextField(
       key: const Key('loginForm_accountInput_textField'),
       onChanged: (email) {
-        context.read<LoginBloc>().add(LoginAccountChanged(email));
+        context.read<LoginBloc>().add(LoginAccountChanged(account: email));
       },
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.email_outlined),
@@ -71,7 +71,9 @@ class _AccountInput extends StatelessWidget {
         errorText:
             email.isPure
                 ? null
-                : ValidationErrorMessage.getAccountErrorMessage(email.error),
+                : ValidationErrorMessage.getAccountErrorMessage(
+                  error: email.error,
+                ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: const BorderSide(color: Colors.red, width: 1),
@@ -95,7 +97,9 @@ class _PasswordInput extends StatelessWidget {
             child: TextField(
               key: const Key('loginForm_passwordInput_textField'),
               onChanged: (password) {
-                context.read<LoginBloc>().add(LoginPasswordChanged(password));
+                context.read<LoginBloc>().add(
+                  LoginPasswordChanged(password: password),
+                );
               },
               obscureText: state.obscureText,
               decoration: InputDecoration(
@@ -115,7 +119,7 @@ class _PasswordInput extends StatelessWidget {
                     password.isPure
                         ? null
                         : ValidationErrorMessage.getPasswordErrorMessage(
-                          password.error,
+                          error: password.error,
                         ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),

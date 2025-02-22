@@ -35,7 +35,7 @@ class RegisterOtpSubmitted extends RegisterEvent {}
 class RegisterPasswordChanged extends RegisterEvent {
   final String password;
 
-  const RegisterPasswordChanged(this.password);
+  const RegisterPasswordChanged({required this.password});
 
   @override
   List<Object?> get props => [password];

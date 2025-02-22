@@ -2,7 +2,7 @@ import 'package:rent_transport_fe/global/global.dart';
 import 'package:rent_transport_fe/models/login/login.dart';
 
 class ValidationErrorMessage {
-  static String? getAccountErrorMessage(AccountValidationError? error) {
+  static String? getAccountErrorMessage({AccountValidationError? error}) {
     switch (error) {
       case AccountValidationError.empty:
         return "Email không được để trống!!";
@@ -13,7 +13,9 @@ class ValidationErrorMessage {
     }
   }
 
-  static String? getPasswordErrorMessage(PasswordValidationError? error) {
+  static String? getPasswordErrorMessage({
+    required PasswordValidationError? error,
+  }) {
     switch (error) {
       case PasswordValidationError.empty:
         return "Mật khẩu không được để trống!!";
@@ -24,7 +26,7 @@ class ValidationErrorMessage {
     }
   }
 
-  static String? getOtpErrorMessage(OtpValidationError? error) {
+  static String? getOtpErrorMessage({OtpValidationError? error}) {
     switch (error) {
       case OtpValidationError.empty:
         return "Otp không được để trống!!";

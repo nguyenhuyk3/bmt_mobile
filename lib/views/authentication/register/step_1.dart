@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/register/bloc.dart';
-import 'package:rent_transport_fe/global/global.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
 import 'step_2.dart';
@@ -12,7 +11,7 @@ class StepOnePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RegisterLayout(
-      isStepOne: true,
+      allowBack: true,
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -33,12 +32,9 @@ class _EmailInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final error = context.select<RegisterBloc, String>((bloc) {
       final state = bloc.state;
+
       return state is RegisterError ? state.error : '';
     });
-
-    final currentState = context.read<RegisterBloc>().state;
-
-    logger.i(currentState);
 
     return TextField(
       key: const Key('register_emailInput_textField'),

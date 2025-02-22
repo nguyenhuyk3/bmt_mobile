@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:rent_transport_fe/global/global.dart';
 import 'package:rent_transport_fe/models/models.dart';
 import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
 
@@ -52,7 +53,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
 
       final error = ValidationErrorMessage.getAccountErrorMessage(
-        currentState.email.error,
+        error: currentState.email.error,
       );
 
       if (error != null) {
@@ -88,7 +89,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
 
       final error = ValidationErrorMessage.getOtpErrorMessage(
-        currentState.otp.error,
+        error: currentState.otp.error,
       );
 
       if (error != null) {
@@ -110,24 +111,28 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterPasswordChanged event,
     Emitter<RegisterState> emit,
   ) async {
-    final currentState = state;
+    final password = Password.dirty(event.password);
 
-    if (currentState is RegisterStepThree) {
-      if (currentState.password.value != currentState.confirmedPassword) {
-        emit(RegisterError(error: 'Mật khẩu không khớp'));
+    emit(RegisterStepThree(password: password, confirmedPassword: ''));
 
-        return;
-      }
+    // final currentState = state;
 
-      _password = event.password;
+    // if (currentState is RegisterStepThree) {
+    //   if (currentState.password.value != currentState.confirmedPassword) {
+    //     emit(RegisterError(error: 'Mật khẩu không khớp'));
 
-      emit(
-        RegisterStepThree(
-          password: Password.dirty(event.password),
-          confirmedPassword: currentState.confirmedPassword,
-        ),
-      );
-    }
+    //     return;
+    //   }
+
+    //   _password = event.password;
+
+    //   emit(
+    //     RegisterStepThree(
+    //       password: Password.dirty(event.password),
+    //       confirmedPassword: currentState.confirmedPassword,
+    //     ),
+    //   );
+    // }
   }
 
   Future<void> _onPasswordSubmitted(
@@ -137,7 +142,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final currentState = state;
 
     if (currentState is RegisterStepThree) {
-      emit(RegisterStepFour(fullName: '', birthDate: '', sex: ''));
+      final password = currentState.password;
+      final error = ValidationErrorMessage.getPasswordErrorMessage(
+        error: password.error,
+      );
+
+      if (error != null) {
+        emit(RegisterError(error: error));
+        return;
+      }
+
+      if (currentState.password.value != currentState.confirmedPassword) {
+        emit(RegisterError(error: CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED));
+      }
     }
   }
 
@@ -161,13 +178,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final currentState = state;
 
     if (currentState is RegisterStepFour) {
-      final userData = {
-        "email": _email,
-        "password": _password,
-        "full_name": currentState.fullName,
-        "birth_date": currentState.birthDate,
-        "sex": currentState.sex,
-      };
+      // final userData = {
+      //   "email": _email,
+      //   "password": _password,
+      //   "full_name": currentState.fullName,
+      //   "birth_date": currentState.birthDate,
+      //   "sex": currentState.sex,
+      // };
     }
 
     emit(const RegisterSuccess());

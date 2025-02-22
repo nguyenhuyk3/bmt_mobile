@@ -22,7 +22,7 @@ class _AppViewState extends State<AppView> {
           case LOGIN_PAGE:
             return MaterialPageRoute(builder: (context) => LoginPage());
           case REGISTER_STEP_ONE:
-            return MaterialPageRoute(builder: (context) => StepOnePage());
+            return MaterialPageRoute(builder: (context) => StepThreePage());
           default:
             return MaterialPageRoute(builder: (context) => SplashPage());
         }

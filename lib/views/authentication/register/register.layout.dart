@@ -4,18 +4,19 @@ import 'package:rent_transport_fe/bloc/register/bloc.dart';
 
 class RegisterLayout extends StatelessWidget {
   final Widget child;
-  final bool isStepOne;
+  final bool allowBack;
 
   const RegisterLayout({
     super.key,
     required this.child,
-    this.isStepOne = false,
+    this.allowBack = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFBFBFB),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text(
           'Đăng kí',
@@ -29,7 +30,19 @@ class RegisterLayout extends StatelessWidget {
         elevation: 0.7,
         shadowColor: const Color(0xFFEFF3EA),
         backgroundColor: const Color(0xFFFBFBFB),
-        automaticallyImplyLeading: isStepOne,
+        leading:
+            allowBack
+                ? IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black87,
+                    size: 25,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+                : null,
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(0.1),
           child: Divider(height: 0.1, thickness: 0.1, color: Colors.grey),
@@ -70,10 +83,11 @@ class NextStepButton extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (_) => BlocProvider.value(
-                value: context.read<RegisterBloc>(),
-                child: nextPage,
-              ),
+              builder:
+                  (_) => BlocProvider.value(
+                    value: context.read<RegisterBloc>(),
+                    child: nextPage,
+                  ),
             ),
           );
         }
@@ -108,4 +122,3 @@ class NextStepButton extends StatelessWidget {
     );
   }
 }
-

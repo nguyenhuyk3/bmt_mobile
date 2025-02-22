@@ -10,7 +10,6 @@ class Otp extends FormzInput<String, OtpValidationError> {
 
   @override
   OtpValidationError? validator(String value) {
-    // TODO: implement validator
     if (value.isEmpty) return OtpValidationError.empty;
 
     if (value.length != 6 || !RegExp(r'^\d{6}$').hasMatch(value))

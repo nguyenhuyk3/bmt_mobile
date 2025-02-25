@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:rent_transport_fe/global/error.dart';
-import 'package:rent_transport_fe/global/other.dart';
 import 'package:rent_transport_fe/models/models.dart';
 import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
 
@@ -14,8 +13,8 @@ part 'event.dart';
 part 'state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  String _email = '';
-  String _password = '';
+  // String _email = '';
+  // String _password = '';
 
   RegisterBloc() : super(RegisterInitial()) {
     on<RegisterEmailChanged>(_onEmailChanged);

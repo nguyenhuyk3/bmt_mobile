@@ -5,6 +5,7 @@ import 'package:formz/formz.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
 import 'package:rent_transport_fe/global/route.dart';
 import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
+import 'package:rent_transport_fe/views/authentication/register/register.export.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -45,10 +46,7 @@ class LoginForm extends StatelessWidget {
 
           Spacer(),
 
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30),
-            child: _LoginButton(),
-          ),
+          _LoginButton(),
         ],
       ),
     );
@@ -165,7 +163,10 @@ class _RegisterButton extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, REGISTER_STEP_ONE);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StepOnePage()),
+            );
           },
           child: const Text(
             'Hãy đăng ký',

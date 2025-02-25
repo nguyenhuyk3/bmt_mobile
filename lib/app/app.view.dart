@@ -8,47 +8,30 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
-  final _navigatorKey = GlobalKey<NavigatorState>();
+  int _selectedIndex = 0;
 
-  NavigatorState get _navigator => _navigatorKey.currentState!;
+  final List<Widget> _screens = [LoginPage()];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: _navigatorKey,
-      initialRoute: LOGIN_PAGE,
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case LOGIN_PAGE:
-            return MaterialPageRoute(builder: (context) => LoginPage());
-          case REGISTER_STEP_ONE:
-            return MaterialPageRoute(builder: (context) => StepOnePage());
-          default:
-            return MaterialPageRoute(builder: (context) => SplashPage());
-        }
-      },
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthenticationStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomePage.route(),
-                  (route) => false,
-                );
-              case AuthenticationStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
-                  (route) => false,
-                );
-              case AuthenticationStatus.unknown:
-                break;
-            }
-          },
-          child: child,
-        );
-      },
-      // onGenerateRoute: (_) => SplashPage.route(),
+    return Scaffold(
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Trang chủ'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Cá nhân'),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color(0xFF0D7C66),
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }

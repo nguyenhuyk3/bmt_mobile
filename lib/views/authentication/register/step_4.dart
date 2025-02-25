@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent_transport_fe/app/app.export.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
-import 'package:rent_transport_fe/global/route.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
 class StepFourPage extends StatelessWidget {
@@ -193,7 +193,10 @@ class _NextStepButton extends StatelessWidget {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          Navigator.pushNamed(context, LOGIN_PAGE);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => AppView()),
+          );
         }
       },
       child: ElevatedButton(

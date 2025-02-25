@@ -1,5 +1,5 @@
 import 'package:rent_transport_fe/global/other.dart';
-import 'package:rent_transport_fe/models/login/login.dart';
+import 'package:rent_transport_fe/models/authentication/login.dart';
 
 class ValidationErrorMessage {
   static String? getAccountErrorMessage({AccountValidationError? error}) {

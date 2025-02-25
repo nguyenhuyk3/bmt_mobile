@@ -190,7 +190,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     final currentState = state;
 
-    logger.i(currentState);
     if (currentState is RegisterStepFour) {
       final fullName = currentState.fullName;
 

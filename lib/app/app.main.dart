@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/bloc/bloc.export.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
-import 'package:rent_transport_fe/global/route.dart';
 import 'package:rent_transport_fe/views/authentication/login/login.export.dart';
-import 'package:rent_transport_fe/views/authentication/register/register.export.dart';
 import 'package:user_repository/user_repository.export.dart';
 
 import '../views/home/page.dart';
 
-import '../views/spash_view.dart';
-
 part 'app.view.dart';
+part 'app.router.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -65,7 +62,7 @@ class _MainAppState extends State<MainApp> {
           ),
           BlocProvider(create: (_) => RegisterBloc()),
         ],
-        child: const AppView(),
+        child: AppRouter(),
       ),
     );
   }

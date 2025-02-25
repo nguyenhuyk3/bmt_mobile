@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
-import 'package:rent_transport_fe/models/login/login.dart';
+import 'package:rent_transport_fe/models/authentication/login.dart';
 
 part 'event.dart';
 part 'state.dart';

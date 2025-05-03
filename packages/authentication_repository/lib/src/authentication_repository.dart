@@ -3,6 +3,8 @@ import 'dart:async';
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
 class AuthenticationRepository {
+  final _controller = StreamController<AuthenticationStatus>();
+  
   // "Stream<AuthenticationStatus>" this is a Stream that emits events of type AuthenticationStatus.
   Stream<AuthenticationStatus> get status async* {
     await Future.delayed(
@@ -12,7 +14,6 @@ class AuthenticationRepository {
     yield* _controller.stream;
   }
 
-  final _controller = StreamController<AuthenticationStatus>();
 
   Future<void> logIn(
       {required String username, required String password}) async {

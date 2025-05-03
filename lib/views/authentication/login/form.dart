@@ -22,6 +22,7 @@ class LoginForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Information fields
           const SizedBox(height: 20),
           _AccountInput(),
           const SizedBox(height: 20),
@@ -34,12 +35,13 @@ class LoginForm extends StatelessWidget {
 
           const Divider(thickness: 0.5, color: Colors.grey),
 
+          // Other login methods
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [_FacebookLoginButton(), _GoogleLoginButton()],
           ),
-
+          
           const SizedBox(height: 18),
           _RegisterButton(),
 

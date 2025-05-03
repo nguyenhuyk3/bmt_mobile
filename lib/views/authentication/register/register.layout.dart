@@ -31,9 +31,16 @@ class RegisterLayout extends StatelessWidget {
         automaticallyImplyLeading: allowBack,
         leading:
             allowBack
-                ? IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black87),
-                  onPressed: () => Navigator.pop(context),
+                ? Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.black87,
+                      size: 20,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
                 )
                 : null,
         bottom: const PreferredSize(

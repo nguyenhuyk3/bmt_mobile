@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/app/app.export.dart';
-import 'package:rent_transport_fe/bloc/bloc.export.dart';
+import 'package:rent_transport_fe/blocs/blocs.export.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
 class StepFourPage extends StatelessWidget {

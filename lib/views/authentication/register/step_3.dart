@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/bloc/bloc.export.dart';
+import 'package:rent_transport_fe/blocs/blocs.export.dart';
 import 'package:rent_transport_fe/global/error.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
@@ -77,7 +77,7 @@ class _PasswordInput extends StatelessWidget {
                 labelText: 'Mật khẩu',
                 errorText:
                     (error.isEmpty ||
-                            error == CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED ||
+                            error == CONFIRMATION_PASSWORD_MISMATCH_ERROR ||
                             error == EMPTY_CONFIRMED_PASSWORD_ERROR)
                         ? null
                         : error,

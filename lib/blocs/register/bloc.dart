@@ -31,7 +31,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterEmailChanged event,
     Emitter<RegisterState> emit,
   ) async {
-    emit(RegisterStepOne(email: Account.dirty(event.email)));
+    emit(RegisterStepOne(email: Email.dirty(event.email)));
   }
 
   Future<void> _onEmailSubmitted(
@@ -161,7 +161,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           RegisterStepThree(
             password: password,
             confirmedPassword: currentState.confirmedPassword,
-            error: CONFIRMED_PASSWORD_ERR_DOES_NOT_MATCHED,
+            error: CONFIRMATION_PASSWORD_MISMATCH_ERROR,
           ),
         );
       } else {

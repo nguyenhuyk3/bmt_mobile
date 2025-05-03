@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/bloc/register/bloc.dart';
+import 'package:rent_transport_fe/blocs/register/bloc.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
 
 import 'step_2.dart';

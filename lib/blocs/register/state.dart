@@ -14,7 +14,7 @@ class RegisterInitial extends RegisterState {
 }
 
 class RegisterStepOne extends RegisterState {
-  final Account email;
+  final Email email;
 
   const RegisterStepOne({required this.email})
     : super(status: FormzSubmissionStatus.inProgress);

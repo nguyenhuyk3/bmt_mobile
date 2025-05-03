@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
-import 'package:rent_transport_fe/bloc/bloc.export.dart';
+import 'package:rent_transport_fe/blocs/blocs.export.dart';
 import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.export.dart';
 
@@ -41,7 +41,7 @@ class LoginForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [_FacebookLoginButton(), _GoogleLoginButton()],
           ),
-          
+
           const SizedBox(height: 18),
           _RegisterButton(),
 
@@ -57,12 +57,12 @@ class LoginForm extends StatelessWidget {
 class _AccountInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final email = context.select((LoginBloc bloc) => bloc.state.account);
+    final email = context.select((LoginBloc bloc) => bloc.state.email);
 
     return TextField(
       key: const Key('loginForm_accountInput_textField'),
       onChanged: (email) {
-        context.read<LoginBloc>().add(LoginAccountChanged(account: email));
+        context.read<LoginBloc>().add(LoginAccountChanged(email: email));
       },
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.email_outlined),

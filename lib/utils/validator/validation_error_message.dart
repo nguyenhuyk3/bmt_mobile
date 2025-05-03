@@ -1,12 +1,12 @@
 import 'package:rent_transport_fe/global/other.dart';
-import 'package:rent_transport_fe/models/authentication/login.dart';
+import 'package:rent_transport_fe/models/authentication/export.dart';
 
 class ValidationErrorMessage {
-  static String? getAccountErrorMessage({AccountValidationError? error}) {
+  static String? getAccountErrorMessage({EmailValidationError? error}) {
     switch (error) {
-      case AccountValidationError.empty:
+      case EmailValidationError.empty:
         return "Email không được để trống!!";
-      case AccountValidationError.invalid:
+      case EmailValidationError.invalid:
         return "Email không hợp lệ!!";
       default:
         return null;

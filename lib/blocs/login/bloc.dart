@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
-import 'package:rent_transport_fe/models/authentication/login.dart';
+import 'package:rent_transport_fe/models/authentication/export.dart';
 
 part 'event.dart';
 part 'state.dart';
@@ -24,12 +24,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginAccountChanged event,
     Emitter<LoginState> emit,
   ) {
-    final account = Account.dirty(event.account);
+    final email = Email.dirty(event.email);
 
     emit(
       state.copyWith(
-        account: account,
-        isValid: Formz.validate([state.password, account]),
+        email: email,
+        isValid: Formz.validate([state.password, email]),
       ),
     );
   }
@@ -43,7 +43,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(
       state.copyWith(
         password: password,
-        isValid: Formz.validate([password, state.account]),
+        isValid: Formz.validate([password, state.email]),
       ),
     );
   }
@@ -57,7 +57,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
         await _authenticationRepository.logIn(
-          username: state.account.value,
+          username: state.email.value,
           password: state.password.value,
         );
 

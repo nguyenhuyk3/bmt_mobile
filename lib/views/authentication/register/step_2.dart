@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/bloc/bloc.export.dart';
+import 'package:rent_transport_fe/blocs/blocs.export.dart';
 import 'package:rent_transport_fe/global/other.dart';
 import 'package:rent_transport_fe/utils/utils.export.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';

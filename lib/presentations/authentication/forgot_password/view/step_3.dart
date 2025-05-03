@@ -53,7 +53,8 @@ class _PasswordInput extends StatelessWidget {
               onChanged: (password) {
                 final currentState = context.read<ForgotPasswordBloc>().state;
                 final confirmedPassword =
-                    (currentState as ForgotPasswordStepThree?)?.confirmedPassword ??
+                    (currentState as ForgotPasswordStepThree?)
+                        ?.confirmedPassword ??
                     '';
 
                 context.read<ForgotPasswordBloc>().add(
@@ -117,7 +118,10 @@ class _ConfirmedPasswordInput extends StatelessWidget {
               onChanged: (confirmedPassword) {
                 final currentState = context.read<ForgotPasswordBloc>().state;
                 final password =
-                    (currentState as ForgotPasswordStepThree?)?.password.value ?? '';
+                    (currentState as ForgotPasswordStepThree?)
+                        ?.password
+                        .value ??
+                    '';
 
                 context.read<ForgotPasswordBloc>().add(
                   ForgotPasswordPasswordChanged(
@@ -140,7 +144,10 @@ class _ConfirmedPasswordInput extends StatelessWidget {
                   },
                 ),
                 labelText: 'Xác nhận mật khẩu',
-                errorText: error.isEmpty ? null : error,
+                errorText:
+                    (error.isEmpty || error == PASSWORD_CAN_NOT_BE_BLANK)
+                        ? null
+                        : error,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: const BorderSide(color: Colors.red, width: 1),
@@ -160,16 +167,19 @@ class _NextStepButton extends StatelessWidget {
     return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
       listener: (context, state) {
         if (state is ForgotPasswordSuccess) {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => AppView()),
+            (route) => false,
           );
         }
       },
       child: ElevatedButton(
         key: const Key('forgotPassword_nextStepThree_raisedButton'),
         onPressed:
-            () => context.read<ForgotPasswordBloc>().add(ForgotPasswordSubmitted()),
+            () => context.read<ForgotPasswordBloc>().add(
+              ForgotPasswordSubmitted(),
+            ),
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
           shape: WidgetStateProperty.all(

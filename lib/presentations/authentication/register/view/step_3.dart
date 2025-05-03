@@ -140,7 +140,10 @@ class _ConfirmedPasswordInput extends StatelessWidget {
                   },
                 ),
                 labelText: 'Xác nhận mật khẩu',
-                errorText: error.isEmpty ? null : error,
+                errorText:
+                    (error.isEmpty || error == PASSWORD_CAN_NOT_BE_BLANK)
+                        ? null
+                        : error,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: const BorderSide(color: Colors.red, width: 1),

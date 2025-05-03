@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/presentations/authentication/forgot_password/bloc/bloc.dart';
+import 'package:rent_transport_fe/presentations/authentication/forgot_password/view/step_2.dart';
 import 'package:rent_transport_fe/presentations/widgets/layouts/authentication/export.dart';
 
 class StepOneForgotPasswordPage extends StatelessWidget {
@@ -69,7 +70,7 @@ class _NextStepButton extends StatelessWidget {
               builder:
                   (_) => BlocProvider.value(
                     value: context.read<ForgotPasswordBloc>(),
-                    child: StepOneForgotPasswordPage(),
+                    child: StepTwoForgotPasswordPage(),
                   ),
             ),
           );

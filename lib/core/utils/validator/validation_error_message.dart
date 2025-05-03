@@ -1,3 +1,4 @@
+import 'package:rent_transport_fe/core/constants/error.dart';
 import 'package:rent_transport_fe/core/constants/others.dart';
 import 'package:rent_transport_fe/data/models/authentication/export.dart';
 
@@ -18,7 +19,7 @@ class ValidationErrorMessage {
   }) {
     switch (error) {
       case PasswordValidationError.empty:
-        return "Mật khẩu không được để trống!!";
+        return PASSWORD_CAN_NOT_BE_BLANK;
       case PasswordValidationError.tooShort:
         return "Mật khẩu không được ngắn hơn $MINIMUM_LENGTH_FOR_PASSWORD kí tự!!";
       default:

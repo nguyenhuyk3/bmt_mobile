@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/presentations/authentication/bloc/bloc.dart';
+import 'package:rt_mobile/presentations/authentication/bloc/bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

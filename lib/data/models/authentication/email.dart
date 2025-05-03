@@ -5,7 +5,6 @@ enum EmailValidationError { empty, invalid }
 // FormzInput<Value, Error>
 class Email extends FormzInput<String, EmailValidationError> {
   // Constructors
-  
   // pure means nothing entered (initial state)
   const Email.pure() : super.pure('');
   // dirty means what the user entered (whether true or false)

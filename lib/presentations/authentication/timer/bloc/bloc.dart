@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/core/constants/others.dart';
-import 'package:rent_transport_fe/core/utils/utils.export.dart';
+import 'package:rt_mobile/core/constants/others.dart';
+import 'package:rt_mobile/core/utils/utils.export.dart';
 
 part 'event.dart';
 part 'state.dart';

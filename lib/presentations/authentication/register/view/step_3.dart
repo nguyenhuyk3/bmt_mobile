@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/core/constants/error.dart';
-import 'package:rent_transport_fe/presentations/authentication/password/bloc/bloc.dart';
-import 'package:rent_transport_fe/presentations/authentication/register/bloc/bloc.dart';
-import 'package:rent_transport_fe/presentations/widgets/layouts/authentication/export.dart';
+import 'package:rt_mobile/core/constants/error.dart';
+import 'package:rt_mobile/presentations/authentication/password/bloc/bloc.dart';
+import 'package:rt_mobile/presentations/authentication/register/bloc/bloc.dart';
+import 'package:rt_mobile/presentations/widgets/layouts/authentication/export.dart';
 
 import 'step_4.dart';
 

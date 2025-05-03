@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent_transport_fe/presentations/authentication/login/view/form.dart';
+import 'package:rt_mobile/presentations/authentication/login/view/form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

@@ -1,6 +1,6 @@
-import 'package:rent_transport_fe/core/constants/error.dart';
-import 'package:rent_transport_fe/core/constants/others.dart';
-import 'package:rent_transport_fe/data/models/authentication/export.dart';
+import 'package:rt_mobile/core/constants/error.dart';
+import 'package:rt_mobile/core/constants/others.dart';
+import 'package:rt_mobile/data/models/authentication/export.dart';
 
 class ValidationErrorMessage {
   static String? getEmailErrorMessage({EmailValidationError? error}) {

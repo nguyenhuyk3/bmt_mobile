@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:authentication_repository/authentication_repository.export.dart';
-import 'package:rent_transport_fe/core/constants/others.dart';
-import 'package:rent_transport_fe/presentations/app/cubit/bottom_nav.dart';
+import 'package:rt_mobile/core/constants/others.dart';
+import 'package:rt_mobile/presentations/app/cubit/bottom_nav.dart';
 
-import 'package:rent_transport_fe/presentations/authentication/bloc/bloc.dart';
-import 'package:rent_transport_fe/presentations/authentication/forgot_password/bloc/bloc.dart';
-import 'package:rent_transport_fe/presentations/authentication/login/bloc/bloc.dart';
-import 'package:rent_transport_fe/presentations/authentication/login/view/login.export.dart';
-import 'package:rent_transport_fe/presentations/authentication/register/bloc/bloc.dart';
+import 'package:rt_mobile/presentations/authentication/bloc/bloc.dart';
+import 'package:rt_mobile/presentations/authentication/forgot_password/bloc/bloc.dart';
+import 'package:rt_mobile/presentations/authentication/login/bloc/bloc.dart';
+import 'package:rt_mobile/presentations/authentication/login/view/export.dart';
+import 'package:rt_mobile/presentations/authentication/register/bloc/bloc.dart';
 import 'package:user_repository/user_repository.export.dart';
 
 import '../presentations/home/page.dart';

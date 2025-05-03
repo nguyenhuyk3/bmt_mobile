@@ -12,11 +12,11 @@ class Otp extends FormzInput<String, OtpValidationError> {
   OtpValidationError? validator(String value) {
     if (value.isEmpty) return OtpValidationError.empty;
 
-    if (value.length != 6 || !RegExp(r'^\d{6}$').hasMatch(value))
-      return OtpValidationError.incorrectSixDigits;
-
     if (RegExp(r'[a-zA-Z]').hasMatch(value))
       return OtpValidationError.noTextAllowed;
+
+    if (value.length != 6 || !RegExp(r'^\d{6}$').hasMatch(value))
+      return OtpValidationError.incorrectSixDigits;
 
     return null;
   }

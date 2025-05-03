@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_transport_fe/blocs/register/bloc.dart';
-import 'package:rent_transport_fe/views/authentication/register/register.layout.dart';
+import 'package:rent_transport_fe/blocs/forgot_password/bloc.dart';
+import 'package:rent_transport_fe/views/authentication/forgot_password/forgot_password.layout.dart';
+import 'package:rent_transport_fe/views/authentication/forgot_password/step_2.dart';
 
-import 'step_2.dart';
-
-class StepOnePage extends StatelessWidget {
-  const StepOnePage({super.key});
+class StepOneForgotPasswordPage extends StatelessWidget {
+  const StepOneForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return RegisterLayout(
+    return ForgotPasswordLayout(
       allowBack: true,
       child: Column(
         children: [
@@ -30,17 +29,18 @@ class StepOnePage extends StatelessWidget {
 class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final error = context.select<RegisterBloc, String>((bloc) {
+    final error = context.select<ForgotPasswordBloc, String>((bloc) {
       final state = bloc.state;
 
-      return state is RegisterError ? state.error : '';
+      return state is ForgotPasswordError ? state.error : '';
     });
 
     return TextField(
-      key: const Key('register_emailInput_textField'),
+      key: const Key('forgot_Password_emailInput_textField'),
       onChanged:
-          (email) =>
-              context.read<RegisterBloc>().add(RegisterEmailChanged(email: email)),
+          (email) => context.read<ForgotPasswordBloc>().add(
+            ForgotPasswordEmailChanged(email: email),
+          ),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email_outlined),
         labelText: 'Email',
@@ -57,15 +57,16 @@ class _EmailInput extends StatelessWidget {
 class _NextStepButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RegisterBloc, RegisterState>(
-      listener: (context, state) {
-        if (state is RegisterStepTwo) {
+    return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+      listener: (context, state) async {
+        if (state is ForgotPasswordStepTwo) {
+          await Future.delayed(Duration(milliseconds: 800));
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder:
                   (_) => BlocProvider.value(
-                    value: context.read<RegisterBloc>(),
+                    value: context.read<ForgotPasswordBloc>(),
                     child: StepTwoPage(),
                   ),
             ),
@@ -75,7 +76,11 @@ class _NextStepButton extends StatelessWidget {
       child: ElevatedButton(
         key: const Key('register_nextStepTwo_raisedButton'),
         onPressed:
-            () => {context.read<RegisterBloc>().add(RegisterEmailSubmitted())},
+            () => {
+              context.read<ForgotPasswordBloc>().add(
+                ForgotPasswordEmailSubmitted(),
+              ),
+            },
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
           shape: WidgetStateProperty.all(

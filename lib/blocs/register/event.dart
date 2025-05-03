@@ -11,7 +11,7 @@ sealed class RegisterEvent extends Equatable {
 class RegisterEmailChanged extends RegisterEvent {
   final String email;
 
-  const RegisterEmailChanged(this.email);
+  const RegisterEmailChanged({required this.email});
 
   @override
   List<Object?> get props => [email];
@@ -23,7 +23,7 @@ class RegisterEmailSubmitted extends RegisterEvent {}
 class RegisterOtpChanged extends RegisterEvent {
   final String otp;
 
-  const RegisterOtpChanged(this.otp);
+  const RegisterOtpChanged({required this.otp});
 
   @override
   List<Object?> get props => [otp];

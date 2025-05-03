@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent_transport_fe/blocs/blocs.export.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
+import 'package:rent_transport_fe/blocs/forgot_password/bloc.dart';
 import 'package:rent_transport_fe/cubits/app/bottom_nav.dart';
 import 'package:rent_transport_fe/global/other.dart';
 import 'package:rent_transport_fe/views/authentication/login/login.export.dart';
@@ -63,6 +64,7 @@ class _MainAppState extends State<MainApp> {
                 ),
           ),
           BlocProvider(create: (_) => RegisterBloc()),
+          BlocProvider(create: (_) => ForgotPasswordBloc())
         ],
         child: AppRouter(),
       ),

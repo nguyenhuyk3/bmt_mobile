@@ -50,7 +50,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         return;
       }
 
-      final error = ValidationErrorMessage.getAccountErrorMessage(
+      final error = ValidationErrorMessage.getEmailErrorMessage(
         error: currentState.email.error,
       );
 

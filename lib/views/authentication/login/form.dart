@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
 import 'package:rent_transport_fe/blocs/blocs.export.dart';
 import 'package:rent_transport_fe/utils/validator/validation_error_message.dart';
+import 'package:rent_transport_fe/views/authentication/forgot_password/step_1.dart';
 import 'package:rent_transport_fe/views/authentication/register/register.export.dart';
 
 class LoginForm extends StatelessWidget {
@@ -70,7 +71,7 @@ class _AccountInput extends StatelessWidget {
         errorText:
             email.isPure
                 ? null
-                : ValidationErrorMessage.getAccountErrorMessage(
+                : ValidationErrorMessage.getEmailErrorMessage(
                   error: email.error,
                 ),
         border: OutlineInputBorder(
@@ -138,7 +139,10 @@ class _ForgotPasswordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/forgot-password');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => StepOneForgotPasswordPage()),
+        );
       },
       child: const Text(
         'Quên mật khẩu?',

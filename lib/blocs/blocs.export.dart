@@ -5,3 +5,5 @@ export 'login/password/bloc.dart';
 
 export 'register/bloc.dart';
 export 'register/timer/bloc.dart';
+
+export 'forgot_password/bloc.dart';

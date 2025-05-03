@@ -2,7 +2,7 @@ import 'package:rent_transport_fe/global/other.dart';
 import 'package:rent_transport_fe/models/authentication/export.dart';
 
 class ValidationErrorMessage {
-  static String? getAccountErrorMessage({EmailValidationError? error}) {
+  static String? getEmailErrorMessage({EmailValidationError? error}) {
     switch (error) {
       case EmailValidationError.empty:
         return "Email không được để trống!!";

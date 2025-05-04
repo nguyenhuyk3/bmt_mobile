@@ -57,7 +57,7 @@ class RegisterStepFour extends RegisterState {
   const RegisterStepFour({
     required this.fullName,
     required this.birthDate,
-    this.sex = 'Nữ',
+    this.sex = 'male',
     this.error = '',
   }) : super(status: FormzSubmissionStatus.inProgress);
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
 

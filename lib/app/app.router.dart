@@ -16,12 +16,12 @@
               switch (state.status) {
                 case AuthenticationStatus.authenticated:
                   _navigator.pushAndRemoveUntil<void>(
-                    HomePage.route(),
+                    HomeScreen.route(),
                     (route) => false,
                   );
                 case AuthenticationStatus.unauthenticated:
                   _navigator.pushAndRemoveUntil<void>(
-                    LoginPage.route(),
+                    LoginScreen.route(),
                     (route) => false,
                   );
                 case AuthenticationStatus.unknown:

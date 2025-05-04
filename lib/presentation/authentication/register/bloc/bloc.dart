@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:rt_mobile/core/constants/error.dart';
 import 'package:rt_mobile/core/constants/others.dart';
+import 'package:rt_mobile/core/utils/convetors/date.dart';
 import 'package:rt_mobile/data/models/models.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
 import 'package:rt_mobile/data/repositories/authentication.dart';
@@ -61,7 +62,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
         switch (response.statusCode) {
           case 409:
-            emit(RegisterError(error: 'Email đang trong trạng thái đăng kí!!'));
+            emit(RegisterError(error: 'Email đã được đăng kí!!'));
             return;
           case 500:
             emit(
@@ -115,7 +116,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
         switch (response.statusCode) {
           case 422:
-            emit(RegisterError(error: 'Mã OTP đã hết hạn!!'));
+            emit(RegisterError(error: 'Mã OTP không đúng!!'));
             return;
           case 200:
             emit(
@@ -239,7 +240,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         'info': {
           'name': currentState.fullName,
           'sex': currentState.sex,
-          'birth_day': currentState.birthDate,
+          'birth_day': convertToDDMMYYYY(currentState.birthDate),
         },
       };
       final response = await authenticationRepository.completeRegistration(
@@ -250,10 +251,24 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
       switch (response.statusCode) {
         case 500:
-          emit(RegisterError(error: 'Có lỗi ở phía máy chủ!!'));
+          emit(
+            RegisterStepFour(
+              fullName: currentState.fullName,
+              birthDate: currentState.birthDate,
+              sex: currentState.sex,
+              error: 'Có lỗi ở phía máy chủ!!',
+            ),
+          );
           return;
         case 400:
-          emit(RegisterError(error: 'Email không hợp lệ!!'));
+          emit(
+            RegisterStepFour(
+              fullName: currentState.fullName,
+              birthDate: currentState.birthDate,
+              sex: currentState.sex,
+              error: 'Yêu cầu không hợp lệ!!',
+            ),
+          );
           return;
         case 200:
           emit(const RegisterSuccess());

@@ -11,7 +11,7 @@ class RegisterService {
     final response = await dio.post(
       '/user_service/auth/register/send_otp',
       data: {'email': email},
-      options: VALIDATE_NON_5XX_STATUS,
+      options: VALIDATE_NON_6XX_STATUS,
     );
 
     return APIReponse(statusCode: response.statusCode);
@@ -24,10 +24,8 @@ class RegisterService {
     final response = await dio.post(
       '/user_service/auth/register/verify_registration_otp',
       data: {'email': email, 'otp': otp},
-      options: VALIDATE_NON_5XX_STATUS,
+      options: VALIDATE_NON_6XX_STATUS,
     );
-
-    logger.i(email + " " + otp);
 
     return APIReponse(statusCode: response.statusCode);
   }
@@ -38,8 +36,10 @@ class RegisterService {
     final response = await dio.post(
       '/user_service/auth/register/complete_registration',
       data: resquest,
-      options: VALIDATE_NON_5XX_STATUS,
+      options: VALIDATE_NON_6XX_STATUS,
     );
+
+    logger.i(response);
 
     return APIReponse(statusCode: response.statusCode);
   }

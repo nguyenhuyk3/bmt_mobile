@@ -11,13 +11,13 @@ final appLogger = app_logger.AppLogger();
 final logger = Logger();
 
 // dio options
-final VALIDATE_NON_5XX_STATUS  = Options(
-  validateStatus: (status) => status != null && status < 500,
+final VALIDATE_NON_6XX_STATUS  = Options(
+  validateStatus: (status) => status != null && status < 600,
 );
 
 // others
 const MINIMUM_LENGTH_FOR_PASSWORD = 8;
 const LENGTH_OF_OTP = 6;
 const TIME_FOR_RESENDING_MAIL = 10;
-const SCREENS = [HomePage(), LoginPage()];
+const SCREENS = [HomeScreen(), LoginScreen()];
 const BASE_URL = 'http://192.168.2.67:8000';

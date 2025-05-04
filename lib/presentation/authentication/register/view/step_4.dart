@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/app/export.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
 
@@ -54,6 +55,7 @@ class _FullNameInput extends StatelessWidget {
           final birthDate = stepFourState?.birthDate ?? '';
           final sex = stepFourState?.sex ?? '';
 
+          logger.i(currentState);
           context.read<RegisterBloc>().add(
             RegisterInformationChanged(
               fullName: fullName,
@@ -166,7 +168,7 @@ class _SexSelection extends StatelessWidget {
         Row(
           children: [
             Radio(
-              value: 'Nam',
+              value: 'female',
               groupValue: sex,
               onChanged: (value) => _updateSex(context, value!),
             ),
@@ -176,7 +178,7 @@ class _SexSelection extends StatelessWidget {
         Row(
           children: [
             Radio(
-              value: 'Nữ',
+              value: 'male',
               groupValue: sex,
               onChanged: (value) => _updateSex(context, value!),
             ),
@@ -219,7 +221,7 @@ class _NextStepButton extends StatelessWidget {
         child: const Padding(
           padding: EdgeInsets.all(4),
           child: Text(
-            'Xác thực mã OTP',
+            'Hoàn thành',
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,

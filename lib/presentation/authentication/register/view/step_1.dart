@@ -1,18 +1,18 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/presentations/authentication/forgot_password/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/authentication/forgot_password/view/step_2.dart';
-import 'package:rt_mobile/presentations/widgets/layouts/authentication/export.dart';
+import 'package:rt_mobile/core/constants/others.dart';
+import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
 
-class StepOneForgotPasswordPage extends StatelessWidget {
-  const StepOneForgotPasswordPage({super.key});
+import 'step_2.dart';
+
+class StepOnePage extends StatelessWidget {
+  const StepOnePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FormScaffold(
-      title: 'Quên mật khẩu',
+      title: 'Đăng kí',
       allowBack: true,
       child: Column(
         children: [
@@ -32,17 +32,17 @@ class StepOneForgotPasswordPage extends StatelessWidget {
 class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final error = context.select<ForgotPasswordBloc, String>((bloc) {
+    final error = context.select<RegisterBloc, String>((bloc) {
       final state = bloc.state;
 
-      return state is ForgotPasswordError ? state.error : '';
+      return state is RegisterError ? state.error : '';
     });
 
     return TextField(
-      key: const Key('forgotPassword_emailInput_textField'),
+      key: const Key('register_emailInput_textField'),
       onChanged:
-          (email) => context.read<ForgotPasswordBloc>().add(
-            ForgotPasswordEmailChanged(email: email),
+          (email) => context.read<RegisterBloc>().add(
+            RegisterEmailChanged(email: email),
           ),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email_outlined),
@@ -60,29 +60,26 @@ class _EmailInput extends StatelessWidget {
 class _NextStepButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
-      listener: (context, state) async {
-        if (state is ForgotPasswordStepTwo) {
-          await Future.delayed(Duration(milliseconds: 800));
+    return BlocListener<RegisterBloc, RegisterState>(
+      listener: (context, state) {
+        if (state is RegisterStepTwo) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder:
                   (_) => BlocProvider.value(
-                    value: context.read<ForgotPasswordBloc>(),
-                    child: StepTwoForgotPasswordPage(),
+                    value: context.read<RegisterBloc>(),
+                    child: StepTwoPage(),
                   ),
             ),
           );
         }
       },
       child: ElevatedButton(
-        key: const Key('forgotPassword_nextStepTwo_raisedButton'),
+        key: const Key('register_nextStepTwo_raisedButton'),
         onPressed:
             () => {
-              context.read<ForgotPasswordBloc>().add(
-                ForgotPasswordEmailSubmitted(),
-              ),
+              context.read<RegisterBloc>().add(RegisterEmailSubmitted()),
             },
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),

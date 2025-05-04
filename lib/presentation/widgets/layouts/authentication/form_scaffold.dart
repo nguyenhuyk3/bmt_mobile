@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rt_mobile/presentation/authentication/login/view/export.dart';
 
 class FormScaffold extends StatelessWidget {
   final Widget child;
@@ -31,19 +32,26 @@ class FormScaffold extends StatelessWidget {
         shadowColor: const Color(0xFFEFF3EA),
         backgroundColor: const Color(0xFFFBFBFB),
         automaticallyImplyLeading: allowBack,
-        leading: allowBack
-            ? Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.black87,
-                    size: 20,
+        leading:
+            allowBack
+                ? Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.black87,
+                      size: 20,
+                    ),
+                    onPressed:
+                        () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        ),
                   ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              )
-            : null,
+                )
+                : null,
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(0.1),
           child: Divider(height: 0.1, thickness: 0.1, color: Colors.grey),

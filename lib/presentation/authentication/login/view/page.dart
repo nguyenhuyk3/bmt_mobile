@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rt_mobile/presentations/authentication/login/view/form.dart';
+import 'package:rt_mobile/presentation/authentication/login/view/form.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const LoginPage());
+    return MaterialPageRoute<void>(builder: (_) => const LoginScreen());
   }
 
   @override

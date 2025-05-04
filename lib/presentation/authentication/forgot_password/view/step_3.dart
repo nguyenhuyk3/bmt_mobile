@@ -2,20 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:rt_mobile/app/export.dart';
 import 'package:rt_mobile/core/constants/error.dart';
-import 'package:rt_mobile/presentations/authentication/password/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/authentication/register/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/widgets/layouts/authentication/export.dart';
+import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authentication/password/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
 
-import 'step_4.dart';
-
-class StepThreePage extends StatelessWidget {
-  const StepThreePage({super.key});
+class StepThreeForgotPasswordPage extends StatelessWidget {
+  const StepThreeForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FormScaffold(
-      title: 'Đăng kí',
+      title: 'Quên mật khẩu',
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -35,10 +35,10 @@ class StepThreePage extends StatelessWidget {
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final error = context.select<RegisterBloc, String>((bloc) {
+    final error = context.select<ForgotPasswordBloc, String>((bloc) {
       final state = bloc.state;
 
-      return state is RegisterStepThree ? state.error : '';
+      return state is ForgotPasswordStepThree ? state.error : '';
     });
 
     return BlocProvider(
@@ -49,15 +49,16 @@ class _PasswordInput extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.1,
             child: TextField(
-              key: const Key('register_passwordInput_textField'),
+              key: const Key('forgotPassword_passwordInput_textField'),
               onChanged: (password) {
-                final currentState = context.read<RegisterBloc>().state;
+                final currentState = context.read<ForgotPasswordBloc>().state;
                 final confirmedPassword =
-                    (currentState as RegisterStepThree?)?.confirmedPassword ??
+                    (currentState as ForgotPasswordStepThree?)
+                        ?.confirmedPassword ??
                     '';
 
-                context.read<RegisterBloc>().add(
-                  RegisterPasswordChanged(
+                context.read<ForgotPasswordBloc>().add(
+                  ForgotPasswordPasswordChanged(
                     password: password,
                     confirmedPassword: confirmedPassword,
                   ),
@@ -99,10 +100,10 @@ class _PasswordInput extends StatelessWidget {
 class _ConfirmedPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final error = context.select<RegisterBloc, String>((bloc) {
+    final error = context.select<ForgotPasswordBloc, String>((bloc) {
       final currentState = bloc.state;
 
-      return currentState is RegisterStepThree ? currentState.error : '';
+      return currentState is ForgotPasswordStepThree ? currentState.error : '';
     });
 
     return BlocProvider(
@@ -113,14 +114,17 @@ class _ConfirmedPasswordInput extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.1,
             child: TextField(
-              key: const Key('register_confirmedPasswordInput_textField'),
+              key: const Key('forgotPassword_confirmedPasswordInput_textField'),
               onChanged: (confirmedPassword) {
-                final currentState = context.read<RegisterBloc>().state;
+                final currentState = context.read<ForgotPasswordBloc>().state;
                 final password =
-                    (currentState as RegisterStepThree?)?.password.value ?? '';
+                    (currentState as ForgotPasswordStepThree?)
+                        ?.password
+                        .value ??
+                    '';
 
-                context.read<RegisterBloc>().add(
-                  RegisterPasswordChanged(
+                context.read<ForgotPasswordBloc>().add(
+                  ForgotPasswordPasswordChanged(
                     password: password,
                     confirmedPassword: confirmedPassword,
                   ),
@@ -160,25 +164,22 @@ class _ConfirmedPasswordInput extends StatelessWidget {
 class _NextStepButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RegisterBloc, RegisterState>(
+    return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
       listener: (context, state) {
-        if (state is RegisterStepFour) {
-          Navigator.pushReplacement(
+        if (state is ForgotPasswordSuccess) {
+          Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-              builder:
-                  (_) => BlocProvider.value(
-                    value: context.read<RegisterBloc>(),
-                    child: StepFourPage(),
-                  ),
-            ),
+            MaterialPageRoute(builder: (context) => AppView()),
+            (route) => false,
           );
         }
       },
       child: ElevatedButton(
-        key: const Key('register_nextStepThree_raisedButton'),
+        key: const Key('forgotPassword_nextStepThree_raisedButton'),
         onPressed:
-            () => context.read<RegisterBloc>().add(RegisterPasswordSubmitted()),
+            () => context.read<ForgotPasswordBloc>().add(
+              ForgotPasswordSubmitted(),
+            ),
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
           shape: WidgetStateProperty.all(
@@ -194,7 +195,7 @@ class _NextStepButton extends StatelessWidget {
         child: const Padding(
           padding: EdgeInsets.all(4),
           child: Text(
-            'Xác thực mã OTP',
+            'Xác nhận mật khẩu',
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,

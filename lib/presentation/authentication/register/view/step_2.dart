@@ -3,21 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/core/constants/others.dart';
-
 import 'package:rt_mobile/core/utils/utils.export.dart';
-import 'package:rt_mobile/presentations/authentication/forgot_password/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/authentication/timer/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/widgets/layouts/authentication/export.dart';
+import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authentication/timer/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
 
 import 'step_3.dart';
 
-class StepTwoForgotPasswordPage extends StatelessWidget {
-  const StepTwoForgotPasswordPage({super.key});
+class StepTwoPage extends StatelessWidget {
+  const StepTwoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FormScaffold(
-      title: 'Quên mật khẩu',
+      title: 'Đăng kí',
       allowBack: true,
       child: Column(
         children: [
@@ -51,16 +50,15 @@ class StepTwoForgotPasswordPage extends StatelessWidget {
 class _OtpInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final error = context.select<ForgotPasswordBloc, String>((bloc) {
+    final error = context.select<RegisterBloc, String>((bloc) {
       final state = bloc.state;
-      
-      return state is ForgotPasswordError ? state.error : '';
+      return state is RegisterError ? state.error : '';
     });
 
     return TextField(
-      key: const Key('forgotPassword_otpInput_textField'),
+      key: const Key('register_otpInput_textField'),
       onChanged:
-          (otp) => context.read<ForgotPasswordBloc>().add(ForgotPasswordOtpChanged(otp: otp)),
+          (otp) => context.read<RegisterBloc>().add(RegisterOtpChanged(otp: otp)),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email_outlined),
         labelText: 'Otp',
@@ -88,7 +86,7 @@ class _ResendOtpButton extends StatelessWidget {
           final timeLeft = state.duration;
 
           return ElevatedButton(
-            key: const Key('forgotPassword_resendOtp_raisedButton'),
+            key: const Key('register_resendOtp_raisedButton'),
             onPressed:
                 isDisabled
                     ? null
@@ -137,25 +135,25 @@ class _ResendOtpButton extends StatelessWidget {
 class _NextStepButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+    return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
-        if (state is ForgotPasswordStepThree) {
+        if (state is RegisterStepThree) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder:
                   (_) => BlocProvider.value(
-                    value: context.read<ForgotPasswordBloc>(),
-                    child: StepThreeForgotPasswordPage(),
+                    value: context.read<RegisterBloc>(),
+                    child: StepThreePage(),
                   ),
             ),
           );
         }
       },
       child: ElevatedButton(
-        key: const Key('forgotPassword_nextStepThree_raisedButton'),
+        key: const Key('register_nextStepThree_raisedButton'),
         onPressed:
-            () => context.read<ForgotPasswordBloc>().add(ForgotPasswordOtpSubmitted()),
+            () => context.read<RegisterBloc>().add(RegisterOtpSubmitted()),
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
           shape: WidgetStateProperty.all(

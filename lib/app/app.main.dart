@@ -1,18 +1,21 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:authentication_repository/authentication_repository.export.dart';
 import 'package:rt_mobile/core/constants/others.dart';
-import 'package:rt_mobile/presentations/app/cubit/bottom_nav.dart';
+import 'package:rt_mobile/data/repositories/authentication.dart';
+import 'package:rt_mobile/data/services/authentication/register.dart';
+import 'package:rt_mobile/presentation/app/cubit/bottom_nav.dart';
 
-import 'package:rt_mobile/presentations/authentication/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/authentication/forgot_password/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/authentication/login/bloc/bloc.dart';
-import 'package:rt_mobile/presentations/authentication/login/view/export.dart';
-import 'package:rt_mobile/presentations/authentication/register/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authentication/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authentication/login/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authentication/login/view/export.dart';
+import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
 import 'package:user_repository/user_repository.export.dart';
 
-import '../presentations/home/page.dart';
+import '../presentation/home/page.dart';
 
 part 'app.view.dart';
 part 'app.router.dart';
@@ -27,6 +30,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   late final AuthenticationRepository _authenticationRepository;
   late final UserRepository _userRepository;
+  late final AuthenticationRepositoryy _authenticationRepositoryy;
 
   @override
   void initState() {
@@ -34,6 +38,11 @@ class _MainAppState extends State<MainApp> {
 
     _authenticationRepository = AuthenticationRepository();
     _userRepository = UserRepository();
+    _authenticationRepositoryy = AuthenticationRepositoryy(
+      registerService: RegisterService(
+        dio: Dio(BaseOptions(baseUrl: BASE_URL)),
+      ),
+    );
   }
 
   @override
@@ -67,8 +76,13 @@ class _MainAppState extends State<MainApp> {
                   authenticationRepository: _authenticationRepository,
                 ),
           ),
-          BlocProvider(create: (_) => RegisterBloc()),
-          BlocProvider(create: (_) => ForgotPasswordBloc())
+          BlocProvider(
+            create:
+                (_) => RegisterBloc(
+                  authenticationRepository: _authenticationRepositoryy,
+                ),
+          ),
+          BlocProvider(create: (_) => ForgotPasswordBloc()),
         ],
         child: AppRouter(),
       ),

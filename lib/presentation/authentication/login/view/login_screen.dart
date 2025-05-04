@@ -36,6 +36,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w400,
         ),
       ),
+      automaticallyImplyLeading: false,
       centerTitle: true,
       elevation: 0.7,
       shadowColor: Color(0xFFEFF3EA),

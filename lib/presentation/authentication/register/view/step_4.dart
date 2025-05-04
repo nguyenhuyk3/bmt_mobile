@@ -55,7 +55,6 @@ class _FullNameInput extends StatelessWidget {
           final birthDate = stepFourState?.birthDate ?? '';
           final sex = stepFourState?.sex ?? '';
 
-          logger.i(currentState);
           context.read<RegisterBloc>().add(
             RegisterInformationChanged(
               fullName: fullName,

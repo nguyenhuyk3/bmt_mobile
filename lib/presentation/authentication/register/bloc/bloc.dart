@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:rt_mobile/core/constants/error.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/date.dart';
 import 'package:rt_mobile/data/models/models.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
@@ -30,6 +29,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterPasswordSubmitted>(_onPasswordSubmitted);
     on<RegisterInformationChanged>(_onInformationChanged);
     on<RegisterSubmitted>(_onRegisterSubmitted);
+    on<RegisterReset>(_onRegisterReset);
   }
 
   Future<void> _onEmailChanged(
@@ -247,8 +247,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         request: request,
       );
 
-      logger.i(request);
-
       switch (response.statusCode) {
         case 500:
           emit(
@@ -280,5 +278,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           );
       }
     }
+  }
+
+  FutureOr<void> _onRegisterReset(
+    RegisterReset event,
+    Emitter<RegisterState> emit,
+  ) {
+    emit(RegisterInitial());
   }
 }

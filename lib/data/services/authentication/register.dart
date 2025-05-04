@@ -39,8 +39,6 @@ class RegisterService {
       options: VALIDATE_NON_6XX_STATUS,
     );
 
-    logger.i(response);
-
     return APIReponse(statusCode: response.statusCode);
   }
 }

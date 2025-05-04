@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
@@ -5,11 +7,15 @@ import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dar
 
 import 'step_2.dart';
 
-class StepOnePage extends StatelessWidget {
-  const StepOnePage({super.key});
+class StepOneRegistratonPage extends StatelessWidget {
+  const StepOneRegistratonPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<RegisterBloc>().add(RegisterReset());
+    });
+
     return FormScaffold(
       title: 'Đăng kí',
       allowBack: true,
@@ -17,9 +23,7 @@ class StepOnePage extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
           _EmailInput(),
-
           const Spacer(),
-
           _NextStepButton(),
           const SizedBox(height: 30),
         ],
@@ -77,9 +81,7 @@ class _NextStepButton extends StatelessWidget {
       child: ElevatedButton(
         key: const Key('register_nextStepTwo_raisedButton'),
         onPressed:
-            () => {
-              context.read<RegisterBloc>().add(RegisterEmailSubmitted()),
-            },
+            () => {context.read<RegisterBloc>().add(RegisterEmailSubmitted())},
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
           shape: WidgetStateProperty.all(

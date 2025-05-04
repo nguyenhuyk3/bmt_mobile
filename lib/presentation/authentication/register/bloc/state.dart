@@ -80,6 +80,8 @@ class RegisterSuccess extends RegisterState {
   const RegisterSuccess() : super(status: FormzSubmissionStatus.success);
 }
 
+
+
 // class RegisterCompleted extends RegisterState {
 //   // Step 1
 //   final String email;

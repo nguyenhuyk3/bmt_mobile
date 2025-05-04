@@ -9,8 +9,8 @@ import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dar
 
 import 'step_4.dart';
 
-class StepThreePage extends StatelessWidget {
-  const StepThreePage({super.key});
+class StepThreeRegistrationPage extends StatelessWidget {
+  const StepThreeRegistrationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +169,7 @@ class _NextStepButton extends StatelessWidget {
               builder:
                   (_) => BlocProvider.value(
                     value: context.read<RegisterBloc>(),
-                    child: StepFourPage(),
+                    child: StepFourRegistrationPage(),
                   ),
             ),
           );

@@ -68,3 +68,5 @@ class RegisterInformationChanged extends RegisterEvent {
 }
 
 class RegisterSubmitted extends RegisterEvent {}
+
+class RegisterReset extends RegisterEvent {}

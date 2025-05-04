@@ -58,7 +58,8 @@ class _OtpInput extends StatelessWidget {
     return TextField(
       key: const Key('register_otpInput_textField'),
       onChanged:
-          (otp) => context.read<RegisterBloc>().add(RegisterOtpChanged(otp: otp)),
+          (otp) =>
+              context.read<RegisterBloc>().add(RegisterOtpChanged(otp: otp)),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email_outlined),
         labelText: 'Otp',

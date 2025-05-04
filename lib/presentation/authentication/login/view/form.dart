@@ -171,7 +171,9 @@ class _RegisterButton extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => StepOnePage()),
+              MaterialPageRoute(
+                builder: (context) => const StepOneRegistratonPage(),
+              ),
             );
           },
           child: const Text(

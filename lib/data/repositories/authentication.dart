@@ -1,10 +1,16 @@
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/models.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
+import 'package:rt_mobile/data/services/authentication/session.dart';
 
 class AuthenticationRepositoryy {
   final RegisterService registerService;
+  final SessionService sessionService;
 
-  AuthenticationRepositoryy({required this.registerService});
+  AuthenticationRepositoryy({
+    required this.registerService,
+    required this.sessionService,
+  });
 
   Future<APIReponse> sendRegistrationOtp({required String email}) {
     return registerService.sendRegistrationOtp(email: email);
@@ -21,5 +27,23 @@ class AuthenticationRepositoryy {
     required Map<String, dynamic> request,
   }) {
     return registerService.completeRegistration(resquest: request);
+  }
+
+  Future<APIReponse> logIn({
+    required String email,
+    required String password,
+  }) async {
+    final response = await sessionService.logIn(
+      email: email,
+      password: password,
+    );
+
+    logger.i(response.data[ACCESS_TOKEN]);
+    logger.i(response.data[REFRESH_TOKEN]);
+
+    storage.write(ACCESS_TOKEN, response.data[ACCESS_TOKEN]);
+    storage.write(REFRESH_TOKEN, response.data[REFRESH_TOKEN]);
+
+    return APIReponse(statusCode: response.statusCode);
   }
 }

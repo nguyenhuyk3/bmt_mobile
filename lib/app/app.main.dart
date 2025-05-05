@@ -6,6 +6,7 @@ import 'package:authentication_repository/authentication_repository.export.dart'
 import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/repositories/authentication.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
+import 'package:rt_mobile/data/services/authentication/session.dart';
 import 'package:rt_mobile/presentation/app/cubit/bottom_nav.dart';
 
 import 'package:rt_mobile/presentation/authentication/bloc/bloc.dart';
@@ -36,12 +37,13 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
 
+    final dioClient = Dio(BaseOptions(baseUrl: BASE_URL));
+
     _authenticationRepository = AuthenticationRepository();
     _userRepository = UserRepository();
     _authenticationRepositoryy = AuthenticationRepositoryy(
-      registerService: RegisterService(
-        dio: Dio(BaseOptions(baseUrl: BASE_URL)),
-      ),
+      registerService: RegisterService(dio: dioClient),
+      sessionService: SessionService(dio: dioClient),
     );
   }
 
@@ -58,34 +60,32 @@ class _MainAppState extends State<MainApp> {
       RepositoryProvider is a Flutter BLoC "InheritableWidget",
       used to provide a repository for the child widget tree.
     */
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            lazy: false,
-            create:
-                (_) => AuthenticationBloc(
-                  authenticationRepository: _authenticationRepository,
-                  userRepository: _userRepository,
-                )..add(AuthenticationSubscriptionRequested()),
-          ),
-          BlocProvider(
-            create:
-                (_) => LoginBloc(
-                  authenticationRepository: _authenticationRepository,
-                ),
-          ),
-          BlocProvider(
-            create:
-                (_) => RegisterBloc(
-                  authenticationRepository: _authenticationRepositoryy,
-                ),
-          ),
-          BlocProvider(create: (_) => ForgotPasswordBloc()),
-        ],
-        child: AppRouter(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          lazy: false,
+          create:
+              (_) => AuthenticationBloc(
+                authenticationRepository: _authenticationRepository,
+                userRepository: _userRepository,
+              )..add(AuthenticationSubscriptionRequested()),
+        ),
+        BlocProvider(
+          create:
+              (_) => LoginBloc(
+                authenticationRepositoryy: _authenticationRepositoryy,
+                authenticationRepository: _authenticationRepository,
+              ),
+        ),
+        BlocProvider(
+          create:
+              (_) => RegisterBloc(
+                authenticationRepository: _authenticationRepositoryy,
+              ),
+        ),
+        BlocProvider(create: (_) => ForgotPasswordBloc()),
+      ],
+      child: AppRouter(),
     );
   }
 }

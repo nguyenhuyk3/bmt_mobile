@@ -3,12 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/app/export.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
 
-class StepFourPage extends StatelessWidget {
-  const StepFourPage({super.key});
+class StepFourRegistrationPage extends StatelessWidget {
+  const StepFourRegistrationPage({super.key});
 
   @override
   Widget build(BuildContext context) {

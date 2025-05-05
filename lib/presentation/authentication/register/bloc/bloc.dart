@@ -66,7 +66,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             return;
           case 500:
             emit(
-              RegisterError(error: 'Xin lỗi bạn vì có lỗi ở phía máy chủ!!'),
+              RegisterError(error: 'Có lỗi ở phía máy chủ!!'),
             );
             return;
           case 200:

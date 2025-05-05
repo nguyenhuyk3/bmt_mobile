@@ -72,7 +72,7 @@ class _NextStepButton extends StatelessWidget {
               builder:
                   (_) => BlocProvider.value(
                     value: context.read<RegisterBloc>(),
-                    child: StepTwoPage(),
+                    child: StepTwoRegistrationPage(),
                   ),
             ),
           );

@@ -9,7 +9,10 @@ class APIReponse {
     this.data = const {},
   });
 
-  factory APIReponse.fromJson(Map<String, dynamic> json) {
+  bool get isSuccess =>
+      statusCode != null && statusCode! >= 200 && statusCode! < 300;
+
+  factory APIReponse.fromJson({required Map<String, dynamic> json}) {
     return APIReponse(
       statusCode: json['status_code'],
       message: json['message'] ?? "",

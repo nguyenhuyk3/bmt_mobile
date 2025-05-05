@@ -5,20 +5,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:authentication_repository/authentication_repository.export.dart';
 import 'package:rt_mobile/data/models/authentication/export.dart';
+import 'package:rt_mobile/data/repositories/authentication.dart';
 
 part 'event.dart';
 part 'state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required AuthenticationRepository authenticationRepository})
-    : _authenticationRepository = authenticationRepository,
-      super(const LoginState()) {
+  LoginBloc({
+    required AuthenticationRepository authenticationRepository,
+    required AuthenticationRepositoryy authenticationRepositoryy,
+  }) : _authenticationRepository = authenticationRepository,
+       _authenticationRepositoryy = authenticationRepositoryy,
+       super(const LoginState()) {
     on<LoginAccountChanged>(_onUsernameChanged);
     on<LoginPasswordChanged>(_onPasswordChanged);
     on<LoginSubmitted>(_onSubmitted);
   }
 
   final AuthenticationRepository _authenticationRepository;
+  final AuthenticationRepositoryy _authenticationRepositoryy;
 
   FutureOr<void> _onUsernameChanged(
     LoginAccountChanged event,
@@ -56,10 +61,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
       try {
-        await _authenticationRepository.logIn(
-          username: state.email.value,
+        final response = await _authenticationRepositoryy.logIn(
+          email: state.email.value,
           password: state.password.value,
         );
+
+        switch (response.statusCode) {
+          case 500:
+          case 200:
+        }
 
         emit(state.copyWith(status: FormzSubmissionStatus.success));
       } catch (_) {

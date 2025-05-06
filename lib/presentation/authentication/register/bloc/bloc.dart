@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:rt_mobile/core/constants/error.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/date.dart';
 import 'package:rt_mobile/data/models/models.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
@@ -65,9 +66,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             emit(RegisterError(error: 'Email đã được đăng kí!!'));
             return;
           case 500:
-            emit(
-              RegisterError(error: 'Có lỗi ở phía máy chủ!!'),
-            );
+            emit(RegisterError(error: 'Có lỗi ở phía máy chủ!!'));
             return;
           case 200:
             _email = currentState.email.value;

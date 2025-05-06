@@ -5,3 +5,4 @@ const CONFIRMATION_PASSWORD_MISMATCH_ERROR = 'Mật khẩu xác nhận không kh
 const EMPTY_CONFIRMED_PASSWORD_ERROR =
     'Mật khẩu xác nhận không được bỏ trống!!';
 const EMPTY_FULL_NAME_ERROR = 'Họ và tên không được bỏ trống!!';
+const SERVER_ERROR = 'Có lỗi ở phía server!!';

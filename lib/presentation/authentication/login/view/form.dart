@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
+import 'package:rt_mobile/core/utils/export.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/view/export.dart';
 import 'package:rt_mobile/presentation/authentication/login/bloc/bloc.dart';
@@ -16,9 +17,17 @@ class LoginForm extends StatelessWidget {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status.isFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(const SnackBar(content: Text('Đăng nhập thất bại')));
+          showwCustomSnackBar(
+            context: context,
+            isSuccess: false,
+            message: 'Đăng nhập thất bại!!',
+          );
+        } else if (state.status.isSuccess) {
+          showwCustomSnackBar(
+            context: context,
+            isSuccess: true,
+            message: 'Đăng nhập thành công!!',
+          );
         }
       },
       child: Column(
@@ -26,7 +35,7 @@ class LoginForm extends StatelessWidget {
         children: [
           // Information fields
           const SizedBox(height: 20),
-          _AccountInput(),
+          _EmailInput(),
           const SizedBox(height: 20),
           _PasswordInput(),
 
@@ -56,21 +65,22 @@ class LoginForm extends StatelessWidget {
   }
 }
 
-class _AccountInput extends StatelessWidget {
+class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final email = context.select((LoginBloc bloc) => bloc.state.email);
+    final error = context.select((LoginBloc bloc) => bloc.state.error);
 
     return TextField(
       key: const Key('loginForm_accountInput_textField'),
       onChanged: (email) {
-        context.read<LoginBloc>().add(LoginAccountChanged(email: email));
+        context.read<LoginBloc>().add(LoginEmailChanged(email: email));
       },
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.email_outlined),
         labelText: 'Tài khoản',
         errorText:
-            email.isPure
+            error.isEmpty
                 ? null
                 : ValidationErrorMessage.getEmailErrorMessage(
                   error: email.error,
@@ -88,6 +98,7 @@ class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final password = context.select((LoginBloc bloc) => bloc.state.password);
+    final error = context.select((LoginBloc bloc) => bloc.state.error);
 
     return BlocProvider(
       create: (context) => PasswordBloc(),
@@ -117,7 +128,7 @@ class _PasswordInput extends StatelessWidget {
                 ),
                 labelText: 'Mật khẩu',
                 errorText:
-                    password.isPure
+                    error.isEmpty
                         ? null
                         : ValidationErrorMessage.getPasswordErrorMessage(
                           error: password.error,
@@ -200,12 +211,12 @@ class _LoginButton extends StatelessWidget {
 
     // if (isInProgressOrSuccess) return const CircularProgressIndicator();
 
-    final isValid = context.select((LoginBloc bloc) => bloc.state.isValid);
+    final error = context.select((LoginBloc bloc) => bloc.state.error);
 
     return ElevatedButton(
       key: const Key('loginForm_continue_raisedButton'),
       onPressed:
-          isValid
+          error.isEmpty
               ? () => context.read<LoginBloc>().add(const LoginSubmitted())
               : null,
       style: ButtonStyle(

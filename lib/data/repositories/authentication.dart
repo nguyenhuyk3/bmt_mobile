@@ -38,9 +38,6 @@ class AuthenticationRepositoryy {
       password: password,
     );
 
-    logger.i(response.data[ACCESS_TOKEN]);
-    logger.i(response.data[REFRESH_TOKEN]);
-
     storage.write(ACCESS_TOKEN, response.data[ACCESS_TOKEN]);
     storage.write(REFRESH_TOKEN, response.data[REFRESH_TOKEN]);
 

@@ -27,7 +27,7 @@ packages:
   authentication_repository:
     dependency: "direct main"
     description:
-      path: "packages/authentication_repository"
+      path: "packages/authorization_repository"
       relative: true
     source: path
     version: "1.0.0"

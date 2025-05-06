@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/data/repositories/authentication.dart';
+import 'package:rt_mobile/presentation/authentication/login/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/form.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,15 +13,16 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFFBFBFB),
-      // Prevent UI from being pushed up
-      // I got this when I clicked on the password input
-      resizeToAvoidBottomInset: false,
-      appBar: _AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: const LoginForm(),
+    return BlocProvider(
+      create:
+          (context) => LoginBloc(
+            authenticationRepository: context.read<AuthenticationRepository>(),
+          ),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFFBFBFB),
+        resizeToAvoidBottomInset: false,
+        appBar: _AppBar(),
+        body: const Padding(padding: EdgeInsets.all(12), child: LoginForm()),
       ),
     );
   }

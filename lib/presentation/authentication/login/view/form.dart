@@ -54,7 +54,7 @@ class LoginForm extends StatelessWidget {
           ),
 
           const SizedBox(height: 18),
-          _RegisterButton(),
+          _RegistrationButton(),
 
           Spacer(),
 
@@ -168,7 +168,7 @@ class _ForgotPasswordButton extends StatelessWidget {
   }
 }
 
-class _RegisterButton extends StatelessWidget {
+class _RegistrationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/presentation/authentication/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/authorization/bloc/bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -48,22 +48,22 @@ class _LogoutButton extends StatelessWidget {
     return ElevatedButton(
       child: const Text('Đăng xuất'),
       onPressed: () {
-        context.read<AuthenticationBloc>().add(AuthenticationLogoutPressed());
+        context.read<AuthorizationBloc>().add(AuthorizationLogoutPressed());
       },
     );
   }
 }
 
-class _UserId extends StatelessWidget {
-  const _UserId();
+class _AccessToken extends StatelessWidget {
+  const _AccessToken();
 
   @override
   Widget build(BuildContext context) {
-    final userId = context.select(
-      (AuthenticationBloc bloc) => bloc.state.user.id,
+    final accessToken = context.select(
+      (AuthorizationBloc bloc) => bloc.state.accessToken,
     );
 
-    return Text('UserID: $userId');
+    return Text('Access Token: $accessToken');
   }
 }
 
@@ -75,7 +75,7 @@ class _Header extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       decoration: const BoxDecoration(
-        color: Color(0xFFD8F3DC), // Màu nền xanh nhạt
+        color: Color(0xFFD8F3DC),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20),
           bottomRight: Radius.circular(20),

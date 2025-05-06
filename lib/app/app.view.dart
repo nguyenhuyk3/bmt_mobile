@@ -10,12 +10,30 @@ class AppView extends StatelessWidget {
       child: BlocBuilder<BottomNavCubit, int>(
         builder: (context, selectedIndex) {
           return Scaffold(
-            body: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (child, animation) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              child: SCREENS[selectedIndex],
+            body: IndexedStack(
+              index: selectedIndex,
+              children: [
+                // Home Tab with its own Navigator
+                Navigator(
+                  key: GlobalKey<NavigatorState>(),
+                  onGenerateRoute: (settings) {
+                    return MaterialPageRoute(
+                      builder: (_) => SCREENS[0],
+                      settings: settings,
+                    );
+                  },
+                ),
+                // Profile Tab with its own Navigator
+                Navigator(
+                  key: GlobalKey<NavigatorState>(),
+                  onGenerateRoute: (settings) {
+                    return MaterialPageRoute(
+                      builder: (_) => SCREENS[1],
+                      settings: settings,
+                    );
+                  },
+                ),
+              ],
             ),
             bottomNavigationBar: BottomNavigationBar(
               items: const [

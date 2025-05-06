@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:authentication_repository/authentication_repository.export.dart';
 import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
 import 'package:rt_mobile/data/models/authentication/export.dart';
@@ -13,19 +12,15 @@ part 'event.dart';
 part 'state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({
-    required AuthenticationRepository authenticationRepository,
-    required AuthenticationRepositoryy authenticationRepositoryy,
-  }) : _authenticationRepository = authenticationRepository,
-       _authenticationRepositoryy = authenticationRepositoryy,
-       super(const LoginState()) {
+  LoginBloc({required AuthenticationRepository authenticationRepository})
+    : _authenticationRepository = authenticationRepository,
+      super(const LoginState()) {
     on<LoginEmailChanged>(_onUsernameChanged);
     on<LoginPasswordChanged>(_onPasswordChanged);
     on<LoginSubmitted>(_onSubmitted);
   }
 
   final AuthenticationRepository _authenticationRepository;
-  final AuthenticationRepositoryy _authenticationRepositoryy;
 
   FutureOr<void> _onUsernameChanged(
     LoginEmailChanged event,
@@ -68,7 +63,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
     try {
-      final response = await _authenticationRepositoryy.logIn(
+      final response = await _authenticationRepository.logIn(
         email: state.email.value,
         password: state.password.value,
       );

@@ -11,20 +11,20 @@
     Widget build(BuildContext context) {
       return MaterialApp(
         builder: (context, child) {
-          return BlocListener<AuthenticationBloc, AuthenticationState>(
+          return BlocListener<AuthorizationBloc, AuthorizationState>(
             listener: (context, state) {
               switch (state.status) {
-                case AuthenticationStatus.authenticated:
+                case AuthorizationStatus.authorized:
                   _navigator.pushAndRemoveUntil<void>(
                     HomeScreen.route(),
                     (route) => false,
                   );
-                case AuthenticationStatus.unauthenticated:
+                case AuthorizationStatus.unauthorized:
                   _navigator.pushAndRemoveUntil<void>(
                     LoginScreen.route(),
                     (route) => false,
                   );
-                case AuthenticationStatus.unknown:
+                case AuthorizationStatus.unknown:
                   break;
               }
             },

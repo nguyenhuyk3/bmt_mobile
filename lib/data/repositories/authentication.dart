@@ -3,11 +3,11 @@ import 'package:rt_mobile/data/models/models.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
 import 'package:rt_mobile/data/services/authentication/session.dart';
 
-class AuthenticationRepositoryy {
+class AuthenticationRepository {
   final RegisterService registerService;
   final SessionService sessionService;
 
-  AuthenticationRepositoryy({
+  AuthenticationRepository({
     required this.registerService,
     required this.sessionService,
   });

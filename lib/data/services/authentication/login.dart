@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/models.dart';
 
-class SessionService {
+class LoginService {
   final Dio dio;
 
-  SessionService({required this.dio});
+  LoginService({required this.dio});
 
   Future<APIReponse> logIn({
     required String email,

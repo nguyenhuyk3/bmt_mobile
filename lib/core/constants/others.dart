@@ -16,6 +16,12 @@ final VALIDATE_ALL_STATUSES = Options(
   validateStatus: (status) => status != null && status < 506,
 );
 
+final storage = SecureStorageService();
+
+// storage key
+const ACCESS_TOKEN = 'access_token';
+const REFRESH_TOKEN = 'refresh_token';
+
 // others
 const MINIMUM_LENGTH_FOR_PASSWORD = 8;
 const LENGTH_OF_OTP = 6;
@@ -23,8 +29,3 @@ const TIME_FOR_RESENDING_MAIL = 10;
 const SCREENS = [HomeScreen(), LoginScreen()];
 const BASE_URL = 'http://192.168.2.67:8000';
 
-final storage = SecureStorageService();
-
-// storage key
-const ACCESS_TOKEN = 'access_token';
-const REFRESH_TOKEN = 'refresh_token';

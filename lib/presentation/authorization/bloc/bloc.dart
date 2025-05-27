@@ -4,7 +4,6 @@ import 'package:authentication_repository/authorization_repository.export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rt_mobile/core/constants/others.dart';
-import 'package:user_repository/user_repository.export.dart';
 
 part 'event.dart';
 part 'state.dart';

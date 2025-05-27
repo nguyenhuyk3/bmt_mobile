@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
+
 import 'package:rt_mobile/core/utils/export.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/view/export.dart';
@@ -28,6 +29,7 @@ class LoginForm extends StatelessWidget {
             isSuccess: true,
             message: 'Đăng nhập thành công!!',
           );
+         //  context.read<LoginBloc>().add(LoginEmailChanged(email: email));
         }
       },
       child: Column(

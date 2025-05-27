@@ -5,19 +5,20 @@ void showwCustomSnackBar({
   required String message,
   required bool isSuccess,
 }) {
-  final backgroundColor =
-      isSuccess
-          ? const Color(0xFFD4EDDA) // success background
-          : const Color(0xFFF8D7DA); // error background
-
-  final textColor =
-      isSuccess
-          ? const Color(0xFF155724) // success text
-          : const Color(0xFF721C24); // error text
-
   final snackBar = SnackBar(
-    content: Text(message, style: TextStyle(color: textColor)),
-    backgroundColor: backgroundColor,
+    content: Text(
+      message,
+      style: TextStyle(
+        color:
+            isSuccess
+                ? const Color(0xFF155724) // success text
+                : const Color(0xFF721C24), // error text
+      ),
+    ),
+    backgroundColor:
+        isSuccess
+            ? const Color(0xFFD4EDDA) // success background
+            : const Color(0xFFF8D7DA), // error background,
     behavior: SnackBarBehavior.floating,
     elevation: 4,
     duration: const Duration(seconds: 2),

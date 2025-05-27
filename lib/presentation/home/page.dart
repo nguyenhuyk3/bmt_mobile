@@ -35,7 +35,9 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Center(child: _LogoutButton()),
+      body: Center(
+        child: Column(children: [_LogoutButton(), const _AccessToken()]),
+      ),
     );
   }
 }

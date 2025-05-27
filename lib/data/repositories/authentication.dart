@@ -1,15 +1,15 @@
 import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/models.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
-import 'package:rt_mobile/data/services/authentication/session.dart';
+import 'package:rt_mobile/data/services/authentication/login.dart';
 
 class AuthenticationRepository {
   final RegisterService registerService;
-  final SessionService sessionService;
+  final LoginService loginService;
 
   AuthenticationRepository({
     required this.registerService,
-    required this.sessionService,
+    required this.loginService,
   });
 
   Future<APIReponse> sendRegistrationOtp({required String email}) {
@@ -33,7 +33,7 @@ class AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    final response = await sessionService.logIn(
+    final response = await loginService.logIn(
       email: email,
       password: password,
     );

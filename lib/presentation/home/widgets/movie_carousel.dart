@@ -11,11 +11,11 @@ class MovieCarousel extends StatefulWidget {
 
 class _MovieCarouselState extends State<MovieCarousel> {
   /* 
-      PageController trong Flutter là một lớp (class) được sử dụng để điều khiển các trang (pages) trong widget PageView 
-    hoặc các widget tương tự có khả năng cuộn trang theo chiều ngang hoặc chiều dọc.
-      Thuộc tính:
-        - viewportFraction: là một thuộc tính của PageController trong Flutter, dùng để xác định tỷ lệ phần trăm của viewport (khung nhìn) 
-        mà mỗi trang (page) chiếm dụng trên màn hình.
+      PageController in Flutter is a class used to control pages in a PageView widget
+    or similar widgets that can scroll horizontally or vertically.
+      Properties:
+        - viewportFraction: is a property of PageController in Flutter, used to determine the percentage of the viewport
+        that each page occupies on the screen.
   */
   late final PageController _pageController;
   int _currentPage = 0;
@@ -79,14 +79,10 @@ class _MovieCarouselState extends State<MovieCarousel> {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 16,
-          ), // Tạo khoảng cách trên dưới
-          child: _MovieIndicator(
-            length: widget.movies.length,
-            currentIndex: _currentPage,
-          ),
+        SizedBox(height: 5),
+        _MovieIndicator(
+          length: widget.movies.length,
+          currentIndex: _currentPage,
         ),
       ],
     );

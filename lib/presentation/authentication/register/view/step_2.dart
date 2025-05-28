@@ -15,7 +15,7 @@ class StepTwoRegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormScaffold(
+    return AuthenForm(
       title: 'Đăng kí',
       allowBack: true,
       child: Column(
@@ -39,8 +39,6 @@ class StepTwoRegistrationPage extends StatelessWidget {
           const Spacer(),
 
           _NextStepButton(),
-
-          const SizedBox(height: 30),
         ],
       ),
     );
@@ -56,18 +54,38 @@ class _OtpInput extends StatelessWidget {
     });
 
     return TextField(
-      key: const Key('register_otpInput_textField'),
+      key: const Key('register_otpInput_stepTwo_textField'),
       onChanged:
           (otp) =>
               context.read<RegisterBloc>().add(RegisterOtpChanged(otp: otp)),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email_outlined),
-        labelText: 'Otp',
-        errorText: error.isEmpty ? null : error,
+        // Border when not focused
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        // Border when focused
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        // Border when error
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1),
         ),
+        labelText: 'OTP',
+        labelStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        // When label is focused (floating)
+        floatingLabelStyle: TextStyle(
+          color: error.isEmpty ? Colors.yellowAccent : Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        errorText: error.isEmpty ? null : error,
       ),
     );
   }
@@ -87,7 +105,7 @@ class _ResendOtpButton extends StatelessWidget {
           final timeLeft = state.duration;
 
           return ElevatedButton(
-            key: const Key('register_resendOtp_raisedButton'),
+            key: const Key('register_resendOtp_stepTwo_raisedButton'),
             onPressed:
                 isDisabled
                     ? null
@@ -99,8 +117,8 @@ class _ResendOtpButton extends StatelessWidget {
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(
                 isDisabled
-                    ? const Color(0xFF0D7C66).withOpacity(0.5)
-                    : const Color(0xFF0D7C66),
+                    ? Colors.yellowAccent.withOpacity(0.5)
+                    : Colors.yellowAccent,
               ),
               shape: WidgetStateProperty.all(
                 RoundedRectangleBorder(
@@ -120,7 +138,7 @@ class _ResendOtpButton extends StatelessWidget {
               child: Text(
                 isDisabled ? '${timeLeft}s' : 'Gửi lại',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
@@ -152,11 +170,11 @@ class _NextStepButton extends StatelessWidget {
         }
       },
       child: ElevatedButton(
-        key: const Key('register_nextStepThree_raisedButton'),
+        key: const Key('register_nextStepThree_stepTwo_raisedButton'),
         onPressed:
             () => context.read<RegisterBloc>().add(RegisterOtpSubmitted()),
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.yellowAccent),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
@@ -172,7 +190,7 @@ class _NextStepButton extends StatelessWidget {
           child: Text(
             'Xác thực mã OTP',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),

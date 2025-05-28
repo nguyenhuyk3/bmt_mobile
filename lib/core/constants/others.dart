@@ -2,14 +2,12 @@
 
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:app_logger/app_logger.export.dart' as app_logger;
 import 'package:rt_mobile/data/models/movie/movie.dart';
 import 'package:rt_mobile/data/services/secure_storage.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/export.dart';
 import 'package:rt_mobile/presentation/home/home_screen.dart';
 
 // loggers
-final appLogger = app_logger.AppLogger();
 final logger = Logger();
 
 // dio options
@@ -27,8 +25,9 @@ const REFRESH_TOKEN = 'refresh_token';
 const MINIMUM_LENGTH_FOR_PASSWORD = 8;
 const LENGTH_OF_OTP = 6;
 const TIME_FOR_RESENDING_MAIL = 10;
+const BASE_URL = 'http://192.168.1.7:8000';
+
 var SCREENS = [HomeScreen(), const LoginScreen()];
-const BASE_URL = 'http://192.168.2.67:8000';
 
 final List<Movie> movies = [
     Movie(

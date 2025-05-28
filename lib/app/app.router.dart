@@ -15,6 +15,13 @@ class AppRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(navigatorKey: _navigatorKey, home: AppView());
+    return MaterialApp(
+      navigatorKey: _navigatorKey,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+        colorScheme: ColorScheme.dark(),
+      ),
+      home: AppView(),
+    );
   }
 }

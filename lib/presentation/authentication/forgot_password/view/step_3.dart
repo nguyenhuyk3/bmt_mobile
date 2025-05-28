@@ -14,7 +14,7 @@ class StepThreeForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormScaffold(
+    return AuthenForm(
       title: 'Quên mật khẩu',
       child: Column(
         children: [
@@ -25,7 +25,6 @@ class StepThreeForgotPasswordPage extends StatelessWidget {
           const Spacer(),
 
           _NextStepButton(),
-          const SizedBox(height: 30),
         ],
       ),
     );
@@ -49,7 +48,9 @@ class _PasswordInput extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.1,
             child: TextField(
-              key: const Key('forgotPassword_passwordInput_textField'),
+              key: const Key(
+                'forgotPassword_passwordInput_stepThree_textField',
+              ),
               onChanged: (password) {
                 final currentState = context.read<ForgotPasswordBloc>().state;
                 final confirmedPassword =
@@ -77,17 +78,40 @@ class _PasswordInput extends StatelessWidget {
                     );
                   },
                 ),
+                // Border when not focused
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                // Border when focused
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                // Border when error
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.redAccent,
+                    width: 1,
+                  ),
+                ),
                 labelText: 'Mật khẩu',
+                labelStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                // When label is focused (floating)
+                floatingLabelStyle: TextStyle(
+                  color: error.isEmpty ? Colors.yellowAccent : Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
                 errorText:
                     (error.isEmpty ||
                             error == CONFIRMATION_PASSWORD_MISMATCH_ERROR ||
                             error == EMPTY_CONFIRMED_PASSWORD_ERROR)
                         ? null
                         : error,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: const BorderSide(color: Colors.red, width: 1),
-                ),
               ),
             ),
           );
@@ -114,7 +138,9 @@ class _ConfirmedPasswordInput extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.1,
             child: TextField(
-              key: const Key('forgotPassword_confirmedPasswordInput_textField'),
+              key: const Key(
+                'forgotPassword_confirmedPasswordInput_stepThree_textField',
+              ),
               onChanged: (confirmedPassword) {
                 final currentState = context.read<ForgotPasswordBloc>().state;
                 final password =
@@ -143,15 +169,38 @@ class _ConfirmedPasswordInput extends StatelessWidget {
                     );
                   },
                 ),
+                // Border when not focused
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                // Border when focused
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                // Border when error
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.redAccent,
+                    width: 1,
+                  ),
+                ),
                 labelText: 'Xác nhận mật khẩu',
+                labelStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                // When label is focused (floating)
+                floatingLabelStyle: TextStyle(
+                  color: error.isEmpty ? Colors.yellowAccent : Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
                 errorText:
                     (error.isEmpty || error == PASSWORD_CAN_NOT_BE_BLANK)
                         ? null
                         : error,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: const BorderSide(color: Colors.red, width: 1),
-                ),
               ),
             ),
           );
@@ -167,21 +216,20 @@ class _NextStepButton extends StatelessWidget {
     return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
       listener: (context, state) {
         if (state is ForgotPasswordSuccess) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => AppView()),
+          Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const MainApp()),
             (route) => false,
           );
         }
       },
       child: ElevatedButton(
-        key: const Key('forgotPassword_nextStepThree_raisedButton'),
+        key: const Key('forgotPassword_nextStepThree_stepThree_raisedButton'),
         onPressed:
             () => context.read<ForgotPasswordBloc>().add(
               ForgotPasswordSubmitted(),
             ),
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.yellowAccent),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
@@ -195,9 +243,9 @@ class _NextStepButton extends StatelessWidget {
         child: const Padding(
           padding: EdgeInsets.all(4),
           child: Text(
-            'Xác nhận mật khẩu',
+            'Thay đổi mật khẩu',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),

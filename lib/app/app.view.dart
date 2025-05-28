@@ -47,7 +47,7 @@ class AppView extends StatelessWidget {
                 ),
               ],
               currentIndex: selectedIndex,
-              selectedItemColor: Color(0xFF0D7C66),
+              selectedItemColor: Colors.yellow,
               unselectedItemColor: Colors.grey,
               onTap: (index) => context.read<BottomNavCubit>().changeTab(index),
             ),

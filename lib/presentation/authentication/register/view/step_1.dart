@@ -7,8 +7,8 @@ import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dar
 
 import 'step_2.dart';
 
-class StepOneRegistratonPage extends StatelessWidget {
-  const StepOneRegistratonPage({super.key});
+class StepOneRegistratonScreen extends StatelessWidget {
+  const StepOneRegistratonScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class StepOneRegistratonPage extends StatelessWidget {
       context.read<RegisterBloc>().add(RegisterReset());
     });
 
-    return FormScaffold(
+    return AuthenForm(
       title: 'Đăng kí',
       allowBack: true,
       child: Column(
@@ -25,7 +25,6 @@ class StepOneRegistratonPage extends StatelessWidget {
           _EmailInput(),
           const Spacer(),
           _NextStepButton(),
-          const SizedBox(height: 30),
         ],
       ),
     );
@@ -42,19 +41,39 @@ class _EmailInput extends StatelessWidget {
     });
 
     return TextField(
-      key: const Key('register_emailInput_textField'),
+      key: const Key('register_emailInput_stepOne_textField'),
       onChanged:
           (email) => context.read<RegisterBloc>().add(
             RegisterEmailChanged(email: email),
           ),
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email_outlined),
-        labelText: 'Email',
-        errorText: error.isEmpty ? null : error,
+        // Border when not focused
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        // Border when focused
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        // Border when error
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1),
         ),
+        labelText: 'Email',
+        labelStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        // When label is focused (floating)
+        floatingLabelStyle: TextStyle(
+          color: error.isEmpty ? Colors.yellowAccent : Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        errorText: error.isEmpty ? null : error,
       ),
     );
   }
@@ -83,7 +102,7 @@ class _NextStepButton extends StatelessWidget {
         onPressed:
             () => {context.read<RegisterBloc>().add(RegisterEmailSubmitted())},
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.yellowAccent),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
@@ -99,7 +118,7 @@ class _NextStepButton extends StatelessWidget {
           child: Text(
             'Gửi mã xác thực OTP',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),

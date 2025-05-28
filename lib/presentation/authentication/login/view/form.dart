@@ -29,7 +29,7 @@ class LoginForm extends StatelessWidget {
             isSuccess: true,
             message: 'Đăng nhập thành công!!',
           );
-         //  context.read<LoginBloc>().add(LoginEmailChanged(email: email));
+          //  context.read<LoginBloc>().add(LoginEmailChanged(email: email));
         }
       },
       child: Column(
@@ -80,17 +80,37 @@ class _EmailInput extends StatelessWidget {
       },
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.email_outlined),
-        labelText: 'Tài khoản',
+        // Border when not focused
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        // Border when focused
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        // Border when error
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        labelText: 'Email',
+        labelStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        // When label is focused (floating)
+        floatingLabelStyle: TextStyle(
+          color: error.isEmpty ? Colors.yellowAccent : Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
         errorText:
             error.isEmpty
                 ? null
                 : ValidationErrorMessage.getEmailErrorMessage(
                   error: email.error,
                 ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
       ),
     );
   }
@@ -106,40 +126,55 @@ class _PasswordInput extends StatelessWidget {
       create: (context) => PasswordBloc(),
       child: BlocBuilder<PasswordBloc, PasswordState>(
         builder: (context, state) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-            child: TextField(
-              key: const Key('loginForm_passwordInput_textField'),
-              onChanged: (password) {
-                context.read<LoginBloc>().add(
-                  LoginPasswordChanged(password: password),
-                );
-              },
-              obscureText: state.obscureText,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.lock_rounded),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    state.obscureText ? Icons.visibility_off : Icons.visibility,
-                  ),
-                  onPressed: () {
-                    context.read<PasswordBloc>().add(
-                      PasswordToggleVisibility(),
-                    );
-                  },
-                ),
-                labelText: 'Mật khẩu',
-                errorText:
-                    error.isEmpty
-                        ? null
-                        : ValidationErrorMessage.getPasswordErrorMessage(
-                          error: password.error,
-                        ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: const BorderSide(color: Colors.red, width: 1),
-                ),
+          return TextField(
+            key: const Key('loginForm_passwordInput_textField'),
+            onChanged: (password) {
+              context.read<LoginBloc>().add(
+                LoginPasswordChanged(password: password),
+              );
+            },
+            obscureText: state.obscureText,
+            decoration: InputDecoration(
+              prefixIcon: Icon(
+                Icons.lock_rounded,
+                color: Colors.white, // Tùy chỉnh màu icon
               ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  state.obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.white, // Màu icon toggle
+                ),
+                onPressed: () {
+                  context.read<PasswordBloc>().add(PasswordToggleVisibility());
+                },
+              ),
+              labelText: 'Mật khẩu',
+              labelStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+              floatingLabelStyle: TextStyle(
+                color: error.isEmpty ? Colors.yellowAccent : Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: const BorderSide(color: Colors.red, width: 1),
+              ),
+              errorText:
+                  error.isEmpty
+                      ? null
+                      : ValidationErrorMessage.getPasswordErrorMessage(
+                        error: password.error,
+                      ),
             ),
           );
         },
@@ -161,7 +196,7 @@ class _ForgotPasswordButton extends StatelessWidget {
       child: const Text(
         'Quên mật khẩu?',
         style: TextStyle(
-          color: Colors.black87,
+          color: Colors.white,
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
@@ -185,14 +220,13 @@ class _RegistrationButton extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const StepOneRegistratonPage(),
+                builder: (context) => const StepOneRegistratonScreen(),
               ),
             );
           },
           child: const Text(
             'Hãy đăng ký',
             style: TextStyle(
-              color: Colors.black87,
               fontSize: 15,
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.underline,
@@ -222,7 +256,7 @@ class _LoginButton extends StatelessWidget {
               ? () => context.read<LoginBloc>().add(const LoginSubmitted())
               : null,
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
+        backgroundColor: WidgetStateProperty.all<Color>(Colors.yellowAccent),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
@@ -238,7 +272,7 @@ class _LoginButton extends StatelessWidget {
         child: Text(
           'Đăng nhập',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
@@ -255,7 +289,6 @@ class _FacebookLoginButton extends StatelessWidget {
       key: const Key('loginForm_facebook_login'),
       onPressed: () => {},
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color(0xFFFBFBFB)),
         shadowColor: WidgetStateProperty.all(Colors.transparent),
         elevation: WidgetStateProperty.all(0),
         shape: WidgetStateProperty.all(
@@ -280,7 +313,7 @@ class _FacebookLoginButton extends StatelessWidget {
             SizedBox(width: 12.0),
             Text(
               'Facebook',
-              style: TextStyle(color: Colors.black87, fontSize: 16.0),
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
             ),
           ],
         ),
@@ -296,7 +329,6 @@ class _GoogleLoginButton extends StatelessWidget {
       key: const Key('loginForm_google_login'),
       onPressed: () => {},
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Colors.white70),
         shadowColor: WidgetStateProperty.all(Colors.transparent),
         elevation: WidgetStateProperty.all(0),
         shape: WidgetStateProperty.all(
@@ -321,7 +353,7 @@ class _GoogleLoginButton extends StatelessWidget {
             SizedBox(width: 12.0),
             Text(
               'Google',
-              style: TextStyle(color: Colors.black87, fontSize: 16.0),
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
             ),
           ],
         ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/export.dart';
 
-class FormScaffold extends StatelessWidget {
+class AuthenForm extends StatelessWidget {
   final Widget child;
   final bool allowBack;
   final String title;
 
-  const FormScaffold({
+  const AuthenForm({
     super.key,
     required this.child,
     this.allowBack = false,
@@ -16,13 +16,12 @@ class FormScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFBFBFB),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           title,
           style: const TextStyle(
-            color: Colors.black87,
+            color: Colors.white,
             fontSize: 21,
             fontWeight: FontWeight.w400,
           ),
@@ -30,7 +29,7 @@ class FormScaffold extends StatelessWidget {
         centerTitle: true,
         elevation: 0.7,
         shadowColor: const Color(0xFFEFF3EA),
-        backgroundColor: const Color(0xFFFBFBFB),
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: allowBack,
         leading:
             allowBack
@@ -39,7 +38,7 @@ class FormScaffold extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
-                      color: Colors.black87,
+                      color: Colors.white,
                       size: 20,
                     ),
                     onPressed:

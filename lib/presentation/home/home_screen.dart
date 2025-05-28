@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color(0xFFA6F1E0),
+        backgroundColor: Colors.black,
         elevation: 0,
         title: Row(
           children: [

@@ -11,7 +11,7 @@ class StepFourRegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormScaffold(
+    return AuthenForm(
       title: 'Đăng kí',
       child: Column(
         children: [
@@ -26,7 +26,6 @@ class StepFourRegistrationPage extends StatelessWidget {
           const Spacer(),
 
           _NextStepButton(),
-          const SizedBox(height: 30),
         ],
       ),
     );
@@ -46,7 +45,7 @@ class _FullNameInput extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.95,
       height: MediaQuery.of(context).size.height * 0.1,
       child: TextField(
-        key: const Key('register_fullNameInput_textField'),
+        key: const Key('register_fullNameInput_stepFour_textField'),
         onChanged: (fullName) {
           final currentState = context.read<RegisterBloc>().state;
           final stepFourState =
@@ -65,12 +64,32 @@ class _FullNameInput extends StatelessWidget {
 
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.lock_rounded),
-          labelText: 'Họ và tên',
-          errorText: error.isEmpty ? null : error,
+          // Border when not focused
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          // Border when focused
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          // Border when error
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
-            borderSide: const BorderSide(color: Colors.red, width: 1),
+            borderSide: const BorderSide(color: Colors.redAccent, width: 1),
           ),
+          labelText: 'Họ và tên',
+          labelStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          // When label is focused (floating)
+          floatingLabelStyle: TextStyle(
+            color: error.isEmpty ? Colors.yellowAccent : Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+          errorText: error.isEmpty ? null : error,
         ),
       ),
     );
@@ -194,18 +213,17 @@ class _NextStepButton extends StatelessWidget {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => AppView()),
+          Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const MainApp()),
             (route) => false,
           );
         }
       },
       child: ElevatedButton(
-        key: const Key('register_nextStepThree_raisedButton'),
+        key: const Key('register_nextStepThree_stepFour_raisedButton'),
         onPressed: () => context.read<RegisterBloc>().add(RegisterSubmitted()),
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xFF0D7C66)),
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.yellowAccent),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
@@ -221,7 +239,7 @@ class _NextStepButton extends StatelessWidget {
           child: Text(
             'Hoàn thành',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),

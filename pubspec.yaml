@@ -11,8 +11,6 @@ dependencies:
     path: packages/authorization_repository
   user_repository:
     path: packages/user_repository
-  app_logger: 
-    path: packages/app_logger
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0

@@ -19,7 +19,6 @@ class LoginScreen extends StatelessWidget {
             authenticationRepository: context.read<AuthenticationRepository>(),
           ),
       child: Scaffold(
-        backgroundColor: const Color(0xFFFBFBFB),
         resizeToAvoidBottomInset: false,
         appBar: _AppBar(),
         body: const Padding(padding: EdgeInsets.all(12), child: LoginForm()),
@@ -35,7 +34,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       title: const Text(
         'Đăng nhập',
         style: TextStyle(
-          color: Colors.black87,
+          color: Colors.white,
           fontSize: 21,
           fontWeight: FontWeight.w400,
         ),
@@ -44,7 +43,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       elevation: 0.7,
       shadowColor: Color(0xFFEFF3EA),
-      backgroundColor: Color(0xFFFBFBFB),
+      backgroundColor: Colors.black,
       bottom: const PreferredSize(
         preferredSize: Size.fromHeight(0.1),
         child: Divider(height: 0.1, thickness: 0.1, color: Colors.grey),

@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:rt_mobile/core/constants/others.dart';
-import 'package:rt_mobile/data/models/models.dart';
+import 'package:rt_mobile/data/models/export.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
 import 'package:rt_mobile/data/services/authentication/login.dart';
 
@@ -33,13 +35,12 @@ class AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    final response = await loginService.logIn(
-      email: email,
-      password: password,
-    );
+    final response = await loginService.logIn(email: email, password: password);
 
-    storage.write(ACCESS_TOKEN, response.data[ACCESS_TOKEN]);
-    storage.write(REFRESH_TOKEN, response.data[REFRESH_TOKEN]);
+    if (response.statusCode == 200) {
+      storage.write(ACCESS_TOKEN, response.data[ACCESS_TOKEN]);
+      storage.write(REFRESH_TOKEN, response.data[REFRESH_TOKEN]);
+    }
 
     return APIReponse(statusCode: response.statusCode);
   }

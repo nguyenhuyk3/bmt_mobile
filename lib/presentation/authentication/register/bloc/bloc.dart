@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:rt_mobile/core/constants/error.dart';
 import 'package:rt_mobile/core/utils/convetors/date.dart';
-import 'package:rt_mobile/data/models/models.dart';
+import 'package:rt_mobile/data/models/export.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
 import 'package:rt_mobile/data/repositories/authentication.dart';
 
@@ -16,6 +16,7 @@ part 'state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthenticationRepository authenticationRepository;
+  
   String _email = '';
   String _password = '';
 

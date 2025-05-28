@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:rt_mobile/core/constants/others.dart';
-import 'package:rt_mobile/data/models/models.dart';
+import 'package:rt_mobile/data/models/export.dart';
 
 class RegisterService {
   final Dio dio;

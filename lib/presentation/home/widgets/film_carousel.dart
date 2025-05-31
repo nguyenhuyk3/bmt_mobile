@@ -51,6 +51,11 @@ class _FilmCarouselContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => FilmCarouselCubit(),
+      /* 
+          A Builder is a special widget that creates a new BuildContext, giving 
+        you access to the correct context when you need to call 
+        Navigator, Scaffold.of(context), or other context-dependent widgets.
+      */
       child: Builder(
         builder: (context) {
           _pageController.addListener(() {

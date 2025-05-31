@@ -39,7 +39,18 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         body: SafeArea(
+          /* 
+            ListView is a widget in Flutter used to display a scrollable list of child widgets vertically or horizontally.
+            Main features of ListView:
+              - Can display a long list of elements without having to create all the widgets at once (lazy loading support).
+              - Supports scrolling when the content exceeds the screen size.
+              - Can be used to create simple or complex lists, depending on how you build the items.
+          */
           child: ListView(
+            /* 
+              shrinkWrap: true in ListView is an attribute that helps to allow ListView to shrink itself according 
+                to the size of the content inside instead of taking up all the available space.
+            */
             shrinkWrap: true,
             children: [FilmCarousel()],
           ),

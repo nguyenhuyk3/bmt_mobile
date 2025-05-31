@@ -10,11 +10,28 @@ class AppView extends StatelessWidget {
       child: BlocBuilder<BottomNavCubit, int>(
         builder: (context, selectedIndex) {
           return Scaffold(
+            /* 
+                IndexedStack is a widget in Flutter used to stack multiple widgets on top of each other 
+              but only display one widget at a time based on the index.
+                Other child widgets still exist in the widget tree, but are not displayed.
+            */
             body: IndexedStack(
               index: selectedIndex,
               children: [
                 // Home Tab with its own Navigator
+
+                /* 
+                  Navigator is used to manage navigation between screens (routes/pages) in the application.
+
+                  Route: Is a screen, usually a widget, that represents a page.
+                */
                 Navigator(
+                  /* 
+                    GlobalKey is a special key in Flutter that allows you to directly access a widget's State anywhere in the app.
+                    When you use GlobalKey<NavigatorState>, you are creating a "window" to control the Navigator without context.
+
+                    When to use -> When there is no BuildContext but still want to navigate
+                  */
                   key: GlobalKey<NavigatorState>(),
                   onGenerateRoute: (settings) {
                     return MaterialPageRoute(

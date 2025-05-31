@@ -2,7 +2,6 @@
 
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:rt_mobile/data/models/export.dart';
 import 'package:rt_mobile/data/services/storage/secure_storage.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/export.dart';
 import 'package:rt_mobile/presentation/home/home_screen.dart';
@@ -30,32 +29,4 @@ const PUBLIC_SHOWTIME_BASE_URL = 'http://192.168.1.7:5005';
 
 var SCREENS = [HomeScreen(), const LoginScreen()];
 
-// final List<Film> movies = [
-//     Film(
-//       posterUrl:
-//           'https://upload.wikimedia.org/wikipedia/en/4/4d/Avengers_Infinity_War_poster.jpg',
-//       title: 'Avengers - Infinity War',
-//       genres: 'Action, Adventure, Sci-fi',
-//       duration: '2h29m',
-//       rating: 4.8,
-//       votes: 1222,
-//     ),
-//     Film(
-//       posterUrl:
-//           'https://upload.wikimedia.org/wikipedia/en/4/4d/Avengers_Infinity_War_poster.jpg',
-//       title: 'Avengers - Infinity War',
-//       genres: 'Action, Adventure, Sci-fi',
-//       duration: '2h29m',
-//       rating: 4.8,
-//       votes: 1222,
-//     ),
-//     Film(
-//       posterUrl:
-//           'https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg',
-//       title: 'Avengers - Endgame',
-//       genres: 'Action, Adventure, Sci-fi',
-//       duration: '3h1m',
-//       rating: 4.9,
-//       votes: 1500,
-//     ),
-//   ];
+

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
-import 'package:rt_mobile/presentation/home/bloc/film_carousel/bloc.dart';
-import 'package:rt_mobile/presentation/home/widgets/film_carousell.dart';
+import 'package:rt_mobile/presentation/home/bloc/film/bloc.dart';
+import 'package:rt_mobile/presentation/home/widgets/film_carousel.dart';
 import 'package:rt_mobile/presentation/splash/export.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,8 +15,8 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider(
       create:
           (_) =>
-              FilmCarouselBloc(filmRepository: filmRepository)
-                ..add(FilmCarouselFetched()),
+              FilmBloc(filmRepository: filmRepository)
+                ..add(FilmFetched()),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -45,13 +45,13 @@ class HomeScreen extends StatelessWidget {
           child: ListView(
             shrinkWrap: true,
             children: [
-              BlocBuilder<FilmCarouselBloc, FilmCarouselState>(
+              BlocBuilder<FilmBloc, FilmState>(
                 builder: (context, state) {
-                  if (state is FilmCarouselLoading) {
+                  if (state is FilmLoading) {
                     return const SplashPage();
-                  } else if (state is FilmCarouselLoadSuccess) {
-                    return MovieCarousell(films: state.film);
-                  } else if (state is FilmCarouselLoadFailed) {
+                  } else if (state is FilmLoadSuccess) {
+                    return FilmCarousel(films: state.film);
+                  } else if (state is FilmLoadFailed) {
                     return Center(
                       child: Text(
                         state.message,

@@ -12,12 +12,12 @@ class FilmInitial extends FilmState {}
 class FilmLoading extends FilmState {}
 
 class FilmLoadSuccess extends FilmState {
-  final List<Film> film;
+  final List<Film> films;
 
-  const FilmLoadSuccess({required this.film}) : super();
+  const FilmLoadSuccess({required this.films}) : super();
 
   @override
-  List<Object?> get props => [film];
+  List<Object?> get props => [films];
 }
 
 class FilmLoadFailed extends FilmState {

@@ -26,7 +26,7 @@ class FilmBloc extends Bloc<FilmEvent, FilmState> {
     try {
       final films = await filmRepository.getAllFilmsCurrentlyShowing();
       
-      emit(FilmLoadSuccess(film: films));
+      emit(FilmLoadSuccess(films: films));
     } catch (e) {
       emit(FilmLoadFailed(message: e.toString()));
     }

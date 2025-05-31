@@ -1,16 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/models/export.dart';
+import 'package:rt_mobile/presentation/home/bloc/film/bloc.dart';
 import 'package:rt_mobile/presentation/home/cubit/film_carousel.dart';
+import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
 class FilmCarousel extends StatelessWidget {
+  const FilmCarousel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FilmBloc, FilmState>(
+      builder: (context, state) {
+        if (state is FilmLoading) {
+          return Center(child: SplashPage());
+        } else if (state is FilmLoadSuccess) {
+          return _FilmCarouselContainer(films: state.films);
+        } else if (state is FilmLoadFailed) {
+          return Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 30),
+              child: Text(
+                'Đã có lỗi xảy ra',
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          );
+        } else {
+          return SizedBox.shrink();
+        }
+      },
+    );
+  }
+}
+
+class _FilmCarouselContainer extends StatelessWidget {
   final List<Film> films;
   final PageController _pageController = PageController(
     viewportFraction: 0.7,
     initialPage: 0,
   );
 
-  FilmCarousel({super.key, required this.films});
+  _FilmCarouselContainer({required this.films});
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:rt_mobile/data/models/movie/movie.dart';
+import 'package:rt_mobile/data/models/film/film.dart';
 
-class MovieCarousel extends StatefulWidget {
-  final List<Movie> movies;
-  const MovieCarousel({super.key, required this.movies});
+class MovieCarousell extends StatefulWidget {
+  final List<Film> films;
+
+  const MovieCarousell({super.key, required this.films});
 
   @override
-  State<MovieCarousel> createState() => _MovieCarouselState();
+  State<MovieCarousell> createState() => _MovieCarouselState();
 }
 
-class _MovieCarouselState extends State<MovieCarousel> {
+class _MovieCarouselState extends State<MovieCarousell> {
   /* 
       PageController in Flutter is a class used to control pages in a PageView widget
     or similar widgets that can scroll horizontally or vertically.
@@ -68,11 +69,11 @@ class _MovieCarouselState extends State<MovieCarousel> {
           height: MediaQuery.of(context).size.height * 0.72,
           child: PageView.builder(
             controller: _pageController,
-            itemCount: widget.movies.length,
+            itemCount: widget.films.length,
             itemBuilder: (context, index) {
-              final movie = widget.movies[index];
+              final film = widget.films[index];
               return _CenteredMovieCard(
-                movie: movie,
+                film: film,
                 index: index,
                 pageController: _pageController,
               );
@@ -81,7 +82,7 @@ class _MovieCarouselState extends State<MovieCarousel> {
         ),
         SizedBox(height: 5),
         _MovieIndicator(
-          length: widget.movies.length,
+          length: widget.films.length,
           currentIndex: _currentPage,
         ),
       ],
@@ -118,12 +119,12 @@ class _MovieIndicator extends StatelessWidget {
 
 class _CenteredMovieCard extends StatelessWidget {
   const _CenteredMovieCard({
-    required this.movie,
+    required this.film,
     required this.index,
     required this.pageController,
   });
 
-  final Movie movie;
+  final Film film;
   final int index;
   final PageController pageController;
 
@@ -157,14 +158,14 @@ class _CenteredMovieCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.network(
-                movie.imageUrl,
+                film.posterUrl,
                 height: 480,
                 fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 12),
             Text(
-              movie.title,
+              film.title,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -173,7 +174,7 @@ class _CenteredMovieCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${movie.duration} • ${movie.genre}',
+              '${film.duration} • ${film.genres}',
               style: const TextStyle(color: Colors.white70, fontSize: 13),
             ),
             const SizedBox(height: 4),

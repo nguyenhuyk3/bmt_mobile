@@ -1,0 +1,1 @@
+export 'spash_view.dart';

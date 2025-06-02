@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/data/repositories/cinema.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
+import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/film_detail/available_cinema/view/available_cinema.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/view/film_information.dart';
 
@@ -9,14 +12,36 @@ class MovieDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filmRepository = RepositoryProvider.of<FilmRepository>(context);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) {
+            final bloc = FilmInformationBloc(
+              filmRepository: RepositoryProvider.of<FilmRepository>(context),
+            );
 
-    return BlocProvider(
-      create:
-          (_) =>
-              FilmInformationBloc(filmRepository: filmRepository)
-                ..add(FilmInfomationFetched()),
-      child: Scaffold(body: ListView(children: [FilmInformation()])),
+            bloc.add(FilmInfomationFetched());
+
+            return bloc;
+          },
+        ),
+        BlocProvider(
+          create: (_) {
+            final bloc = AvailableCinemaBloc(
+              cinemaRepository: RepositoryProvider.of<CinemaRepository>(
+                context,
+              ),
+            );
+
+            bloc.add(AvailableCinemaFetched());
+
+            return bloc;
+          },
+        ),
+      ],
+      child: Scaffold(
+        body: ListView(children: [FilmInformation(), AvaibleCinema()]),
+      ),
     );
   }
 }

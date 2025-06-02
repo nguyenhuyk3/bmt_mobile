@@ -77,7 +77,7 @@ class _FilmInformationContainer extends StatelessWidget {
 
             _FilmInfos(film: film),
 
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
 
             _FilmStoryLine(storyLine: film.description),
 
@@ -227,6 +227,7 @@ class _InfoRowState extends State<_InfoRow> {
               style: const TextStyle(color: Colors.grey),
             ),
           ),
+          
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +262,9 @@ class _FilmInfos extends StatelessWidget {
   const _FilmInfos({required this.film});
 
   String capitalize(String text) {
-    if (text.isEmpty) return text;
+    if (text.isEmpty) {
+      return text;
+    }
 
     return text[0].toUpperCase() + text.substring(1).toLowerCase();
   }
@@ -322,7 +325,8 @@ class _FilmDirectorOrActorInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
+
         Text(
           title,
           style: const TextStyle(
@@ -331,7 +335,9 @@ class _FilmDirectorOrActorInfo extends StatelessWidget {
             fontSize: 15,
           ),
         ),
+
         const SizedBox(height: 12),
+
         Row(
           children:
               people.map((person) {
@@ -343,7 +349,9 @@ class _FilmDirectorOrActorInfo extends StatelessWidget {
                         backgroundImage: NetworkImage(person['img']!),
                         radius: 24,
                       ),
-                      const SizedBox(height: 4),
+
+                      const SizedBox(height: 6),
+
                       SizedBox(
                         width: 60,
                         child: Text(

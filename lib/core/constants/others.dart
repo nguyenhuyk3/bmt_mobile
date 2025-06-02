@@ -3,7 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:rt_mobile/data/services/storage/secure_storage.dart';
-import 'package:rt_mobile/presentation/authentication/login/view/export.dart';
+import 'package:rt_mobile/presentation/authentication/login/view/login_screen.dart';
 import 'package:rt_mobile/presentation/film_detail/film_detail_screen.dart';
 import 'package:rt_mobile/presentation/home/home_screen.dart';
 

@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/view/step_2.dart';
-import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
+import 'package:rt_mobile/presentation/widgets/layouts/authentication/authen_form.dart';
 
 class StepOneForgotPasswordPage extends StatelessWidget {
   const StepOneForgotPasswordPage({super.key});

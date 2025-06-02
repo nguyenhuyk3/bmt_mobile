@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/data/models/film/export.dart';
+
+import 'package:rt_mobile/data/models/film/film.product.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 

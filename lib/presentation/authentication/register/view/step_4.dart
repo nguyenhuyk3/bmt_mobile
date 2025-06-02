@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/app/export.dart';
+
+import 'package:rt_mobile/app/app.main.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
+import 'package:rt_mobile/presentation/widgets/layouts/authentication/authen_form.dart';
 
 class StepFourRegistrationPage extends StatelessWidget {
   const StepFourRegistrationPage({super.key});

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:rt_mobile/core/constants/others.dart';
-import 'package:rt_mobile/data/models/export.dart';
-import 'package:rt_mobile/data/services/authentication/export.dart';
-
+import 'package:rt_mobile/data/models/api_response.dart';
+import 'package:rt_mobile/data/services/authentication/login.dart';
+import 'package:rt_mobile/data/services/authentication/register.dart';
 
 class AuthenticationRepository {
   final RegisterService registerService;

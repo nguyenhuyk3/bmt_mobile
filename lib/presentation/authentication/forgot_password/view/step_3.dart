@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rt_mobile/app/export.dart';
-import 'package:rt_mobile/core/constants/export.dart';
+import 'package:rt_mobile/app/app.main.dart';
+import 'package:rt_mobile/core/constants/errors.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/password/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';
+import 'package:rt_mobile/presentation/widgets/layouts/authentication/authen_form.dart';
 
 class StepThreeForgotPasswordPage extends StatelessWidget {
   const StepThreeForgotPasswordPage({super.key});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
 import 'package:rt_mobile/presentation/home/bloc/film/bloc.dart';
-import 'package:rt_mobile/presentation/home/widgets/export.dart';
+import 'package:rt_mobile/presentation/home/widgets/film_carousel.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -1,5 +1,5 @@
-import 'package:rt_mobile/core/constants/others.dart';
-import 'package:rt_mobile/data/models/film/export.dart';
+import 'package:rt_mobile/data/models/film/film.product.dart';
+import 'package:rt_mobile/data/models/film/film.showtime.dart';
 import 'package:rt_mobile/data/services/film/film.dart';
 
 class FilmRepository {

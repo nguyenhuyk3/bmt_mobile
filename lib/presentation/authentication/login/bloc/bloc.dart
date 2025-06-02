@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
-import 'package:rt_mobile/data/models/authentication/export.dart';
+import 'package:rt_mobile/data/models/authentication/email.dart';
+import 'package:rt_mobile/data/models/authentication/password.dart';
 import 'package:rt_mobile/data/repositories/authentication.dart';
 
 part 'event.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/data/models/export.dart';
+import 'package:rt_mobile/data/models/film/film.showtime.dart';
 import 'package:rt_mobile/presentation/home/bloc/film/bloc.dart';
 import 'package:rt_mobile/presentation/home/cubit/film_carousel.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';

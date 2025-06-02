@@ -17,7 +17,19 @@ class FilmInformation extends StatelessWidget {
         } else if (state is FilmInformationLoading) {
           return SplashPage();
         } else {
-          return SplashPage();
+          return Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 30),
+              child: Text(
+                'Đã có lỗi xảy ra',
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          );
         }
       },
     );

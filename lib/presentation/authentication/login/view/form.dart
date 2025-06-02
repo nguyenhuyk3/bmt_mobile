@@ -5,10 +5,10 @@ import 'package:formz/formz.dart';
 
 import 'package:rt_mobile/core/utils/displayers/snack_bar.dart';
 import 'package:rt_mobile/core/utils/validator/validation_error_message.dart';
-import 'package:rt_mobile/presentation/authentication/forgot_password/view/export.dart';
+import 'package:rt_mobile/presentation/authentication/forgot_password/view/step_1.dart';
 import 'package:rt_mobile/presentation/authentication/login/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/password/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/authentication/register/view/export.dart';
+import 'package:rt_mobile/presentation/authentication/register/view/step_1.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});

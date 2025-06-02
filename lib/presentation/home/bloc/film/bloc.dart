@@ -2,38 +2,38 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/data/models/film/film.dart';
+import 'package:rt_mobile/data/models/film/film.showtime.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
 
 part 'event.dart';
 part 'state.dart';
 
-class FilmBloc extends Bloc<FilmEvent, FilmState> {
+class FilmsBloc extends Bloc<FilmsEvent, FilmsState> {
   final FilmRepository filmRepository;
 
-  FilmBloc({required this.filmRepository})
-    : super(FilmInitial()) {
-    on<FilmFetched>(_onFilmsFetched);
-    on<FilmRefreshed>(_onFilmsRefreshed);
+  FilmsBloc({required this.filmRepository})
+    : super(FilmsInitial()) {
+    on<FilmsFetched>(_onFilmsFetched);
+    on<FilmsRefreshed>(_onFilmsRefreshed);
   }
 
   FutureOr<void> _onFilmsFetched(
-    FilmFetched event,
-    Emitter<FilmState> emit,
+    FilmsFetched event,
+    Emitter<FilmsState> emit,
   ) async {
-    emit(FilmLoading());
+    emit(FilmsLoading());
 
     try {
       final films = await filmRepository.getAllFilmsCurrentlyShowing();
       
-      emit(FilmLoadSuccess(films: films));
+      emit(FilmsLoadSuccess(films: films));
     } catch (e) {
-      emit(FilmLoadFailed(message: e.toString()));
+      emit(FilmsLoadFailed(message: e.toString()));
     }
   }
 
   FutureOr<void> _onFilmsRefreshed(
-    FilmRefreshed event,
-    Emitter<FilmState> emit,
+    FilmsRefreshed event,
+    Emitter<FilmsState> emit,
   ) {}
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rt_mobile/app/export.dart';
-import 'package:rt_mobile/core/constants/error.dart';
+import 'package:rt_mobile/core/constants/export.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';

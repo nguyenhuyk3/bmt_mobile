@@ -1,4 +1,4 @@
-class Film {
+class FilmShowtime {
   final int filmId;
   final String title;
   final String posterUrl;
@@ -7,7 +7,7 @@ class Film {
   final double rating;
   final int votes;
 
-  Film({
+  FilmShowtime({
     required this.filmId,
     required this.title,
     required this.posterUrl,
@@ -17,8 +17,8 @@ class Film {
     required this.votes,
   });
 
-  factory Film.fromJson(Map<String, dynamic> json) {
-    return Film(
+  factory FilmShowtime.fromJson(Map<String, dynamic> json) {
+    return FilmShowtime(
       filmId: json['film_id'] as int,
       posterUrl: json['poster_url'] as String,
       title: json['title'] as String,

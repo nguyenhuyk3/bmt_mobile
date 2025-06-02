@@ -1,5 +1,5 @@
 import 'package:rt_mobile/core/constants/others.dart';
-import 'package:rt_mobile/data/models/film/film.dart';
+import 'package:rt_mobile/data/models/film/export.dart';
 import 'package:rt_mobile/data/services/film/film.dart';
 
 class FilmRepository {
@@ -7,20 +7,34 @@ class FilmRepository {
 
   FilmRepository({required this.filmService});
 
-  Future<List<Film>> getAllFilmsCurrentlyShowing() async {
+  Future<List<FilmShowtime>> getAllFilmsCurrentlyShowing() async {
     final response = await filmService.getAllFilmssCurrentlyShowing();
 
     if (response.isSuccess) {
       final rawData = response.data['data'];
-      logger.i(rawData);
+
       if (rawData is List) {
-        return rawData.map((film) => Film.fromJson(film)).toList();
+        return rawData.map((film) => FilmShowtime.fromJson(film)).toList();
       } else {
         throw Exception("invalid data format");
       }
     } else {
       throw Exception(
         'failed to fetch films (status code: ${response.statusCode})',
+      );
+    }
+  }
+
+  Future<FilmProduct> getFilmById() async {
+    final response = await filmService.getFilmById();
+
+    if (response.isSuccess) {
+      final rawData = response.data['data'];
+
+      return FilmProduct.fromJson(rawData);
+    } else {
+      throw Exception(
+        'failed to fetch film by id (status code: ${response.statusCode})',
       );
     }
   }

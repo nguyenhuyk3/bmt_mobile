@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
 
     return BlocProvider(
       create:
-          (_) => FilmBloc(filmRepository: filmRepository)..add(FilmFetched()),
+          (_) => FilmsBloc(filmRepository: filmRepository)..add(FilmsFetched()),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,

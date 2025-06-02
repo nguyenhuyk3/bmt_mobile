@@ -32,9 +32,9 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
 
-    final dioClient = Dio(BaseOptions(baseUrl: PRIVATE_BASE_URL));
+    final dioClient = Dio(BaseOptions(baseUrl: BASE_URL));
     final dioShowtimeClient = Dio(
-      BaseOptions(baseUrl: PUBLIC_SHOWTIME_BASE_URL),
+      BaseOptions(baseUrl: BASE_URL),
     );
 
     _authenticationRepository = AuthenticationRepository(

@@ -1,29 +1,29 @@
 part of 'bloc.dart';
 
-sealed class FilmState extends Equatable {
-  const FilmState();
+sealed class FilmsState extends Equatable {
+  const FilmsState();
 
   @override
   List<Object?> get props => [];
 }
 
-class FilmInitial extends FilmState {}
+class FilmsInitial extends FilmsState {}
 
-class FilmLoading extends FilmState {}
+class FilmsLoading extends FilmsState {}
 
-class FilmLoadSuccess extends FilmState {
-  final List<Film> films;
+class FilmsLoadSuccess extends FilmsState {
+  final List<FilmShowtime> films;
 
-  const FilmLoadSuccess({required this.films}) : super();
+  const FilmsLoadSuccess({required this.films}) : super();
 
   @override
   List<Object?> get props => [films];
 }
 
-class FilmLoadFailed extends FilmState {
+class FilmsLoadFailed extends FilmsState {
   final String message;
 
-  const FilmLoadFailed({required this.message}) : super();
+  const FilmsLoadFailed({required this.message}) : super();
 
   @override
   List<Object?> get props => [message];

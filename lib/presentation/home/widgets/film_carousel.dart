@@ -10,13 +10,13 @@ class FilmCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilmBloc, FilmState>(
+    return BlocBuilder<FilmsBloc, FilmsState>(
       builder: (context, state) {
-        if (state is FilmLoading) {
+        if (state is FilmsLoading) {
           return Center(child: SplashPage());
-        } else if (state is FilmLoadSuccess) {
+        } else if (state is FilmsLoadSuccess) {
           return _FilmCarouselContainer(films: state.films);
-        } else if (state is FilmLoadFailed) {
+        } else if (state is FilmsLoadFailed) {
           return Center(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 30),
@@ -39,7 +39,7 @@ class FilmCarousel extends StatelessWidget {
 }
 
 class _FilmCarouselContainer extends StatelessWidget {
-  final List<Film> films;
+  final List<FilmShowtime> films;
   final PageController _pageController = PageController(
     viewportFraction: 0.7,
     initialPage: 0,
@@ -125,7 +125,7 @@ class _Header extends StatelessWidget {
 }
 
 class _CenteredFilmCard extends StatelessWidget {
-  final Film film;
+  final FilmShowtime film;
   final int index;
   final PageController pageController;
 

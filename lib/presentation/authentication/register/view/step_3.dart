@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/error.dart';
+import 'package:rt_mobile/core/constants/errors.dart';
 import 'package:rt_mobile/presentation/authentication/password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/widgets/layouts/authentication/export.dart';

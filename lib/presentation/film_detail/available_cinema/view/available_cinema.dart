@@ -42,29 +42,28 @@ class _AvailableCinemaContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                'Rạp chiếu phim',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+    return Column(
+      children: [
+        SizedBox(height: 10),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Rạp chiếu phim',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
 
-          SizedBox(height: 10),
+        SizedBox(height: 12),
 
-          ...cinemas.map((cinema) => _BuildCinemaItem(cinema: cinema)).toList(),
-        ],
-      ),
+        ...cinemas.map((cinema) => _BuildCinemaItem(cinema: cinema)).toList(),
+      ],
     );
   }
 }

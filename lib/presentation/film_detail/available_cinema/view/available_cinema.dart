@@ -62,7 +62,7 @@ class _AvailableCinemaContainer extends StatelessWidget {
 
         SizedBox(height: 12),
 
-        ...cinemas.map((cinema) => _BuildCinemaItem(cinema: cinema)).toList(),
+        ...cinemas.map((cinema) => _BuildCinemaItem(cinema: cinema)),
       ],
     );
   }

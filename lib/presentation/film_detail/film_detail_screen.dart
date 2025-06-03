@@ -5,7 +5,6 @@ import 'package:rt_mobile/data/repositories/film.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/view/available_cinema.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/film_detail/film_information/cubit/check_overflow.cubit.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/view/film_information.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -39,7 +38,6 @@ class MovieDetailScreen extends StatelessWidget {
             return bloc;
           },
         ),
-        // BlocProvider(create: (_) => CheckOverFlowCubit()),
       ],
       child: Scaffold(
         body: Padding(

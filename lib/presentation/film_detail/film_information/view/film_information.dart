@@ -45,6 +45,13 @@ class _FilmInformationContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*
+      SafeArea is a widget in Flutter that is used to ensure your content is not obscured by things like:
+      - Notch on iPhone
+      - Status bar
+      - Navigation bar
+      - Borders or collapsed devices
+*/
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,13 +190,11 @@ class _InfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => CheckOverFlowCubit(),
-
       child: Builder(
         builder: (context) {
           final cubit = context.read<CheckOverFlowCubit>();
           final textStyle = const TextStyle(color: Colors.white);
 
-          // Sử dụng addPostFrameCallback để đo text sau khi layout xong
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final maxWidth = MediaQuery.of(context).size.width - 150;
             cubit.checkOverflow(
@@ -285,26 +290,65 @@ class _FilmStoryLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Text(
-              'Cốt truyện',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+    return BlocProvider(
+      create: (_) => CheckOverFlowCubit(),
+      child: Builder(
+        builder: (context) {
+          final cubit = context.read<CheckOverFlowCubit>();
+          final textStyle = const TextStyle(color: Colors.grey);
+
+          // Kiểm tra overflow sau khi layout xong
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final maxWidth = MediaQuery.of(context).size.width;
+            cubit.checkOverflow(
+              value: storyLine,
+              textStyle: textStyle,
+              maxWidth: maxWidth,
+            );
+          });
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Cốt truyện',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
-            ),
-          ],
-        ),
-
-        const SizedBox(height: 4),
-
-        Text(storyLine, style: TextStyle(color: Colors.grey)),
-      ],
+              const SizedBox(height: 4),
+              BlocBuilder<CheckOverFlowCubit, CheckOverflowState>(
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111',
+                        style: textStyle,
+                        maxLines: state.expanded ? null : 1,
+                        overflow:
+                            state.expanded
+                                ? TextOverflow.visible
+                                : TextOverflow.ellipsis,
+                      ),
+                      if (state.overflow && !state.expanded)
+                        GestureDetector(
+                          onTap: () => cubit.expand(),
+                          child: const Text(
+                            'Xem thêm',
+                            style: TextStyle(color: Colors.amber, fontSize: 12),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

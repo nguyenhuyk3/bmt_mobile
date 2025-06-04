@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/models/film/film.showtime.dart';
+import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/home/bloc/film/bloc.dart';
-import 'package:rt_mobile/presentation/home/cubit/film_carousel.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
 class FilmCarousel extends StatelessWidget {
@@ -50,7 +50,7 @@ class _FilmCarouselContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => FilmCarouselCubit(),
+      create: (_) => ChangeTabCubit<int>(initialState: 0),
       /* 
           A Builder is a special widget that creates a new BuildContext, giving 
         you access to the correct context when you need to call 
@@ -60,8 +60,8 @@ class _FilmCarouselContainer extends StatelessWidget {
         builder: (context) {
           _pageController.addListener(() {
             final newPage = _pageController.page?.round() ?? 0;
-            if (newPage != context.read<FilmCarouselCubit>().state) {
-              context.read<FilmCarouselCubit>().moveFilm(newPage);
+            if (newPage != context.read<ChangeTabCubit<int>>().state) {
+              context.read<ChangeTabCubit<int>>().changeTab(newPage);
             }
           });
 
@@ -86,7 +86,7 @@ class _FilmCarouselContainer extends StatelessWidget {
                 ),
               ),
 
-              BlocBuilder<FilmCarouselCubit, int>(
+              BlocBuilder<ChangeTabCubit<int>, int>(
                 builder: (context, currentIndex) {
                   return _FilmIndicator(
                     length: films.length,

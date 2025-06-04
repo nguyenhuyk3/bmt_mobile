@@ -6,8 +6,8 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => BottomNavCubit(),
-      child: BlocBuilder<BottomNavCubit, int>(
+      create: (_) => ChangeTabCubit<int>(initialState: 0),
+      child: BlocBuilder<ChangeTabCubit<int>, int>(
         builder: (context, selectedIndex) {
           return Scaffold(
             /* 
@@ -66,7 +66,7 @@ class AppView extends StatelessWidget {
               currentIndex: selectedIndex,
               selectedItemColor: Colors.yellow,
               unselectedItemColor: Colors.grey,
-              onTap: (index) => context.read<BottomNavCubit>().changeTab(index),
+              onTap: (index) => context.read< ChangeTabCubit<int>>().changeTab(index),
             ),
           );
         },

@@ -1,8 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/models/cinema/cinema.showtime.dart';
+import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/film_detail/available_cinema/cubit/chose_cinema.cutbit.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/cubit/chose_cinema.state.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
@@ -87,12 +89,15 @@ class _AvailableCinemaContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ChoseCinemaCubit(),
-      child: BlocBuilder<ChoseCinemaCubit, ChoseCinemaState>(
+      create:
+          (_) => ChangeTabCubit<ChoseCinemaState>(
+            initialState: ChoseCinemaState(),
+          ),
+      child: BlocBuilder<ChangeTabCubit<ChoseCinemaState>, ChoseCinemaState>(
         builder: (context, state) {
           return Column(
             children: [
-              SizedBox(height: 10),
+              SizedBox(height: 12),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -116,9 +121,11 @@ class _AvailableCinemaContainer extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () {
-                    context.read<ChoseCinemaCubit>().choseCinema(
-                      selectedIndex: index,
-                      selectedCinemaId: cinema.id,
+                    context.read<ChangeTabCubit<ChoseCinemaState>>().changeTab(
+                      ChoseCinemaState().copyWith(
+                        selectedIndex: index,
+                        selectedCinemaId: cinema.id,
+                      ),
                     );
                   },
                   child: _BuildCinemaItem(

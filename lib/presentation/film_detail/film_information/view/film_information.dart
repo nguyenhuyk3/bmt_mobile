@@ -23,7 +23,7 @@ class FilmInformation extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 30),
               child: Text(
-                'Đã có lỗi xảy ra',
+                'Máy chủ đã xảy ra lỗi',
                 style: TextStyle(
                   color: Colors.redAccent,
                   fontWeight: FontWeight.bold,

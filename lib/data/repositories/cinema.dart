@@ -6,8 +6,12 @@ class CinemaRepository {
 
   CinemaRepository({required this.cinemaService});
 
-  Future<List<CinemaShowtime>> getCinemasForShowingFilmByFilmId() async {
-    final response = await cinemaService.getCinemasForShowingFilmByFilmId();
+  Future<List<CinemaShowtime>> getCinemasForShowingFilmByFilmId({
+    required int filmId,
+  }) async {
+    final response = await cinemaService.getCinemasForShowingFilmByFilmId(
+      filmId: filmId,
+    );
 
     if (response.isSuccess) {
       final rawData = response.data['data'];

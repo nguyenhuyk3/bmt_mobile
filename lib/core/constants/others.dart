@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:rt_mobile/data/services/storage/secure_storage.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/login_screen.dart';
-import 'package:rt_mobile/presentation/film_detail/film_detail_screen.dart';
+import 'package:rt_mobile/presentation/home/home_screen.dart';
 
 // loggers
 final logger = Logger();
@@ -26,4 +26,4 @@ const LENGTH_OF_OTP = 6;
 const TIME_FOR_RESENDING_MAIL = 10;
 const BASE_URL = 'http://192.168.204.1:8000';
 
-var SCREENS = [MovieDetailScreen(), const LoginScreen()];
+var SCREENS = [HomeScreen(), const LoginScreen()];

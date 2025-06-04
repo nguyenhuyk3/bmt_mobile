@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/repositories/cinema.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
@@ -7,8 +8,10 @@ import 'package:rt_mobile/presentation/film_detail/available_cinema/view/availab
 import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/view/film_information.dart';
 
-class MovieDetailScreen extends StatelessWidget {
-  const MovieDetailScreen({super.key});
+class FilmDetailScreen extends StatelessWidget {
+  final int filmId;
+
+  const FilmDetailScreen({super.key, required this.filmId});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class MovieDetailScreen extends StatelessWidget {
               filmRepository: RepositoryProvider.of<FilmRepository>(context),
             );
 
-            bloc.add(FilmInfomationFetched());
+            bloc.add(FilmInfomationFetched(filmId: filmId));
 
             return bloc;
           },
@@ -33,7 +36,9 @@ class MovieDetailScreen extends StatelessWidget {
               ),
             );
 
-            bloc.add(AvailableCinemaFetched());
+            logger.i(filmId);
+
+            bloc.add(AvailableCinemaFetched(filmId: filmId));
 
             return bloc;
           },

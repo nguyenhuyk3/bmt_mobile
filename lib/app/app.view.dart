@@ -32,7 +32,7 @@ class AppView extends StatelessWidget {
 
                     When to use -> When there is no BuildContext but still want to navigate
                   */
-                  key: GlobalKey<NavigatorState>(),
+                  key: AppNavigatorService.homeNavigatorKey,
                   onGenerateRoute: (settings) {
                     return MaterialPageRoute(
                       builder: (_) => SCREENS[0],
@@ -66,7 +66,9 @@ class AppView extends StatelessWidget {
               currentIndex: selectedIndex,
               selectedItemColor: Colors.yellow,
               unselectedItemColor: Colors.grey,
-              onTap: (index) => context.read< ChangeTabCubit<int>>().changeTab(index),
+              onTap:
+                  (index) =>
+                      context.read<ChangeTabCubit<int>>().changeTab(index),
             ),
           );
         },

@@ -8,15 +8,15 @@ class FilmService {
 
   Future<APIReponse> getAllFilmssCurrentlyShowing() async {
     final response = await dio.get(
-      '/v1/showtime/public/get_all_films_currently_showing',
+      '/showtime_service/film/public/get_all_film_currenly_showing',
     );
 
     return APIReponse(statusCode: response.statusCode, data: response.data);
   }
 
-  Future<APIReponse> getFilmById() async {
+  Future<APIReponse> getFilmById({required int filmId}) async {
     final response = await dio.get(
-      '/product_service/film/public/get_film_by_id/1',
+      '/product_service/film/public/get_film_by_id/$filmId',
     );
 
     return APIReponse(statusCode: response.statusCode, data: response.data);

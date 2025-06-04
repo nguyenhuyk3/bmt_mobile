@@ -25,7 +25,7 @@ class FilmInformationBloc
     emit(FilmInformationLoading());
 
     try {
-      final film = await filmRepository.getFilmById();
+      final film = await filmRepository.getFilmById(filmId: event.filmId);
 
       emit(FilmInformationLoadSuccess(film: film));
     } catch (e) {

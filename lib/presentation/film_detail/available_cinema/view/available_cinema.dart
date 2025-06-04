@@ -18,63 +18,21 @@ class AvaibleCinema extends StatelessWidget {
         if (state is AvailableCinemaLoading) {
           return SplashPage();
         } else if (state is AvailableCinemaLoadSuccess) {
-          final List<CinemaShowtime> cinemaList = [
-            CinemaShowtime(
-              id: 1,
-              name: 'Galaxy Nguyễn Du',
-              city: 'Hồ Chí Minh',
-              location: '116 Nguyễn Du, Quận 1',
-            ),
-            CinemaShowtime(
-              id: 2,
-              name: 'CGV Vincom Đồng Khởi',
-              city: 'Hồ Chí Minh',
-              location: '72 Lê Thánh Tôn, Quận 1',
-            ),
-            CinemaShowtime(
-              id: 3,
-              name: 'Lotte Cinema Cộng Hòa',
-              city: 'Hồ Chí Minh',
-              location: '20 Cộng Hòa, Tân Bình',
-            ),
-            CinemaShowtime(
-              id: 4,
-              name: 'BHD Star Bitexco',
-              city: 'Hồ Chí Minh',
-              location: '2 Hải Triều, Quận 1',
-            ),
-          ];
-
-          return _AvailableCinemaContainer(cinemas: cinemaList);
+          return _AvailableCinemaContainer(cinemas: state.cinemas);
         } else {
-          final List<CinemaShowtime> cinemaList = [
-            CinemaShowtime(
-              id: 1,
-              name: 'Galaxy Nguyễn Du',
-              city: 'Hồ Chí Minh',
-              location: '116 Nguyễn Du, Quận 1',
+          return Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 30),
+              child: Text(
+                'Máy chủ đã xảy ra lỗi',
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
             ),
-            CinemaShowtime(
-              id: 2,
-              name: 'CGV Vincom Đồng Khởi',
-              city: 'Hồ Chí Minh',
-              location: '72 Lê Thánh Tôn, Quận 1',
-            ),
-            CinemaShowtime(
-              id: 3,
-              name: 'Lotte Cinema Cộng Hòa',
-              city: 'Hồ Chí Minh',
-              location: '20 Cộng Hòa, Tân Bình',
-            ),
-            CinemaShowtime(
-              id: 4,
-              name: 'BHD Star Bitexco',
-              city: 'Hồ Chí Minh',
-              location: '2 Hải Triều, Quận 1',
-            ),
-          ];
-
-          return _AvailableCinemaContainer(cinemas: cinemaList);
+          );
         }
       },
     );
@@ -89,19 +47,23 @@ class _AvailableCinemaContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
+      // Provide ChangeTabCubit with an initial state of ChoseCinemaState
       create:
           (_) => ChangeTabCubit<ChoseCinemaState>(
             initialState: ChoseCinemaState(),
           ),
+
+      // Listen to ChoseCinemaState and rebuild the UI accordingly
       child: BlocBuilder<ChangeTabCubit<ChoseCinemaState>, ChoseCinemaState>(
         builder: (context, state) {
           return Column(
             children: [
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
+              // Title for the cinema section
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
                     'Rạp chiếu phim',
                     style: TextStyle(
@@ -113,46 +75,65 @@ class _AvailableCinemaContainer extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-              ...List.generate(cinemas.length, (index) {
-                final cinema = cinemas[index];
-                final isSelected = index == state.selectedIndex;
+              if (cinemas.isNotEmpty)
+                /*
+                ✅ List.generate:
+                - Dynamically generates a List of widgets based on the given length (cinemas.length).
+                - Each widget is created using the function passed to it (here, a GestureDetector).
 
-                return GestureDetector(
-                  onTap: () {
-                    context.read<ChangeTabCubit<ChoseCinemaState>>().changeTab(
-                      ChoseCinemaState().copyWith(
-                        selectedIndex: index,
-                        selectedCinemaId: cinema.id,
-                      ),
-                    );
-                  },
-                  child: _BuildCinemaItem(
-                    cinema: cinema,
-                    isSelected: isSelected,
-                  ),
-                );
-              }),
+                ✅ Spread operator (...) :
+                - Used to "unpack" or insert each generated widget into the parent list of children in the widget tree.
+              */
+                ...List.generate(cinemas.length, (index) {
+                  final cinema = cinemas[index];
+                  final isSelected = index == state.selectedIndex;
 
-              const SizedBox(height: 16),
+                  /*
+                  ✅ GestureDetector:
+                  - A widget used to capture touch gestures (e.g., tap, double tap, long press, drag, etc.).
+                  - Here, it's used to detect when a cinema item is tapped.
 
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      foregroundColor: Colors.black,
+                  👉 When tapped, it updates the cubit state using copyWith():
+                      - selectedIndex: to highlight the selected cinema
+                      - selectedCinemaId: to store the selected cinema's ID
+                */
+                  return GestureDetector(
+                    onTap: () {
+                      context
+                          .read<ChangeTabCubit<ChoseCinemaState>>()
+                          .changeTab(
+                            state.copyWith(
+                              selectedIndex: index,
+                              selectedCinemaId: cinema.id,
+                            ),
+                          );
+                    },
+                    child: _BuildCinemaItem(
+                      cinema: cinema,
+                      isSelected: isSelected,
                     ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Xác nhận chọn rạp',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                  );
+                })
+              else
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      'Phim này hiện tại không có suất chiếu',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ),
-              ),
+
+              const SizedBox(height: 12),
+
+              if (cinemas.isNotEmpty) _ConfirmationButton(),
             ],
           );
         },
@@ -179,7 +160,7 @@ class _BuildCinemaItem extends StatelessWidget {
                 ? Colors.amber.shade100.withOpacity(0.2)
                 : Colors.grey.shade900,
         border: Border.all(
-          color: isSelected ? Colors.amber : Colors.transparent,
+          color: isSelected ? Colors.amberAccent : Colors.transparent,
           width: 1.5,
         ),
         borderRadius: BorderRadius.circular(12),
@@ -203,6 +184,32 @@ class _BuildCinemaItem extends StatelessWidget {
             style: const TextStyle(color: Colors.grey, fontSize: 14),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ConfirmationButton extends StatelessWidget {
+  const _ConfirmationButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.amberAccent,
+            foregroundColor: Colors.black,
+          ),
+          onPressed: () {
+            // TODO: Handle confirmation logic for selected cinema
+          },
+          child: const Text(
+            'Xác nhận chọn rạp',
+            style: TextStyle(color: Colors.black, fontSize: 18),
+          ),
+        ),
       ),
     );
   }

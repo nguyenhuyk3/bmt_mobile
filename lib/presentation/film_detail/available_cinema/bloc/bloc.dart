@@ -26,7 +26,9 @@ class AvailableCinemaBloc
     emit(AvailableCinemaLoading());
 
     try {
-      final cinemas = await cinemaRepository.getCinemasForShowingFilmByFilmId();
+      final cinemas = await cinemaRepository.getCinemasForShowingFilmByFilmId(
+        filmId: event.filmId,
+      );
 
       emit(AvailableCinemaLoadSuccess(cinemas: cinemas));
     } catch (e) {

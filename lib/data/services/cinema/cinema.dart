@@ -7,9 +7,11 @@ class CinemaService {
 
   CinemaService({required this.dio});
 
-  Future<APIReponse> getCinemasForShowingFilmByFilmId() async {
+  Future<APIReponse> getCinemasForShowingFilmByFilmId({
+    required int filmId,
+  }) async {
     final response = await dio.get(
-      '/showtime_service/cinema/get_cinemas_for_showing_film_by_film_id/1',
+      '/showtime_service/cinema/get_cinemas_for_showing_film_by_film_id/$filmId',
     );
 
     logger.i(response.statusCode);

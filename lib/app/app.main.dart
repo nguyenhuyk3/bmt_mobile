@@ -11,6 +11,7 @@ import 'package:rt_mobile/data/services/authentication/login.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
 import 'package:rt_mobile/data/services/cinema/cinema.dart';
 import 'package:rt_mobile/data/services/film/film.dart';
+import 'package:rt_mobile/data/services/globalkey/app_navigator.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';

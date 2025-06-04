@@ -25,8 +25,8 @@ class FilmRepository {
     }
   }
 
-  Future<FilmProduct> getFilmById() async {
-    final response = await filmService.getFilmById();
+  Future<FilmProduct> getFilmById({required int filmId}) async {
+    final response = await filmService.getFilmById(filmId: filmId);
 
     if (response.isSuccess) {
       final rawData = response.data['data'];

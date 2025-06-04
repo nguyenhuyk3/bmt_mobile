@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/models/film/film.showtime.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
+import 'package:rt_mobile/presentation/film_detail/film_detail_screen.dart';
 import 'package:rt_mobile/presentation/home/bloc/film/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
@@ -49,13 +50,12 @@ class _FilmCarouselContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ChangeTabCubit<int>(initialState: 0),
-      /* 
-          A Builder is a special widget that creates a new BuildContext, giving 
-        you access to the correct context when you need to call 
-        Navigator, Scaffold.of(context), or other context-dependent widgets.
-      */
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ChangeTabCubit<int>>(
+          create: (_) => ChangeTabCubit<int>(initialState: 0),
+        ),
+      ],
       child: Builder(
         builder: (context) {
           _pageController.addListener(() {
@@ -77,10 +77,24 @@ class _FilmCarouselContainer extends StatelessWidget {
                   itemCount: films.length,
                   itemBuilder: (context, index) {
                     final film = films[index];
-                    return _CenteredFilmCard(
-                      film: film,
-                      index: index,
-                      pageController: _pageController,
+
+                    return GestureDetector(
+                      onTap:
+                          () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        FilmDetailScreen(filmId: film.filmId),
+                              ),
+                            ),
+                          },
+                      child: _CenteredFilmCard(
+                        film: film,
+                        index: index,
+                        pageController: _pageController,
+                      ),
                     );
                   },
                 ),

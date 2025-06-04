@@ -63,7 +63,7 @@ class _FilmInformationContainer extends StatelessWidget {
           Text(
             film.title,
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 25,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -73,7 +73,7 @@ class _FilmInformationContainer extends StatelessWidget {
 
           Text(
             '${film.duration} • ${film.releaseDate}',
-            style: const TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey, fontSize: 15),
           ),
 
           const SizedBox(height: 8),
@@ -193,10 +193,16 @@ class _InfoRow extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final cubit = context.read<CheckOverFlowCubit>();
-          final textStyle = const TextStyle(color: Colors.white);
+          final textStyle = const TextStyle(color: Colors.white, fontSize: 15);
 
+          /* 
+              This code registers a callback function to be called after the current frame has finished rendering 
+            (i.e. after the UI build and layout is complete)
+              addPostFrameCallback is used to delay running the code until the UI has finished rendering
+          */
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final maxWidth = MediaQuery.of(context).size.width - 150;
+
             cubit.checkOverflow(
               value: value,
               textStyle: textStyle,
@@ -213,9 +219,10 @@ class _InfoRow extends StatelessWidget {
                   width: 110,
                   child: Text(
                     label,
-                    style: const TextStyle(color: Colors.grey),
+                    style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                 ),
+
                 Expanded(
                   child: BlocBuilder<CheckOverFlowCubit, CheckOverflowState>(
                     builder: (context, state) {
@@ -231,6 +238,7 @@ class _InfoRow extends StatelessWidget {
                                     ? TextOverflow.visible
                                     : TextOverflow.ellipsis,
                           ),
+
                           if (state.overflow && !state.expanded)
                             GestureDetector(
                               onTap: () => cubit.expand(),
@@ -238,7 +246,7 @@ class _InfoRow extends StatelessWidget {
                                 'Xem thêm',
                                 style: TextStyle(
                                   color: Colors.amber,
-                                  fontSize: 12,
+                                  fontSize: 15,
                                 ),
                               ),
                             ),
@@ -295,9 +303,8 @@ class _FilmStoryLine extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final cubit = context.read<CheckOverFlowCubit>();
-          final textStyle = const TextStyle(color: Colors.grey);
+          final textStyle = const TextStyle(color: Colors.grey, fontSize: 15);
 
-          // Kiểm tra overflow sau khi layout xong
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final maxWidth = MediaQuery.of(context).size.width;
             cubit.checkOverflow(
@@ -315,17 +322,19 @@ class _FilmStoryLine extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 15,
+                  fontSize: 18,
                 ),
               ),
+
               const SizedBox(height: 4),
+
               BlocBuilder<CheckOverFlowCubit, CheckOverflowState>(
                 builder: (context, state) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111slkdufjlksdjflksjlfksjlkfjsljf11111111111',
+                        storyLine,
                         style: textStyle,
                         maxLines: state.expanded ? null : 1,
                         overflow:
@@ -333,12 +342,13 @@ class _FilmStoryLine extends StatelessWidget {
                                 ? TextOverflow.visible
                                 : TextOverflow.ellipsis,
                       ),
+
                       if (state.overflow && !state.expanded)
                         GestureDetector(
                           onTap: () => cubit.expand(),
                           child: const Text(
                             'Xem thêm',
-                            style: TextStyle(color: Colors.amber, fontSize: 12),
+                            style: TextStyle(color: Colors.amber, fontSize: 15),
                           ),
                         ),
                     ],
@@ -371,7 +381,7 @@ class _FilmDirectorOrActorInfo extends StatelessWidget {
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: 18,
           ),
         ),
 
@@ -397,7 +407,7 @@ class _FilmDirectorOrActorInfo extends StatelessWidget {
                           person['name']!,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 13,
+                            fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.center,

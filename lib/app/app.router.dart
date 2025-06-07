@@ -9,7 +9,7 @@ class AppRouter extends StatelessWidget {
   */
   final _navigatorKey = GlobalKey<NavigatorState>();
 
-  NavigatorState get _navigator => _navigatorKey.currentState!;
+  NavigatorState get navigator => _navigatorKey.currentState!;
 
   AppRouter({super.key});
 

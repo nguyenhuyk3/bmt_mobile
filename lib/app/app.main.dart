@@ -7,11 +7,13 @@ import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/repositories/authentication.dart';
 import 'package:rt_mobile/data/repositories/cinema.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
+import 'package:rt_mobile/data/repositories/showtime.dart';
 import 'package:rt_mobile/data/services/authentication/login.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
-import 'package:rt_mobile/data/services/cinema/cinema.dart';
-import 'package:rt_mobile/data/services/film/film.dart';
-import 'package:rt_mobile/data/services/globalkey/app_navigator.dart';
+import 'package:rt_mobile/data/services/cinema.dart';
+import 'package:rt_mobile/data/services/film.dart';
+import 'package:rt_mobile/data/services/app_navigator.dart';
+import 'package:rt_mobile/data/services/showtime.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
@@ -31,6 +33,7 @@ class _MainAppState extends State<MainApp> {
   late final AuthenticationRepository _authenticationRepository;
   late final FilmRepository _filmRepository;
   late final CinemaRepository _cinemaRepository;
+  late final ShowtimeRepository _showtimeRepository;
   // Authorization
   // late final AuthorizationRepository _authorizationRepository;
 
@@ -48,6 +51,9 @@ class _MainAppState extends State<MainApp> {
     _cinemaRepository = CinemaRepository(
       cinemaService: CinemaService(dio: dioClient),
     );
+    _showtimeRepository = ShowtimeRepository(
+      showtimeService: ShowtimeService(dio: dioClient),
+    );
 
     // _authorizationRepository = AuthorizationRepository();
   }
@@ -64,6 +70,7 @@ class _MainAppState extends State<MainApp> {
         RepositoryProvider.value(value: _authenticationRepository),
         RepositoryProvider.value(value: _filmRepository),
         RepositoryProvider.value(value: _cinemaRepository),
+        RepositoryProvider.value(value: _showtimeRepository),
       ],
       child: MultiBlocProvider(
         providers: [

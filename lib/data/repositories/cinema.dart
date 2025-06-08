@@ -1,5 +1,5 @@
 import 'package:rt_mobile/data/models/cinema/cinema.showtime.dart';
-import 'package:rt_mobile/data/services/cinema/cinema.dart';
+import 'package:rt_mobile/data/services/cinema.dart';
 
 class CinemaRepository {
   final CinemaService cinemaService;

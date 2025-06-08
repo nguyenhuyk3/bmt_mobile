@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 
 import 'package:rt_mobile/data/models/film/film.product.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
@@ -53,7 +52,6 @@ class _FilmInformationContainer extends StatelessWidget {
       - Navigation bar
       - Borders or collapsed devices
     */
-    logger.i(film.posterUrl);
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

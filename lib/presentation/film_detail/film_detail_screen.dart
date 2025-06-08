@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
+
 import 'package:rt_mobile/data/repositories/cinema.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
@@ -35,8 +35,6 @@ class FilmDetailScreen extends StatelessWidget {
                 context,
               ),
             );
-
-            logger.i(filmId);
 
             bloc.add(AvailableCinemaFetched(filmId: filmId));
 

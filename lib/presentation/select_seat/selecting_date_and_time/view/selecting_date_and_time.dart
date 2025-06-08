@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/map.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/bloc/bloc.dart';
@@ -56,6 +57,7 @@ class SelectingDateAndTime extends StatelessWidget {
 }
 
 class _SelectingDateAndTimeContainer extends StatelessWidget {
+  // dates: will be provided 14 days from tomorrow
   final List<String> dates;
   final Map<String, List<String>> datesAndShowtimes;
 
@@ -92,6 +94,7 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
                 isSelected: index == selectedIndex,
                 onTap: () {
                   context.read<ChangeTabCubit<int>>().changeTab(index);
+                  context.read<ChangeTabCubit<String>>().changeTab('');
                 },
               );
             },
@@ -102,32 +105,38 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
 
         BlocBuilder<ChangeTabCubit<int>, int>(
           builder: (context, selectedIndex) {
-            final selectedDate = dates[selectedIndex];
-            final times = datesAndShowtimes[selectedDate] ?? [];
-            final selectedTime = context.watch<ChangeTabCubit<String>>().state;
+            final times = datesAndShowtimes[dates[selectedIndex]] ?? [];
 
-            if (times.isNotEmpty && selectedTime.isEmpty) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.read<ChangeTabCubit<String>>().changeTab(times[0]);
-              });
-            }
+            return BlocBuilder<ChangeTabCubit<String>, String>(
+              builder: (context, selectedTime) {
+                // Nếu chưa chọn time, tự chọn phần tử đầu tiên
+                if (times.isNotEmpty && selectedTime.isEmpty) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    context.read<ChangeTabCubit<String>>().changeTab(times[0]);
+                  });
+                }
 
-            return SizedBox(
-              height: 40,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: times.length,
-                itemBuilder: (context, index) {
-                  final time = times[index];
-                  return _BuildTimeButton(
-                    time: time,
-                    isSelected: time == selectedTime,
-                    onTap: () {
-                      context.read<ChangeTabCubit<String>>().changeTab(time);
+                return SizedBox(
+                  height: 40,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: times.length,
+                    itemBuilder: (context, index) {
+                      final time = times[index];
+
+                      return _BuildTimeButton(
+                        time: time,
+                        isSelected: time == selectedTime,
+                        onTap: () {
+                          context.read<ChangeTabCubit<String>>().changeTab(
+                            time,
+                          );
+                        },
+                      );
                     },
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             );
           },
         ),

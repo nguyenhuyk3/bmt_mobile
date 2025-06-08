@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/repositories/showtime.dart';
+import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/select_seat/seats/view/seats.dart';
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/view/selecting_date_and_time.dart';
 
@@ -24,6 +26,19 @@ class SelectSeatScreen extends StatelessWidget {
             return bloc;
           },
         ),
+        BlocProvider(
+          create: (_) {
+            final bloc = SeatsBloc(
+              showtimeRepository: RepositoryProvider.of<ShowtimeRepository>(
+                context,
+              ),
+            );
+
+            bloc.add(SeatsFetched());
+
+            return bloc;
+          },
+        ),
       ],
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -33,7 +48,10 @@ class SelectSeatScreen extends StatelessWidget {
           leading: const BackButton(color: Colors.white),
           elevation: 0,
         ),
-        body: Column(children: [SelectingDateAndTime()]),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [ SelectingDateAndTime()],
+        ),
       ),
     );
   }

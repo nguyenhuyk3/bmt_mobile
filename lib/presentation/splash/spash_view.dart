@@ -5,10 +5,12 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.only(top: 100),
-        child: CircularProgressIndicator(color: Colors.yellowAccent),
+    return SizedBox(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.only(top: 100),
+          child: CircularProgressIndicator(color: Colors.yellowAccent),
+        ),
       ),
     );
   }

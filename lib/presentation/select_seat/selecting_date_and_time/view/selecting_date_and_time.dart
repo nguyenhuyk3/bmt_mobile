@@ -85,6 +85,16 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
                 date: dates[index],
                 isSelected: index == selectedIndex,
                 onTap: () {
+                  context.read<SeatsBloc>().add(
+                    SeatsFetched(
+                      showtimeId: int.parse(
+                        extractShowtimeId(
+                          input: context.read<ChangeTabCubit<String>>().state,
+                        ),
+                      ),
+                    ),
+                  );
+
                   context.read<ChangeTabCubit<int>>().changeTab(index);
                   context.read<ChangeTabCubit<String>>().changeTab('');
                 },

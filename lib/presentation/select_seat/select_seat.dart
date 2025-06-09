@@ -50,7 +50,7 @@ class SelectSeatScreen extends StatelessWidget {
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [ SelectingDateAndTime()],
+          children: [Seats(), SelectingDateAndTime()],
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
@@ -30,8 +31,6 @@ class Seats extends StatelessWidget {
         if (state is SeatsLoading) {
           return SplashPage();
         } else if (state is SeatsLoadSuccess) {
-          final seats = state.seats;
-
           return Column(
             children: [
               Container(
@@ -50,10 +49,12 @@ class Seats extends StatelessWidget {
                 height: 360,
                 child: SingleChildScrollView(
                   child: Center(
-                    child: Wrap(
-                      spacing: seatSpacing,
-                      runSpacing: seatSpacing,
-                      children: _buildSeatRows(seats),
+                    child: SeatRows(
+                      seats: state.seats,
+                      selectedSeatIds: state.selectedSeatIds,
+                      seatSize: seatSize,
+                      seatSpacing: seatSpacing,
+                      getSeatColor: getSeatColor,
                     ),
                   ),
                 ),
@@ -65,27 +66,13 @@ class Seats extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildLegend(const Color(0xFF1E1E1E), "Available"),
-                    _buildLegend(Colors.grey, "Booked"),
-                    _buildLegend(Colors.amber, "Selected"),
+                    SeatLegend(color: const Color(0xFF1E1E1E), label: "Có sẵn"),
+                    SeatLegend(color: Colors.grey, label: "Đã được đặt"),
+                    SeatLegend(color: Colors.amber, label: "Đã chọn"),
                   ],
                 ),
               ),
             ],
-          );
-        } else if (state is SeatsError) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30),
-              child: Text(
-                state.message,
-                style: const TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
           );
         } else {
           return const Center(
@@ -105,8 +92,34 @@ class Seats extends StatelessWidget {
       },
     );
   }
+}
 
-  List<Widget> _buildSeatRows(List<SeatShowtime> seats) {
+class SeatRows extends StatelessWidget {
+  final List<SeatShowtime> seats;
+  final Set<int> selectedSeatIds;
+  final double seatSize;
+  final double seatSpacing;
+  final Color Function(String) getSeatColor;
+
+  const SeatRows({
+    super.key,
+    required this.seats,
+    required this.selectedSeatIds,
+    required this.seatSize,
+    required this.seatSpacing,
+    required this.getSeatColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: seatSpacing,
+      runSpacing: seatSpacing,
+      children: _buildSeatRows(context),
+    );
+  }
+
+  List<Widget> _buildSeatRows(BuildContext context) {
     final List<Widget> rows = [];
     final pairedIds = <int>{};
 
@@ -114,7 +127,9 @@ class Seats extends StatelessWidget {
     double currentSlots = 0; // 1 for standard, 2 for coupled
 
     for (final seat in seats) {
-      if (pairedIds.contains(seat.seatId)) continue;
+      if (pairedIds.contains(seat.seatId)) {
+        continue;
+      }
 
       if (seat.seatType == 'coupled' && seat.seatId % 2 == 1) {
         // Coupled seat chiếm 2 slot
@@ -137,18 +152,28 @@ class Seats extends StatelessWidget {
         pairedIds.add(pair.seatId);
 
         currentRow.add(
-          Container(
-            width: seatSize * 2 + seatSpacing,
-            height: seatSize,
-            margin: EdgeInsets.only(right: seatSpacing),
-            decoration: BoxDecoration(
-              color: getSeatColor(seat.status),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              '${seat.seatNumber}-${pair.seatNumber}',
-              style: const TextStyle(color: Colors.white, fontSize: 12),
+          GestureDetector(
+            onTap: () {
+              if (seat.status == 'available') {
+                context.read<SeatsBloc>().add(SeatsToggled(seat.seatId));
+              }
+            },
+            child: Container(
+              width: seatSize * 2 + seatSpacing,
+              height: seatSize,
+              margin: EdgeInsets.only(right: seatSpacing),
+              decoration: BoxDecoration(
+                color:
+                    selectedSeatIds.contains(seat.seatId)
+                        ? Colors.amber
+                        : getSeatColor(seat.status),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                '${seat.seatNumber}  -  ${pair.seatNumber}',
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+              ),
             ),
           ),
         );
@@ -169,18 +194,29 @@ class Seats extends StatelessWidget {
         }
 
         currentRow.add(
-          Container(
-            width: seatSize,
-            height: seatSize,
-            margin: EdgeInsets.only(right: seatSpacing),
-            decoration: BoxDecoration(
-              color: getSeatColor(seat.status),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              seat.seatNumber,
-              style: const TextStyle(color: Colors.white, fontSize: 12),
+          GestureDetector(
+            onTap: () {
+              if (seat.status == 'available') {
+                logger.i(seat.status);
+                context.read<SeatsBloc>().add(SeatsToggled(seat.seatId));
+              }
+            },
+            child: Container(
+              width: seatSize,
+              height: seatSize,
+              margin: EdgeInsets.only(right: seatSpacing),
+              decoration: BoxDecoration(
+                color:
+                    selectedSeatIds.contains(seat.seatId)
+                        ? Colors.amber
+                        : getSeatColor(seat.status),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                seat.seatNumber,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+              ),
             ),
           ),
         );
@@ -202,8 +238,16 @@ class Seats extends StatelessWidget {
 
     return rows;
   }
+}
 
-  Widget _buildLegend(Color color, String label) {
+class SeatLegend extends StatelessWidget {
+  final Color color;
+  final String label;
+
+  const SeatLegend({super.key, required this.color, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         Container(width: 14, height: 14, color: color),

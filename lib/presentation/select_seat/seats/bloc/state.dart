@@ -13,11 +13,15 @@ class SeatsLoading extends SeatsState {}
 
 class SeatsLoadSuccess extends SeatsState {
   final List<SeatShowtime> seats;
+  final Set<int> selectedSeatIds;
 
-  const SeatsLoadSuccess({required this.seats});
+  const SeatsLoadSuccess({
+    required this.seats,
+    this.selectedSeatIds = const {},
+  });
 
   @override
-  List<Object?> get props => [seats];
+  List<Object?> get props => [seats, selectedSeatIds];
 }
 
 class SeatsError extends SeatsState {

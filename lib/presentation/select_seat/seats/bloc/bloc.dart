@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 
 import 'package:rt_mobile/data/repositories/showtime.dart';
@@ -16,6 +15,7 @@ class SeatsBloc extends Bloc<SeatsEvent, SeatsState> {
   SeatsBloc({required this.showtimeRepository}) : super(SeatsInitial()) {
     on<SeatsFetched>(_onSeatsFetched);
     on<SeatsRefreshed>(_onSeatsRefreshed);
+    on<SeatsToggled>(_onSeatToggled);
   }
 
   FutureOr<void> _onSeatsFetched(
@@ -27,8 +27,6 @@ class SeatsBloc extends Bloc<SeatsEvent, SeatsState> {
     try {
       final seats = await showtimeRepository.getAllShowtimeSeatsByShowtimeId();
 
-      logger.i(state);
-
       emit(SeatsLoadSuccess(seats: seats));
     } catch (e) {
       emit(SeatsError(message: e.toString()));
@@ -39,4 +37,24 @@ class SeatsBloc extends Bloc<SeatsEvent, SeatsState> {
     SeatsRefreshed event,
     Emitter<SeatsState> emit,
   ) {}
+
+  FutureOr<void> _onSeatToggled(SeatsToggled event, Emitter<SeatsState> emit) {
+    if (state is SeatsLoadSuccess) {
+      final currentState = state as SeatsLoadSuccess;
+      final seatsSelected = Set<int>.from(currentState.selectedSeatIds);
+
+      if (seatsSelected.contains(event.seatId)) {
+        seatsSelected.remove(event.seatId);
+      } else {
+        seatsSelected.add(event.seatId);
+      }
+
+      emit(
+        SeatsLoadSuccess(
+          seats: currentState.seats,
+          selectedSeatIds: seatsSelected,
+        ),
+      );
+    }
+  }
 }

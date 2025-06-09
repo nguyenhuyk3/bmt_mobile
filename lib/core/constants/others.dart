@@ -5,7 +5,6 @@ import 'package:logger/logger.dart';
 import 'package:rt_mobile/data/services/secure_storage.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/login_screen.dart';
 import 'package:rt_mobile/presentation/select_seat/select_seat.dart';
-import 'package:rt_mobile/presentation/home/home_screen.dart';
 
 // loggers
 final logger = Logger();

@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class Showtime {
+class ShowtimeShowtime {
   final int id;
   final int filmId;
   final int auditoriumId;
@@ -12,7 +12,7 @@ class Showtime {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Showtime({
+  ShowtimeShowtime({
     required this.id,
     required this.filmId,
     required this.auditoriumId,
@@ -25,7 +25,7 @@ class Showtime {
     required this.updatedAt,
   });
 
-  factory Showtime.fromJson(Map<String, dynamic> json) {
+  factory ShowtimeShowtime.fromJson(Map<String, dynamic> json) {
     final rawStartTime = json['start_time'] as String;
     final rawEndTime = json['end_time'] as String;
     final formattedStartTime = DateFormat.Hm().format(
@@ -33,7 +33,7 @@ class Showtime {
     );
     final formattedEndTime = DateFormat.Hm().format(DateTime.parse(rawEndTime));
 
-    return Showtime(
+    return ShowtimeShowtime(
       id: json['id'] as int,
       filmId: json['film_id'] as int,
       auditoriumId: json['auditorium_id'] as int,

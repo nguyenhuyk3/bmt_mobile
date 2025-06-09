@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/map.dart';
+import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
+import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
@@ -28,9 +31,9 @@ class SelectingDateAndTime extends StatelessWidget {
                 14,
                 (index) => DateFormat(
                   'yyyy-MM-dd',
-                ).format(DateTime.now().add(Duration(days: index + 1))),
+                ).format(DateTime.now().add(Duration(days: index + 0))),
               ),
-              datesAndShowtimes: groupShowtimesByDate(state.showtimes),
+              groupedShowtimes: groupShowtimes(showtimes: state.showtimes),
             );
           } else if (state is SelectingDateAndTimeLoading) {
             return SplashPage();
@@ -58,28 +61,18 @@ class SelectingDateAndTime extends StatelessWidget {
 class _SelectingDateAndTimeContainer extends StatelessWidget {
   // dates: will be provided 14 days from tomorrow
   final List<String> dates;
-  final Map<String, List<String>> datesAndShowtimes;
+  final Map<String, List<String>> groupedShowtimes;
 
   const _SelectingDateAndTimeContainer({
     required this.dates,
-    required this.datesAndShowtimes,
+    required this.groupedShowtimes,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "Chọn ngày và giờ",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-
-        SizedBox(height: 12),
-
+        // dates
         SizedBox(
           height: 82,
           child: ListView.builder(
@@ -100,11 +93,12 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 12),
+        SizedBox(height: 16),
 
+        // times
         BlocBuilder<ChangeTabCubit<int>, int>(
           builder: (context, selectedIndex) {
-            final times = datesAndShowtimes[dates[selectedIndex]] ?? [];
+            final times = groupedShowtimes[dates[selectedIndex]] ?? [];
 
             return BlocBuilder<ChangeTabCubit<String>, String>(
               builder: (context, selectedTime) {
@@ -124,11 +118,18 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
                       final time = times[index];
 
                       return _BuildTimeButton(
-                        time: time,
+                        time: extractStartTime(input: time),
                         isSelected: time == selectedTime,
                         onTap: () {
                           context.read<ChangeTabCubit<String>>().changeTab(
                             time,
+                          );
+                          context.read<SeatsBloc>().add(
+                            SeatsFetched(
+                              showtimeId: int.parse(
+                                extractShowtimeId(input: time),
+                              ),
+                            ),
                           );
                         },
                       );

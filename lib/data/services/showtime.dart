@@ -15,10 +15,16 @@ class ShowtimeService {
     return APIReponse(statusCode: response.statusCode, data: response.data);
   }
 
-  Future<APIReponse> getAllShowtimeSeatsByShowtimeId() async {
+  Future<APIReponse> getAllShowtimeSeatsByShowtimeId({
+    required int showtimeId,
+  }) async {
+    if (showtimeId == -1) {
+      showtimeId = 32;
+    }
+
     final response = await dio.get(
       '/showtime_service/showtime_seat/public/get_all_showtime_seats_by_showtime_id',
-      queryParameters: {'showtime_id': 32},
+      queryParameters: {'showtime_id': showtimeId},
     );
 
     return APIReponse(statusCode: response.statusCode, data: response.data);

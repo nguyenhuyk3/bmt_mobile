@@ -7,7 +7,14 @@ sealed class SeatsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class SeatsFetched extends SeatsEvent {}
+class SeatsFetched extends SeatsEvent {
+  final int showtimeId;
+
+  const SeatsFetched({required this.showtimeId});
+
+  @override
+  List<Object?> get props => [showtimeId];
+}
 
 class SeatsRefreshed extends SeatsEvent {}
 

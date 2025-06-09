@@ -1,4 +1,3 @@
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 import 'package:rt_mobile/data/models/showtime/showtime.showtime.dart';
 import 'package:rt_mobile/data/services/showtime.dart';
@@ -8,7 +7,7 @@ class ShowtimeRepository {
 
   ShowtimeRepository({required this.showtimeService});
 
-  Future<List<Showtime>>
+  Future<List<ShowtimeShowtime>>
   getAllShowtimesByFilmIdAndByCinemaIdAndByShowDate() async {
     final response =
         await showtimeService
@@ -18,7 +17,7 @@ class ShowtimeRepository {
       final rawData = response.data['data'];
 
       if (rawData is List) {
-        return rawData.map((showtime) => Showtime.fromJson(showtime)).toList();
+        return rawData.map((showtime) => ShowtimeShowtime.fromJson(showtime)).toList();
       } else {
         throw Exception("invalid data format");
       }
@@ -29,8 +28,13 @@ class ShowtimeRepository {
     }
   }
 
-  Future<List<SeatShowtime>> getAllShowtimeSeatsByShowtimeId() async {
-    final response = await showtimeService.getAllShowtimeSeatsByShowtimeId();
+  Future<List<SeatShowtime>> getAllShowtimeSeatsByShowtimeId({
+    required int showtimeId,
+  }) async {
+    final response = await showtimeService.getAllShowtimeSeatsByShowtimeId(
+      showtimeId: showtimeId,
+    );
+
     if (response.isSuccess) {
       final rawData = response.data['data'];
 

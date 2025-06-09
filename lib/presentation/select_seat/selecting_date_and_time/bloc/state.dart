@@ -22,7 +22,7 @@ class SelectingDateAndTimeLoading extends SelectingDateAndTimeState {
 }
 
 class SelectingDateAndTimeLoadSuccess extends SelectingDateAndTimeState {
-  final List<Showtime> showtimes;
+  final List<ShowtimeShowtime> showtimes;
 
   const SelectingDateAndTimeLoadSuccess({required this.showtimes})
     : super();

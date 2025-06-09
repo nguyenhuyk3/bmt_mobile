@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
+import 'package:rt_mobile/presentation/select_seat/constants.dart';
 import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
@@ -15,25 +16,28 @@ class Seats extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SeatsBloc, SeatsState>(
       builder: (context, state) {
+        double screenHeight = MediaQuery.of(context).size.height;
+
         if (state is SeatsLoading) {
           return SplashPage();
         } else if (state is SeatsLoadSuccess) {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 40,
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.amber, Colors.transparent],
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 40,
+              //   margin: const EdgeInsets.symmetric(vertical: 8),
+              //   decoration: const BoxDecoration(
+              //     gradient: LinearGradient(
+              //       colors: [Colors.amber, Colors.transparent],
+              //     ),
+              //   ),
+              // ),
 
               // seats
               SizedBox(
                 width: double.infinity,
-                height: 325,
+                height: screenHeight * seatsSize,
                 child: SingleChildScrollView(
                   child: Center(
                     child: _SeatRows(
@@ -48,26 +52,29 @@ class Seats extends StatelessWidget {
               ),
 
               // Color annotation
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _SeatLegend(
-                      color: const Color(0xFF1E1E1E),
-                      label: "Có sẵn",
-                    ),
-                    _SeatLegend(color: Colors.grey, label: "Đã được đặt"),
-                    _SeatLegend(color: Colors.amber, label: "Đã chọn"),
-                  ],
+              SizedBox(
+                height: screenHeight * colorAnnotation,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _SeatLegend(
+                        color: const Color(0xFF1E1E1E),
+                        label: "Có sẵn",
+                      ),
+                      _SeatLegend(color: Colors.grey, label: "Đã được đặt"),
+                      _SeatLegend(color: Colors.amber, label: "Đã chọn"),
+                    ],
+                  ),
                 ),
               ),
             ],
           );
         } else {
-          return const Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 30),
+          return SizedBox(
+            height: totalSeatAndColorAnnotationSize * screenHeight,
+            child: const Center(
               child: Text(
                 'Máy chủ đã xảy ra lỗi',
                 style: TextStyle(
@@ -140,6 +147,7 @@ class _SeatRows extends StatelessWidget {
           (s) => s.seatId == seat.seatId + 1,
           orElse: () => seat,
         );
+
         pairedIds.add(pair.seatId);
 
         currentRow.add(

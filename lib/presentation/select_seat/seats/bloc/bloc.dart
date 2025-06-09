@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 
 import 'package:rt_mobile/data/repositories/showtime.dart';
@@ -24,8 +25,11 @@ class SeatsBloc extends Bloc<SeatsEvent, SeatsState> {
   ) async {
     emit(SeatsLoading());
 
+    logger.i(event.showtimeId);
     try {
-      final seats = await showtimeRepository.getAllShowtimeSeatsByShowtimeId();
+      final seats = await showtimeRepository.getAllShowtimeSeatsByShowtimeId(
+        showtimeId: event.showtimeId,
+      );
 
       emit(SeatsLoadSuccess(seats: seats));
     } catch (e) {

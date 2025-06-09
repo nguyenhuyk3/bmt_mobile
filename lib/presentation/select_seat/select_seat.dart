@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/repositories/showtime.dart';
 import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/select_seat/seats/view/seats.dart';
+import 'package:rt_mobile/presentation/select_seat/seats/view/selected_seats_summary.dart';
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/view/selecting_date_and_time.dart';
 
@@ -34,23 +35,66 @@ class SelectSeatScreen extends StatelessWidget {
               ),
             );
 
-            bloc.add(SeatsFetched());
+            bloc.add(SeatsFetched(showtimeId: -1));
 
             return bloc;
           },
         ),
       ],
       child: Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          title: const Text("Đặt ghế", style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.black,
-          leading: const BackButton(color: Colors.white),
-          elevation: 0,
-        ),
         body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [Seats(), SelectingDateAndTime()],
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            const SizedBox(height: 32),
+
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ),
+                const Center(
+                  child: Text(
+                    "Đặt ghế",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 12),
+
+            Seats(),
+
+            SizedBox(height: 18),
+
+            Text(
+              "Chọn ngày và giờ",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+
+            SizedBox(height: 18),
+
+            SelectingDateAndTime(),
+
+            Divider(color: Colors.grey, thickness: 0.4),
+
+            SizedBox(height: 12),
+
+            SelectedSeatSummary(),
+          ],
         ),
       ),
     );

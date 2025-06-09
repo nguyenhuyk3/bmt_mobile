@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
+import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
@@ -10,19 +10,6 @@ class Seats extends StatelessWidget {
 
   final double seatSize = 36;
   final double seatSpacing = 3;
-
-  Color getSeatColor(String status) {
-    switch (status) {
-      case 'booked':
-        return Colors.grey;
-      case 'reserved':
-        return Colors.grey.shade700;
-      case 'available':
-        return const Color(0xFF1E1E1E);
-      default:
-        return Colors.red;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +30,13 @@ class Seats extends StatelessWidget {
                 ),
               ),
 
-              // Ghế
+              // seats
               SizedBox(
                 width: double.infinity,
-                height: 360,
+                height: 325,
                 child: SingleChildScrollView(
                   child: Center(
-                    child: SeatRows(
+                    child: _SeatRows(
                       seats: state.seats,
                       selectedSeatIds: state.selectedSeatIds,
                       seatSize: seatSize,
@@ -60,15 +47,18 @@ class Seats extends StatelessWidget {
                 ),
               ),
 
-              // Chú thích màu
+              // Color annotation
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SeatLegend(color: const Color(0xFF1E1E1E), label: "Có sẵn"),
-                    SeatLegend(color: Colors.grey, label: "Đã được đặt"),
-                    SeatLegend(color: Colors.amber, label: "Đã chọn"),
+                    _SeatLegend(
+                      color: const Color(0xFF1E1E1E),
+                      label: "Có sẵn",
+                    ),
+                    _SeatLegend(color: Colors.grey, label: "Đã được đặt"),
+                    _SeatLegend(color: Colors.amber, label: "Đã chọn"),
                   ],
                 ),
               ),
@@ -94,15 +84,14 @@ class Seats extends StatelessWidget {
   }
 }
 
-class SeatRows extends StatelessWidget {
+class _SeatRows extends StatelessWidget {
   final List<SeatShowtime> seats;
   final Set<int> selectedSeatIds;
   final double seatSize;
   final double seatSpacing;
   final Color Function(String) getSeatColor;
 
-  const SeatRows({
-    super.key,
+  const _SeatRows({
     required this.seats,
     required this.selectedSeatIds,
     required this.seatSize,
@@ -124,7 +113,8 @@ class SeatRows extends StatelessWidget {
     final pairedIds = <int>{};
 
     List<Widget> currentRow = [];
-    double currentSlots = 0; // 1 for standard, 2 for coupled
+    // 1 for standard, 2 for coupled
+    double currentSlots = 0;
 
     for (final seat in seats) {
       if (pairedIds.contains(seat.seatId)) {
@@ -132,12 +122,13 @@ class SeatRows extends StatelessWidget {
       }
 
       if (seat.seatType == 'coupled' && seat.seatId % 2 == 1) {
-        // Coupled seat chiếm 2 slot
+        // Coupled seat take up 2 slot
         if (currentSlots + 2 > 10) {
           rows.add(
             Row(
               mainAxisAlignment:
-                  MainAxisAlignment.center, // Căn giữa ghế trong hàng
+                  // Center the seats in the row
+                  MainAxisAlignment.center,
               children: currentRow,
             ),
           );
@@ -172,7 +163,11 @@ class SeatRows extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 '${seat.seatNumber}  -  ${pair.seatNumber}',
-                style: const TextStyle(color: Colors.white, fontSize: 14),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -180,12 +175,13 @@ class SeatRows extends StatelessWidget {
 
         currentSlots += 2;
       } else if (seat.seatType != 'coupled') {
-        // Ghế thường chiếm 1 slot
+        // Regular seats take up 1 slot
         if (currentSlots + 1 > 10) {
           rows.add(
             Row(
               mainAxisAlignment:
-                  MainAxisAlignment.center, // Căn giữa ghế trong hàng
+                  // Center the seats in the row
+                  MainAxisAlignment.center,
               children: currentRow,
             ),
           );
@@ -197,7 +193,6 @@ class SeatRows extends StatelessWidget {
           GestureDetector(
             onTap: () {
               if (seat.status == 'available') {
-                logger.i(seat.status);
                 context.read<SeatsBloc>().add(SeatsToggled(seat.seatId));
               }
             },
@@ -215,7 +210,11 @@ class SeatRows extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 seat.seatNumber,
-                style: const TextStyle(color: Colors.white, fontSize: 14),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -225,12 +224,13 @@ class SeatRows extends StatelessWidget {
       }
     }
 
-    // Add row còn dư
+    // Add remaining rows
     if (currentRow.isNotEmpty) {
       rows.add(
         Row(
           mainAxisAlignment:
-              MainAxisAlignment.center, // Căn giữa ghế trong hàng
+              // Center the seats in the row
+              MainAxisAlignment.center,
           children: currentRow,
         ),
       );
@@ -240,18 +240,20 @@ class SeatRows extends StatelessWidget {
   }
 }
 
-class SeatLegend extends StatelessWidget {
+class _SeatLegend extends StatelessWidget {
   final Color color;
   final String label;
 
-  const SeatLegend({super.key, required this.color, required this.label});
+  const _SeatLegend({required this.color, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(width: 14, height: 14, color: color),
+
         const SizedBox(width: 4),
+
         Text(label, style: const TextStyle(color: Colors.white)),
       ],
     );

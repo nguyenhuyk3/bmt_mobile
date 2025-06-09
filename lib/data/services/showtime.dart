@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/api_response.dart';
 
 class ShowtimeService {

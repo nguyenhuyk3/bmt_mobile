@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
-
-Color getSeatColor(SeatShowtime seat) {
-  switch (seat.status) {
-    case 'reserved':
-      return Colors.grey;
+Color getSeatColor(String status) {
+  switch (status) {
     case 'booked':
-      return Colors.redAccent;
+      return Colors.grey;
+    case 'reserved':
+      return Colors.grey.shade700;
+    case 'available':
+      return const Color(0xFF1E1E1E);
     default:
-      return Color(0xFF1E1E1E); // available
+      return Colors.red;
   }
 }

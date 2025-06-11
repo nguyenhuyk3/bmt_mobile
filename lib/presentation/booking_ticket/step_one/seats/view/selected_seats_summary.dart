@@ -51,7 +51,7 @@ class SelectedSeatSummary extends StatelessWidget {
                       text:
                           '${total.toString().replaceAllMapped(RegExp(r"(\d)(?=(\d{3})+(?!\d))"), (match) => "${match[1]}.")} VND',
                       style: const TextStyle(
-                        color: Colors.amber,
+                        color: Colors.amberAccent,
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
@@ -67,7 +67,7 @@ class SelectedSeatSummary extends StatelessWidget {
                         }
                         : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
+                  backgroundColor: Colors.amberAccent,
                   disabledBackgroundColor: Colors.grey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),

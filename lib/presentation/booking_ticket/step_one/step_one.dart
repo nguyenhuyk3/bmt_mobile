@@ -7,8 +7,8 @@ import 'package:rt_mobile/presentation/select_seat/seats/view/selected_seats_sum
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/view/selecting_date_and_time.dart';
 
-class SelectSeatScreen extends StatelessWidget {
-  const SelectSeatScreen({super.key});
+class SelectingSeatScreen extends StatelessWidget {
+  const SelectingSeatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

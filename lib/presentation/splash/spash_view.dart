@@ -15,3 +15,22 @@ class SplashPage extends StatelessWidget {
     );
   }
 }
+
+class SplashPageWithHeight extends StatelessWidget {
+  final double height;
+
+  const SplashPageWithHeight({super.key, required this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.only(top: 100),
+          child: CircularProgressIndicator(color: Colors.yellowAccent),
+        ),
+      ),
+    );
+  }
+}

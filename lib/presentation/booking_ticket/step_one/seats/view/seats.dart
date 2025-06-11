@@ -19,21 +19,13 @@ class Seats extends StatelessWidget {
         double screenHeight = MediaQuery.of(context).size.height;
 
         if (state is SeatsLoading) {
-          return SplashPage();
+          return SplashPageWithHeight(
+            height: totalSeatAndColorAnnotationSize * screenHeight,
+          );
         } else if (state is SeatsLoadSuccess) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Container(
-              //   height: 40,
-              //   margin: const EdgeInsets.symmetric(vertical: 8),
-              //   decoration: const BoxDecoration(
-              //     gradient: LinearGradient(
-              //       colors: [Colors.amber, Colors.transparent],
-              //     ),
-              //   ),
-              // ),
-
               // seats
               SizedBox(
                 width: double.infinity,
@@ -108,8 +100,24 @@ class _SeatRows extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*
+    In Flutter, Wrap is a layout widget that automatically arranges its children 
+    horizontally or vertically and "wraps" them to the next line (or column) 
+    when there's not enough space.
+
+    📦 How it works:
+        If there isn't enough space in the main axis (default is horizontal) 
+        to fit all the children in one line, Wrap will automatically move 
+        the remaining widgets to the next line (or next column if the direction is vertical).
+    
+        This behavior is different from Row and Column, which do not automatically 
+        wrap when space runs out.
+  */
+
     return Wrap(
+      // spacing between widgets horizontally
       spacing: seatSpacing,
+      // spacing between rows (or columns if vertical)
       runSpacing: seatSpacing,
       children: _buildSeatRows(context),
     );
@@ -139,6 +147,7 @@ class _SeatRows extends StatelessWidget {
               children: currentRow,
             ),
           );
+
           currentRow = [];
           currentSlots = 0;
         }
@@ -171,8 +180,11 @@ class _SeatRows extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 '${seat.seatNumber}  -  ${pair.seatNumber}',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color:
+                      selectedSeatIds.contains(seat.seatId)
+                          ? Colors.black
+                          : Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -193,6 +205,7 @@ class _SeatRows extends StatelessWidget {
               children: currentRow,
             ),
           );
+
           currentRow = [];
           currentSlots = 0;
         }
@@ -218,8 +231,11 @@ class _SeatRows extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 seat.seatNumber,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color:
+                      selectedSeatIds.contains(seat.seatId)
+                          ? Colors.black
+                          : Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -260,9 +276,16 @@ class _SeatLegend extends StatelessWidget {
       children: [
         Container(width: 14, height: 14, color: color),
 
-        const SizedBox(width: 4),
+        const SizedBox(width: 6),
 
-        Text(label, style: const TextStyle(color: Colors.white)),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }

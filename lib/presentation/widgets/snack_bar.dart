@@ -5,6 +5,26 @@ void customSnackBar({
   required String message,
   required bool isSuccess,
 }) {
+  final snackBar = SnackBar(
+    content: Text(
+      message,
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    ),
+    backgroundColor: isSuccess ? Colors.green : Colors.red,
+    duration: const Duration(seconds: 1),
+  );
+
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(snackBar);
+}
+
+void customSnackBarWithWidth({
+  required BuildContext context,
+  required double width,
+  required String message,
+  required bool isSuccess,
+}) {
   final double screenWidth = MediaQuery.of(context).size.width;
 
   final snackBar = SnackBar(

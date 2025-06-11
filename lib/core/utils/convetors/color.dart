@@ -12,3 +12,20 @@ Color getSeatColor(String status) {
       return Colors.red;
   }
 }
+
+Color getPaymentMethodColor(String method) {
+  switch (method) {
+    case 'ZaloPay':
+      return Colors.blue;
+    case 'MoMo':
+      return Colors.pink;
+    case 'ShopeePay':
+      return Colors.orange;
+    case 'ATM':
+      return Colors.blue[700]!;
+    case 'International':
+      return Colors.blue[900]!;
+    default:
+      return Colors.grey;
+  }
+}

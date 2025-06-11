@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:rt_mobile/data/services/secure_storage.dart';
 import 'package:rt_mobile/presentation/authentication/login/view/login_screen.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_three/view/selecting_payment_method.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/view/selecting_fab.dart';
 
 // loggers
@@ -26,4 +27,4 @@ const LENGTH_OF_OTP = 6;
 const TIME_FOR_RESENDING_MAIL = 10;
 const BASE_URL = 'http://192.168.1.35:8000';
 
-var SCREENS = [SelectingFABScreen(), const LoginScreen()];
+var SCREENS = [SelectingPaymentMethodScreen(), const LoginScreen()];

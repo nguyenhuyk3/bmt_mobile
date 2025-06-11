@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
-import 'package:rt_mobile/presentation/select_seat/constants.dart';
-import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/constants.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
 class Seats extends StatelessWidget {
@@ -16,7 +16,7 @@ class Seats extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SeatsBloc, SeatsState>(
       builder: (context, state) {
-        double screenHeight = MediaQuery.of(context).size.height;
+        final double screenHeight = MediaQuery.of(context).size.height;
 
         if (state is SeatsLoading) {
           return SplashPageWithHeight(
@@ -112,7 +112,7 @@ class _SeatRows extends StatelessWidget {
     
         This behavior is different from Row and Column, which do not automatically 
         wrap when space runs out.
-  */
+    */
 
     return Wrap(
       // spacing between widgets horizontally

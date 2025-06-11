@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:rt_mobile/core/utils/convetors/map.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
-import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
 class SelectingDateAndTime extends StatelessWidget {

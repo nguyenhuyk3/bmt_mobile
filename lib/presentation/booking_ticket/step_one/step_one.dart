@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/repositories/showtime.dart';
-import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/select_seat/seats/view/seats.dart';
-import 'package:rt_mobile/presentation/select_seat/seats/view/selected_seats_summary.dart';
-import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/select_seat/selecting_date_and_time/view/selecting_date_and_time.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/view/seats.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/view/selected_seats_summary.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/view/selecting_date_and_time.dart';
 
-class SelectingSeatScreen extends StatelessWidget {
-  const SelectingSeatScreen({super.key});
+class StepOneScreen extends StatelessWidget {
+  const StepOneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

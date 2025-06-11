@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rt_mobile/presentation/select_seat/seats/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
 
 class SelectedSeatSummary extends StatelessWidget {
   const SelectedSeatSummary({super.key});

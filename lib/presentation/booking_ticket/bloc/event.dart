@@ -9,20 +9,28 @@ sealed class BookingTicketEvent extends Equatable {
 
 class BookingTicketAddSeatToOrder extends BookingTicketEvent {
   final SeatShowtime seat;
+  final bool isCoupled;
 
-  const BookingTicketAddSeatToOrder({required this.seat});
+  const BookingTicketAddSeatToOrder({
+    required this.seat,
+    required this.isCoupled,
+  });
 
   @override
-  List<Object> get props => [seat];
+  List<Object> get props => [seat, isCoupled];
 }
 
 class BookingTicketRemoveSeatFromOrder extends BookingTicketEvent {
   final SeatShowtime seat;
+  final bool isCoupled;
 
-  const BookingTicketRemoveSeatFromOrder({required this.seat});
+  const BookingTicketRemoveSeatFromOrder({
+    required this.seat,
+    required this.isCoupled,
+  });
 
   @override
-  List<Object> get props => [seat];
+  List<Object> get props => [seat, isCoupled];
 }
 
 class BookingTicketAddFABToOrder extends BookingTicketEvent {

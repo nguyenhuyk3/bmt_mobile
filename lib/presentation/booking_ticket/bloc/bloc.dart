@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +27,11 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
       updatedSeats.add(event.seat);
     }
 
-    final total = _calculateTotal(updatedSeats, state.fABs);
+    final total = _calculateTotal(
+      updatedSeats,
+      state.fABs,
+      isCoupled: event.isCoupled,
+    );
 
     emit(state.copyWith(seats: updatedSeats, totalAmount: total));
   }
@@ -49,10 +51,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     BookingTicketAddFABToOrder event,
     Emitter<BookingTicketState> emit,
   ) {
-    final updatedFABs = List<FABProduct>.from(state.fABs);
-
-    updatedFABs.add(event.fAB);
-
+    final updatedFABs = List<FABProduct>.from(state.fABs)..add(event.fAB);
     final total = _calculateTotal(state.seats, updatedFABs);
 
     emit(state.copyWith(fABs: updatedFABs, totalAmount: total));
@@ -63,28 +62,30 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     Emitter<BookingTicketState> emit,
   ) {
     final updatedFABs = List<FABProduct>.from(state.fABs);
-    final index = updatedFABs.indexWhere((fab) => fab.id == event.fAB.id);
-
-    if (index != -1) {
-      updatedFABs.removeAt(index);
-    }
+    updatedFABs.removeWhere((fab) => fab.id == event.fAB.id);
 
     final total = _calculateTotal(state.seats, updatedFABs);
 
     emit(state.copyWith(fABs: updatedFABs, totalAmount: total));
   }
 
-  double _calculateTotal(List<SeatShowtime> seats, List<FABProduct> fabs) {
-    final seatTotal = seats.fold<double>(
-      0.0,
-      (sum, s) => sum + s.price.toDouble(),
-    );
+  double _calculateTotal(
+    List<SeatShowtime> seats,
+    List<FABProduct> fabs, {
+    bool isCoupled = false,
+  }) {
+    final seatTotal = seats.fold<double>(0.0, (sum, seat) {
+      final price = seat.price.toDouble();
+      return sum +
+          (seat.seatType == 'coupled' || isCoupled ? price * 2 : price);
+    });
+
     final fabTotal = fabs.fold<double>(0.0, (sum, f) => sum + f.price);
 
     return seatTotal + fabTotal;
   }
 
-  FutureOr<void> _onClearOrder(
+  void _onClearOrder(
     BookingTicketClearOrder event,
     Emitter<BookingTicketState> emit,
   ) {

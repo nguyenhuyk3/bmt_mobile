@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
+import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';

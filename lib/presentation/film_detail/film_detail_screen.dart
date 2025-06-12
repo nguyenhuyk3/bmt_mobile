@@ -42,7 +42,6 @@ class FilmDetailScreen extends StatelessWidget {
             return bloc;
           },
         ),
-        BlocProvider(create: (_) => BookingTicketBloc()),
       ],
       child: Scaffold(
         body: Padding(

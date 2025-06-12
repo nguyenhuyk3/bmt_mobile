@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/core/constants/errors.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
+import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/constants.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
@@ -199,11 +201,27 @@ class _SeatRows extends StatelessWidget {
 
         pairedIds.add(pair.seatId);
 
+        // coupled
         currentRow.add(
           GestureDetector(
             onTap: () {
               if (seat.status == 'available') {
                 context.read<SeatsBloc>().add(SeatsToggled(seat.seatId));
+
+                final isSelected = selectedSeatIds.contains(seat.seatId);
+
+                if (isSelected) {
+                  context.read<BookingTicketBloc>().add(
+                    BookingTicketRemoveSeatFromOrder(
+                      seat: seat,
+                      isCoupled: true,
+                    ),
+                  );
+                } else {
+                  context.read<BookingTicketBloc>().add(
+                    BookingTicketAddSeatToOrder(seat: seat, isCoupled: true),
+                  );
+                }
               }
             },
             child: Container(
@@ -250,11 +268,27 @@ class _SeatRows extends StatelessWidget {
           currentSlots = 0;
         }
 
+        // non-coupled
         currentRow.add(
           GestureDetector(
             onTap: () {
               if (seat.status == 'available') {
                 context.read<SeatsBloc>().add(SeatsToggled(seat.seatId));
+
+                final isSelected = selectedSeatIds.contains(seat.seatId);
+
+                if (isSelected) {
+                  context.read<BookingTicketBloc>().add(
+                    BookingTicketRemoveSeatFromOrder(
+                      seat: seat,
+                      isCoupled: false,
+                    ),
+                  );
+                } else {
+                  context.read<BookingTicketBloc>().add(
+                    BookingTicketAddSeatToOrder(seat: seat, isCoupled: false),
+                  );
+                }
               }
             },
             child: Container(

@@ -6,6 +6,7 @@ import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/view/seats.
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/view/selected_seats_summary.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/view/selecting_date_and_time.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/view/available_cinema.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
@@ -60,6 +61,9 @@ class StepOneScreen extends StatelessWidget {
 
             return bloc;
           },
+        ),
+        BlocProvider(
+          create: (_) => SelectingFABBloc()..add(SelectingFABLoadFoodItems()),
         ),
       ],
       child: Scaffold(

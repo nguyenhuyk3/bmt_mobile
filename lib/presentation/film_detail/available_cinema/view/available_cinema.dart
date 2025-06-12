@@ -238,7 +238,7 @@ class _ConfirmationButton extends StatelessWidget {
             );
           },
           child: const Text(
-            'Tiếp tục chọn r',
+            'Tiếp tục',
             style: TextStyle(color: Colors.black, fontSize: 18),
           ),
         ),

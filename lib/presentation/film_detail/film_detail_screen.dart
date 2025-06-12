@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rt_mobile/data/repositories/cinema.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
+import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/view/available_cinema.dart';
 import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
@@ -41,6 +42,7 @@ class FilmDetailScreen extends StatelessWidget {
             return bloc;
           },
         ),
+        BlocProvider(create: (_) => BookingTicketBloc()),
       ],
       child: Scaffold(
         body: Padding(

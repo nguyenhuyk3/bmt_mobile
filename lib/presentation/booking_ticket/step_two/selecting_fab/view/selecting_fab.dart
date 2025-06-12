@@ -10,10 +10,7 @@ class SelectingFABScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => SelectingFABBloc()..add(SelectingFABLoadFoodItems()),
-      child: const _CinemaSelectingFABView(),
-    );
+    return _CinemaSelectingFABView();
   }
 }
 
@@ -495,20 +492,27 @@ class _CartItemCard extends StatelessWidget {
             ),
 
             const SizedBox(width: 12),
-            
+
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     cartItem.fABProduct.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
+
+                  SizedBox(height: 18),
+
                   Text(
                     '${cartItem.fABProduct.price.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} VNĐ',
                     style: const TextStyle(
-                      color: Colors.red,
+                      color: Colors.amberAccent,
                       fontWeight: FontWeight.w600,
+                      fontSize: 16,
                     ),
                   ),
                 ],

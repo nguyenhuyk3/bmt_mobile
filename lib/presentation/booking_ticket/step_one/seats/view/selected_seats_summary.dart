@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/view/selecting_fab.dart';
 
 class SelectedSeatSummary extends StatelessWidget {
   const SelectedSeatSummary({super.key});
@@ -22,7 +24,7 @@ class SelectedSeatSummary extends StatelessWidget {
             if (seat.seatType == 'coupled') {
               return sum + (seat.price * 2);
             }
-            
+
             return sum + seat.price;
           });
         }
@@ -63,7 +65,16 @@ class SelectedSeatSummary extends StatelessWidget {
                 onPressed:
                     total > 0
                         ? () {
-                          // TODO: Xử lý khi nhấn nút mua vé
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (_) => BlocProvider.value(
+                                    value: context.read<SelectingFABBloc>(),
+                                    child: SelectingFABScreen(),
+                                  ),
+                            ),
+                          );
                         }
                         : null,
                 style: ElevatedButton.styleFrom(

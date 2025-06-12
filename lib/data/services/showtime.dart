@@ -6,9 +6,9 @@ class ShowtimeService {
 
   ShowtimeService({required this.dio});
 
-  Future<APIReponse> getAllShowtimesByFilmIdAndByCinemaIdAndByShowDate() async {
+  Future<APIReponse> getAllShowtimesByFilmIdAndByCinemaIdAndInDayRange() async {
     final response = await dio.get(
-      '/showtime_service/showtime/public/get_all_showtimes_by_film_id_and_by_cinema_id_and_by_show_date',
+      '/showtime_service/showtime/public/get_all_showtimes_by_film_id_and_by_cinema_id_and_in_day_range',
       queryParameters: {'film_id': 1, 'cinema_id': 1},
     );
 
@@ -19,7 +19,7 @@ class ShowtimeService {
     required int showtimeId,
   }) async {
     if (showtimeId == -1) {
-      showtimeId = 32;
+      showtimeId = 10;
     }
 
     final response = await dio.get(

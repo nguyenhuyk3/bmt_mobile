@@ -307,6 +307,7 @@ class _FilmStoryLine extends StatelessWidget {
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final maxWidth = MediaQuery.of(context).size.width;
+            
             cubit.checkOverflow(
               value: storyLine,
               textStyle: textStyle,

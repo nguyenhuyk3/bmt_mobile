@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/errors.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 
 import 'package:rt_mobile/data/repositories/showtime.dart';
@@ -16,6 +17,7 @@ class SeatsBloc extends Bloc<SeatsEvent, SeatsState> {
     on<SeatsFetched>(_onSeatsFetched);
     on<SeatsRefreshed>(_onSeatsRefreshed);
     on<SeatsToggled>(_onSeatToggled);
+    on<SeatsNoShowtimeSeats>(_onSeatsNoShowtimeSeats);
   }
 
   FutureOr<void> _onSeatsFetched(
@@ -57,6 +59,15 @@ class SeatsBloc extends Bloc<SeatsEvent, SeatsState> {
           selectedSeatIds: seatsSelected,
         ),
       );
+    }
+  }
+
+  FutureOr<void> _onSeatsNoShowtimeSeats(
+    SeatsNoShowtimeSeats event,
+    Emitter<SeatsState> emit,
+  ) {
+    if (event.message == NO_SHOWTIME_SEAT) {
+      emit(SeatsError(message: NO_SHOWTIME_SEAT));
     }
   }
 }

@@ -8,10 +8,10 @@ class ShowtimeRepository {
   ShowtimeRepository({required this.showtimeService});
 
   Future<List<ShowtimeShowtime>>
-  getAllShowtimesByFilmIdAndByCinemaIdAndByShowDate() async {
+  getAllShowtimesByFilmIdAndByCinemaIdAndInDayRange() async {
     final response =
         await showtimeService
-            .getAllShowtimesByFilmIdAndByCinemaIdAndByShowDate();
+            .getAllShowtimesByFilmIdAndByCinemaIdAndInDayRange();
 
     if (response.isSuccess) {
       final rawData = response.data['data'];

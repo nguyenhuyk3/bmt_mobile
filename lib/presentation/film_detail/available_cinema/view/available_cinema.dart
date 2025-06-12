@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/models/cinema/cinema.showtime.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_one/step_one.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/cubit/chose_cinema.state.dart';
@@ -203,7 +204,10 @@ class _ConfirmationButton extends StatelessWidget {
             foregroundColor: Colors.black,
           ),
           onPressed: () {
-            // TODO: Handle confirmation logic for selected cinema
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StepOneScreen()),
+            );
           },
           child: const Text(
             'Xác nhận chọn rạp',

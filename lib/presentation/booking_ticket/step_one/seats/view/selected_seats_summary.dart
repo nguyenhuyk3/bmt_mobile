@@ -28,7 +28,7 @@ class SelectedSeatSummary extends StatelessWidget {
         }
 
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           decoration: const BoxDecoration(
             color: Colors.black,
             border: Border(top: BorderSide(color: Colors.grey, width: 0.2)),
@@ -78,7 +78,7 @@ class SelectedSeatSummary extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  'Tổng tiền',
+                  'Tiếp tục',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

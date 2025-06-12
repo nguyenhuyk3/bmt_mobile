@@ -26,3 +26,12 @@ class SeatsToggled extends SeatsEvent {
   @override
   List<Object?> get props => [seatId];
 }
+  
+class SeatsNoShowtimeSeats extends SeatsEvent {
+  final String message;
+
+  const SeatsNoShowtimeSeats({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

@@ -89,8 +89,6 @@ class StepOneScreen extends StatelessWidget {
 
             SelectingDateAndTime(),
 
-            Divider(color: Colors.grey, thickness: 0.4),
-
             SizedBox(height: 12),
 
             SelectedSeatSummary(),

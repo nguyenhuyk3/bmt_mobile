@@ -8,7 +8,7 @@ class FilmService {
 
   Future<APIReponse> getAllFilmssCurrentlyShowing() async {
     final response = await dio.get(
-      '/showtime_service/film/public/get_all_film_currenly_showing',
+      '/showtime_service/film/public/get_all_films_currently_showing',
     );
 
     return APIReponse(statusCode: response.statusCode, data: response.data);

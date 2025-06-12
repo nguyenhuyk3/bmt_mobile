@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/errors.dart';
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 import 'package:rt_mobile/presentation/booking_ticket/constants.dart';
@@ -63,6 +64,45 @@ class Seats extends StatelessWidget {
               ),
             ],
           );
+        } else if (state is SeatsError) {
+          switch (state.message) {
+            case NO_SHOWTIME_SEAT:
+              return SizedBox(
+                height: totalSeatAndColorAnnotationSize * screenHeight,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.event_busy, size: 64, color: Colors.white70),
+                      const SizedBox(height: 16),
+                      const Text(
+                        NO_SHOWTIME_SEAT,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            default:
+              return SizedBox(
+                height: totalSeatAndColorAnnotationSize * screenHeight,
+                child: const Center(
+                  child: Text(
+                    NO_SHOWTIME_SEAT,
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              );
+          }
         } else {
           return SizedBox(
             height: totalSeatAndColorAnnotationSize * screenHeight,

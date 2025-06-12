@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:rt_mobile/core/constants/errors.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/map.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
@@ -30,7 +32,7 @@ class SelectingDateAndTime extends StatelessWidget {
                 14,
                 (index) => DateFormat(
                   'yyyy-MM-dd',
-                ).format(DateTime.now().add(Duration(days: index + 0))),
+                ).format(DateTime.now().add(Duration(days: index + 1))),
               ),
               groupedShowtimes: groupShowtimes(showtimes: state.showtimes),
             );
@@ -84,18 +86,19 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
                 date: dates[index],
                 isSelected: index == selectedIndex,
                 onTap: () {
-                  context.read<SeatsBloc>().add(
-                    SeatsFetched(
-                      showtimeId: int.parse(
-                        extractShowtimeId(
-                          input: context.read<ChangeTabCubit<String>>().state,
-                        ),
-                      ),
-                    ),
-                  );
+                  final times = groupedShowtimes[dates[index]];
+                  final showtimeKey = times?.first ?? '';
 
                   context.read<ChangeTabCubit<int>>().changeTab(index);
-                  context.read<ChangeTabCubit<String>>().changeTab('');
+                  context.read<ChangeTabCubit<String>>().changeTab(showtimeKey);
+
+                  final showtimeIdStr = extractShowtimeId(input: showtimeKey);
+
+                  context.read<SeatsBloc>().add(
+                    showtimeIdStr.isNotEmpty
+                        ? SeatsFetched(showtimeId: int.parse(showtimeIdStr))
+                        : SeatsNoShowtimeSeats(message: NO_SHOWTIME_SEAT),
+                  );
                 },
               );
             },

@@ -25,7 +25,9 @@ class HomeScreen extends StatelessWidget {
                 backgroundColor: Colors.grey.shade300,
                 child: const Icon(Icons.person, color: Colors.white),
               ),
+
               const SizedBox(width: 10),
+
               const Text(
                 'Xin chào!',
                 style: TextStyle(

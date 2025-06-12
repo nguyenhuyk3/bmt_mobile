@@ -8,9 +8,10 @@ sealed class SeatsEvent extends Equatable {
 }
 
 class SeatsFetched extends SeatsEvent {
+  final int filmId;
   final int showtimeId;
 
-  const SeatsFetched({required this.showtimeId});
+  const SeatsFetched({this.filmId = -1, this.showtimeId = -1});
 
   @override
   List<Object?> get props => [showtimeId];
@@ -26,7 +27,7 @@ class SeatsToggled extends SeatsEvent {
   @override
   List<Object?> get props => [seatId];
 }
-  
+
 class SeatsNoShowtimeSeats extends SeatsEvent {
   final String message;
 

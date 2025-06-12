@@ -6,6 +6,9 @@ import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/view/seats.
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/view/selected_seats_summary.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/view/selecting_date_and_time.dart';
+import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
+import 'package:rt_mobile/presentation/film_detail/available_cinema/view/available_cinema.dart';
+import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
 
 class StepOneScreen extends StatelessWidget {
   const StepOneScreen({super.key});
@@ -22,7 +25,20 @@ class StepOneScreen extends StatelessWidget {
               ),
             );
 
-            bloc.add(SelectingDateAndTimeFetched());
+            bloc.add(
+              SelectingDateAndTimeFetched(
+                filmId:
+                    (context.read<FilmInformationBloc>().state
+                            as FilmInformationLoadSuccess)
+                        .film
+                        .id,
+                cinemaId:
+                    context
+                        .read<ChangeTabCubit<ChoseCinemaState>>()
+                        .state
+                        .selectedCinemaId,
+              ),
+            );
 
             return bloc;
           },
@@ -34,8 +50,13 @@ class StepOneScreen extends StatelessWidget {
                 context,
               ),
             );
+            final filmId =
+                (context.read<FilmInformationBloc>().state
+                        as FilmInformationLoadSuccess)
+                    .film
+                    .id;
 
-            bloc.add(SeatsFetched(showtimeId: -1));
+            bloc.add(SeatsFetched(filmId: filmId));
 
             return bloc;
           },

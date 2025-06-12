@@ -7,7 +7,15 @@ sealed class SelectingDateAndTimeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class SelectingDateAndTimeFetched extends SelectingDateAndTimeEvent {}
+class SelectingDateAndTimeFetched extends SelectingDateAndTimeEvent {
+  final int filmId;
+  final int cinemaId;
+
+  const SelectingDateAndTimeFetched({this.filmId = -1, this.cinemaId = -1});
+
+  @override
+  List<Object?> get props => [filmId, cinemaId];
+}
 
 class SelectingDateAndTimeRefreshed extends SelectingDateAndTimeEvent {}
 

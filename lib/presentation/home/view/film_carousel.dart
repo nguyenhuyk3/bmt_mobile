@@ -184,7 +184,9 @@ class _CenteredFilmCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+
             const SizedBox(height: 12),
+
             Text(
               film.title,
               style: const TextStyle(

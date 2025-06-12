@@ -27,9 +27,11 @@ class SelectingDateAndTimeBloc
     emit(SelectingDateAndTimeLoading());
 
     try {
-      final showtimes =
-          await showtimeRepository
-              .getAllShowtimesByFilmIdAndByCinemaIdAndInDayRange();
+      final showtimes = await showtimeRepository
+          .getAllShowtimesByFilmIdAndByCinemaIdAndInDayRange(
+            filmId: event.filmId,
+            cinemaId: event.cinemaId,
+          );
 
       emit(SelectingDateAndTimeLoadSuccess(showtimes: showtimes));
     } catch (e) {

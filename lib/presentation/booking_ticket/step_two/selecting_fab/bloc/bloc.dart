@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 
 import 'package:rt_mobile/data/models/product/fab.product.dart';

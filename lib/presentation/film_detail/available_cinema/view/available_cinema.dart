@@ -6,7 +6,7 @@ import 'package:rt_mobile/data/models/cinema/cinema.showtime.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/step_one.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/film_detail/available_cinema/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/film_detail/available_cinema/cubit/chose_cinema.state.dart';
+import 'package:rt_mobile/presentation/film_detail/film_information/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
 class AvaibleCinema extends StatelessWidget {
@@ -40,6 +40,20 @@ class AvaibleCinema extends StatelessWidget {
   }
 }
 
+class ChoseCinemaState {
+  final int selectedIndex;
+  final int selectedCinemaId;
+
+  ChoseCinemaState({this.selectedIndex = 0, this.selectedCinemaId = -1});
+
+  ChoseCinemaState copyWith({int? selectedIndex, int? selectedCinemaId}) {
+    return ChoseCinemaState(
+      selectedIndex: selectedIndex ?? this.selectedIndex,
+      selectedCinemaId: selectedCinemaId ?? this.selectedCinemaId,
+    );
+  }
+}
+
 class _AvailableCinemaContainer extends StatelessWidget {
   final List<CinemaShowtime> cinemas;
 
@@ -51,7 +65,7 @@ class _AvailableCinemaContainer extends StatelessWidget {
       // Provide ChangeTabCubit with an initial state of ChoseCinemaState
       create:
           (_) => ChangeTabCubit<ChoseCinemaState>(
-            initialState: ChoseCinemaState(),
+            initialState: ChoseCinemaState(selectedCinemaId: cinemas[0].id),
           ),
 
       // Listen to ChoseCinemaState and rebuild the UI accordingly
@@ -206,11 +220,25 @@ class _ConfirmationButton extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => StepOneScreen()),
+              MaterialPageRoute(
+                builder:
+                    (_) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(
+                          value: context.read<FilmInformationBloc>(),
+                        ),
+                        BlocProvider.value(
+                          value:
+                              context.read<ChangeTabCubit<ChoseCinemaState>>(),
+                        ),
+                      ],
+                      child: StepOneScreen(),
+                    ),
+              ),
             );
           },
           child: const Text(
-            'Xác nhận chọn rạp',
+            'Tiếp tục chọn r',
             style: TextStyle(color: Colors.black, fontSize: 18),
           ),
         ),

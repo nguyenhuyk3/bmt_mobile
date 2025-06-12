@@ -27,9 +27,15 @@ class SeatsBloc extends Bloc<SeatsEvent, SeatsState> {
     emit(SeatsLoading());
 
     try {
-      final seats = await showtimeRepository.getAllShowtimeSeatsByShowtimeId(
-        showtimeId: event.showtimeId,
-      );
+      final seats =
+          (event.filmId != -1 && event.showtimeId == -1)
+              ? await showtimeRepository
+                  .getAllShowtimesSeatsByFilmIdFromEarliestTomorrow(
+                    filmId: event.filmId,
+                  )
+              : await showtimeRepository.getAllShowtimeSeatsByShowtimeId(
+                showtimeId: event.showtimeId,
+              );
 
       emit(SeatsLoadSuccess(seats: seats));
     } catch (e) {

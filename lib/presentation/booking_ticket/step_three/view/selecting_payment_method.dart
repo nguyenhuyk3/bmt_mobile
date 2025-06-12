@@ -383,7 +383,6 @@ class _PaymentOption extends StatelessWidget {
     required this.value,
     this.isSelected = false,
     this.subtitle,
-    super.key,
   });
 
   @override

@@ -61,3 +61,16 @@ class BookingTicketRemoveFABFromOrder extends BookingTicketEvent {
 }
 
 class BookingTicketClearOrder extends BookingTicketEvent {}
+
+class BookingTicketChoseStartTime extends BookingTicketEvent {
+  final String showDate;
+  final String startTime;
+
+  const BookingTicketChoseStartTime({
+    required this.showDate,
+    required this.startTime,
+  });
+
+  @override
+  List<Object> get props => [startTime];
+}

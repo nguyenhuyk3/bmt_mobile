@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/data/models/product/fab.product.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_three/step_three.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_three/view/view.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 import 'package:rt_mobile/presentation/widgets/snack_bar.dart';
 
 class SelectingFABScreen extends StatelessWidget {
@@ -454,8 +455,21 @@ class _CartBottomSheet extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder:
-                                  (_) => BlocProvider.value(
-                                    value: context.read<BookingTicketBloc>(),
+                                  (_) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider.value(
+                                        value:
+                                            context.read<BookingTicketBloc>(),
+                                      ),
+                                      BlocProvider(
+                                        create:
+                                            (_) =>
+                                                ChangeTabCubit<PaymentMethod>(
+                                                  initialState:
+                                                      PaymentMethod.shopeePay,
+                                                ),
+                                      ),
+                                    ],
                                     child: StepThreeScreen(),
                                   ),
                             ),

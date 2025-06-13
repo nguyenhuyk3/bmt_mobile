@@ -1,5 +1,63 @@
 part of 'view.dart';
 
+enum PaymentMethod { zaloPay, moMo, shopeePay, atmCard, international }
+
+extension PaymentMethodExtension on PaymentMethod {
+  String get title {
+    switch (this) {
+      case PaymentMethod.zaloPay:
+        return 'ZaloPay';
+      case PaymentMethod.moMo:
+        return 'MoMo';
+      case PaymentMethod.shopeePay:
+        return 'ShopeePay';
+      case PaymentMethod.atmCard:
+        return 'ATM Card';
+      case PaymentMethod.international:
+        return 'International payments';
+    }
+  }
+
+  String get value {
+    switch (this) {
+      case PaymentMethod.zaloPay:
+        return 'ZaloPay';
+      case PaymentMethod.moMo:
+        return 'MoMo';
+      case PaymentMethod.shopeePay:
+        return 'ShopeePay';
+      case PaymentMethod.atmCard:
+        return 'ATM';
+      case PaymentMethod.international:
+        return 'International';
+    }
+  }
+
+  String get iconPath {
+    switch (this) {
+      case PaymentMethod.zaloPay:
+        return 'assets/zalopay.png';
+      case PaymentMethod.moMo:
+        return 'assets/momo.png';
+      case PaymentMethod.shopeePay:
+        return 'assets/shopeepay.png';
+      case PaymentMethod.atmCard:
+        return 'assets/atm.png';
+      case PaymentMethod.international:
+        return 'assets/visa.png';
+    }
+  }
+
+  String? get subtitle {
+    switch (this) {
+      case PaymentMethod.international:
+        return 'Visa, Master, JCB, Amex';
+      default:
+        return null;
+    }
+  }
+}
+
 class _PaymentMethodsSection extends StatelessWidget {
   const _PaymentMethodsSection();
 
@@ -30,72 +88,52 @@ class _PaymentMethodsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.transparent, width: 1),
-      ),
-      child: Column(
-        children: [
-          _PaymentOption(
-            title: 'ZaloPay',
-            iconPath: 'assets/zalopay.png',
-            value: 'ZaloPay',
+    return BlocBuilder<ChangeTabCubit<PaymentMethod>, PaymentMethod>(
+      builder: (context, selectedPaymentMethod) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Color(0xFF1A1A1A),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.transparent, width: 1),
           ),
+          child: Column(
+            children:
+                PaymentMethod.values.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final paymentMethod = entry.value;
 
-          _Divider(),
-
-          _PaymentOption(
-            title: 'MoMo',
-            iconPath: 'assets/momo.png',
-            value: 'MoMo',
+                  return Column(
+                    children: [
+                      _PaymentOption(
+                        paymentMethod: paymentMethod,
+                        isSelected: selectedPaymentMethod == paymentMethod,
+                        onTap: () {
+                          context
+                              .read<ChangeTabCubit<PaymentMethod>>()
+                              .changeTab(paymentMethod);
+                        },
+                      ),
+                      // Add divider if not the last item
+                      if (index < PaymentMethod.values.length - 1) _Divider(),
+                    ],
+                  );
+                }).toList(),
           ),
-
-          _Divider(),
-
-          _PaymentOption(
-            title: 'ShopeePay',
-            iconPath: 'assets/shopeepay.png',
-            value: 'ShopeePay',
-            isSelected: true,
-          ),
-
-          _Divider(),
-
-          _PaymentOption(
-            title: 'ATM Card',
-            iconPath: 'assets/atm.png',
-            value: 'ATM',
-          ),
-
-          _Divider(),
-          
-          _PaymentOption(
-            title: 'International payments',
-            iconPath: 'assets/visa.png',
-            value: 'International',
-            subtitle: 'Visa, Master, JCB, Amex',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 class _PaymentOption extends StatelessWidget {
-  final String title;
-  final String iconPath;
-  final String value;
+  final PaymentMethod paymentMethod;
   final bool isSelected;
-  final String? subtitle;
+  final VoidCallback onTap;
 
   const _PaymentOption({
-    required this.title,
-    required this.iconPath,
-    required this.value,
-    this.isSelected = false,
-    this.subtitle,
+    required this.paymentMethod,
+    required this.isSelected,
+    required this.onTap,
   });
 
   @override
@@ -111,16 +149,19 @@ class _PaymentOption extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: getPaymentMethodColor(value),
+            color: getPaymentMethodColor(paymentMethod.value),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Center(child: _PaymentMethodIcon(method: value)),
+          child: Center(child: _PaymentMethodIcon(method: paymentMethod.value)),
         ),
-        title: Text(title, style: TextStyle(color: Colors.white, fontSize: 16)),
+        title: Text(
+          paymentMethod.title,
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
         subtitle:
-            subtitle != null
+            paymentMethod.subtitle != null
                 ? Text(
-                  subtitle!,
+                  paymentMethod.subtitle!,
                   style: TextStyle(color: Colors.grey[400], fontSize: 12),
                 )
                 : null,
@@ -129,7 +170,7 @@ class _PaymentOption extends StatelessWidget {
           color: Colors.grey[400],
           size: 16,
         ),
-        onTap: () {},
+        onTap: onTap,
       ),
     );
   }
@@ -189,33 +230,63 @@ class _PaymentMethodIcon extends StatelessWidget {
 }
 
 class _PaymentButton extends StatelessWidget {
-  const _PaymentButton({super.key});
+  const _PaymentButton();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.fromLTRB(16, 10, 16, 10),
-      child: ElevatedButton(
-        onPressed: () {
-          // Handle payment
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.amber,
-          padding: EdgeInsets.symmetric(vertical: 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+    return BlocBuilder<ChangeTabCubit<PaymentMethod>, PaymentMethod>(
+      builder: (context, selectedPaymentMethod) {
+        return Container(
+          width: double.infinity,
+          margin: EdgeInsets.fromLTRB(16, 10, 16, 10),
+          child: ElevatedButton(
+            onPressed: () {
+              _handlePayment(context, selectedPaymentMethod);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.amber,
+              padding: EdgeInsets.symmetric(vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+            child: Text(
+              'Thanh toán',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
-        child: Text(
-          'Thanh toán',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  void _handlePayment(BuildContext context, PaymentMethod paymentMethod) {
+    // Xử lý thanh toán dựa vào payment method được chọn
+    switch (paymentMethod) {
+      case PaymentMethod.zaloPay:
+        // Xử lý thanh toán ZaloPay
+        print('Processing ZaloPay payment...');
+        break;
+      case PaymentMethod.moMo:
+        // Xử lý thanh toán MoMo
+        print('Processing MoMo payment...');
+        break;
+      case PaymentMethod.shopeePay:
+        // Xử lý thanh toán ShopeePay
+        print('Processing ShopeePay payment...');
+        break;
+      case PaymentMethod.atmCard:
+        // Xử lý thanh toán ATM Card
+        print('Processing ATM Card payment...');
+        break;
+      case PaymentMethod.international:
+        // Xử lý thanh toán International
+        print('Processing International payment...');
+        break;
+    }
   }
 }

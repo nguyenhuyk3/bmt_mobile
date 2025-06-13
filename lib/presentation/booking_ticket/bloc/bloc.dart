@@ -24,6 +24,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     on<BookingTicketAddFABToOrder>(_onAddFAB);
     on<BookingTicketRemoveFABFromOrder>(_onRemoveFAB);
     on<BookingTicketClearOrder>(_onClearOrder);
+    on<BookingTicketChoseStartTime>(_onChoseStartTime);
   }
 
   void _onAddSeat(
@@ -150,5 +151,12 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     } catch (e) {
       emit(state.copyWith(messageError: e.toString()));
     }
+  }
+
+  FutureOr<void> _onChoseStartTime(
+    BookingTicketChoseStartTime event,
+    Emitter<BookingTicketState> emit,
+  ) {
+    emit(state.copyWith(showDate: event.showDate, startTime: event.startTime));
   }
 }

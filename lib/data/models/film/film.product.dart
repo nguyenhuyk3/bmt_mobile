@@ -21,6 +21,20 @@ class FilmProduct {
     required this.genres,
   });
 
+  factory FilmProduct.empty() {
+    return FilmProduct(
+      id: 0,
+      title: '',
+      description: '',
+      releaseDate: '',
+      duration: '0h0m',
+      status: 'unknown',
+      posterUrl: '',
+      trailerUrl: '',
+      genres: [],
+    );
+  }
+
   factory FilmProduct.fromJson(Map<String, dynamic> json) {
     final micro = json['duration']['Microseconds'] ?? 0;
     final parsedDuration = Duration(microseconds: micro);

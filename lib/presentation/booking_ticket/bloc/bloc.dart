@@ -1,15 +1,23 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/data/models/film/film.product.dart';
 
 import 'package:rt_mobile/data/models/product/fab.product.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
+import 'package:rt_mobile/data/repositories/film.dart';
 
 part 'event.dart';
 part 'state.dart';
 
 class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
-  BookingTicketBloc() : super(const BookingTicketState()) {
+  final FilmRepository filmRepository;
+
+  BookingTicketBloc({required this.filmRepository})
+    : super(BookingTicketState()) {
+    on<BookingTicketGetFilm>(_onGetFilm);
     on<BookingTicketAddSeatToOrder>(_onAddSeat);
     on<BookingTicketRemoveSeatFromOrder>(_onRemoveSeat);
     on<BookingTicketAddFABToOrder>(_onAddFAB);
@@ -62,6 +70,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     Emitter<BookingTicketState> emit,
   ) {
     final updatedFABs = List<FABProduct>.from(state.fABs);
+
     updatedFABs.removeWhere((fab) => fab.id == event.fAB.id);
 
     final total = _calculateTotal(state.seats, updatedFABs);
@@ -76,6 +85,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
   }) {
     final seatTotal = seats.fold<double>(0.0, (sum, seat) {
       final price = seat.price.toDouble();
+
       return sum +
           (seat.seatType == 'coupled' || isCoupled ? price * 2 : price);
     });
@@ -90,5 +100,18 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     Emitter<BookingTicketState> emit,
   ) {
     emit(state.copyWith(seats: [], fABs: [], totalAmount: 0.0));
+  }
+
+  FutureOr<void> _onGetFilm(
+    BookingTicketGetFilm event,
+    Emitter<BookingTicketState> emit,
+  ) async {
+    try {
+      final film = await filmRepository.getFilmById(filmId: event.filmId);
+
+      emit(state.copyWith(film: film));
+    } catch (e) {
+      emit(state.copyWith(messageError: e.toString()));
+    }
   }
 }

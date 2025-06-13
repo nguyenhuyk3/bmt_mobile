@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
-import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
-import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/view/selecting_fab.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_two/step_two.dart';
 
 class SelectedSeatSummary extends StatelessWidget {
   const SelectedSeatSummary({super.key});
@@ -73,7 +71,7 @@ class SelectedSeatSummary extends StatelessWidget {
                               builder:
                                   (_) => BlocProvider.value(
                                     value: context.read<SelectingFABBloc>(),
-                                    child: SelectingFABScreen(),
+                                    child: StepTwoScreen(),
                                   ),
                             ),
                           );

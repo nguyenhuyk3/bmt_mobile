@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/data/repositories/film.dart';
 import 'package:rt_mobile/data/repositories/showtime.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
@@ -66,7 +67,20 @@ class StepOneScreen extends StatelessWidget {
         BlocProvider(
           create: (_) => SelectingFABBloc()..add(SelectingFABLoadFoodItems()),
         ),
-        BlocProvider(create: (_) => BookingTicketBloc()),
+        BlocProvider(
+          create:
+              (_) => BookingTicketBloc(
+                filmRepository: RepositoryProvider.of<FilmRepository>(context),
+              )..add(
+                BookingTicketGetFilm(
+                  filmId:
+                      (context.read<FilmInformationBloc>().state
+                              as FilmInformationLoadSuccess)
+                          .film
+                          .id,
+                ),
+              ),
+        ),
       ],
       child: Scaffold(
         body: Column(

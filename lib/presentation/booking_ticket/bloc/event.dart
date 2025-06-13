@@ -7,6 +7,15 @@ sealed class BookingTicketEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class BookingTicketGetFilm extends BookingTicketEvent {
+  final int filmId;
+
+  const BookingTicketGetFilm({required this.filmId});
+
+  @override
+  List<Object> get props => [filmId];
+}
+
 class BookingTicketAddSeatToOrder extends BookingTicketEvent {
   final SeatShowtime seat;
   final bool isCoupled;

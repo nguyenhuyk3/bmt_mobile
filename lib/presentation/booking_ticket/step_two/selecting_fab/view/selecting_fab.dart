@@ -4,6 +4,7 @@ import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/data/models/product/fab.product.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
+import 'package:rt_mobile/presentation/booking_ticket/step_three/step_three.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/widgets/snack_bar.dart';
 
@@ -444,14 +445,21 @@ class _CartBottomSheet extends StatelessWidget {
 
                     const SizedBox(height: 16),
 
+                    // continue button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.pop(context);
-                          // context.read<SelectingFABBloc>().add(
-                          //   SelectingFABProcessOrder(),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (_) => BlocProvider.value(
+                                    value: context.read<BookingTicketBloc>(),
+                                    child: StepThreeScreen(),
+                                  ),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.amberAccent,
@@ -534,6 +542,7 @@ class _CartItemCard extends StatelessWidget {
 
             Row(
               children: [
+                // subtract fab within _CartBottomSheet
                 IconButton(
                   onPressed: () {
                     context.read<SelectingFABBloc>().add(
@@ -553,6 +562,7 @@ class _CartItemCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                // add new fab within _CartBottomSheet
                 IconButton(
                   onPressed: () {
                     context.read<SelectingFABBloc>().add(

@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rt_mobile/data/models/film/film.product.dart';
+import 'package:rt_mobile/data/models/product/cart.dart';
 
 import 'package:rt_mobile/data/models/product/fab.product.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
@@ -59,7 +60,24 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     BookingTicketAddFABToOrder event,
     Emitter<BookingTicketState> emit,
   ) {
-    final updatedFABs = List<FABProduct>.from(state.fABs)..add(event.fAB);
+    final updatedFABs = List<CartItem>.from(state.fABs);
+
+    // Tìm xem sản phẩm đã có trong cart chưa
+    final existingIndex = updatedFABs.indexWhere(
+      (item) => item.fABProduct.id == event.fAB.id,
+    );
+
+    if (existingIndex != -1) {
+      // Nếu đã có, tăng quantity
+      final existingItem = updatedFABs[existingIndex];
+      updatedFABs[existingIndex] = existingItem.copyWith(
+        quantity: existingItem.quantity + 1,
+      );
+    } else {
+      // Nếu chưa có, thêm mới
+      updatedFABs.add(CartItem(fABProduct: event.fAB, quantity: 1));
+    }
+
     final total = _calculateTotal(state.seats, updatedFABs);
 
     emit(state.copyWith(fABs: updatedFABs, totalAmount: total));
@@ -69,9 +87,25 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
     BookingTicketRemoveFABFromOrder event,
     Emitter<BookingTicketState> emit,
   ) {
-    final updatedFABs = List<FABProduct>.from(state.fABs);
+    final updatedFABs = List<CartItem>.from(state.fABs);
 
-    updatedFABs.removeWhere((fab) => fab.id == event.fAB.id);
+    final existingIndex = updatedFABs.indexWhere(
+      (item) => item.fABProduct.id == event.fAB.fABProduct.id,
+    );
+
+    if (existingIndex != -1) {
+      final existingItem = updatedFABs[existingIndex];
+
+      if (existingItem.quantity > 1) {
+        // Nếu quantity > 1, giảm quantity
+        updatedFABs[existingIndex] = existingItem.copyWith(
+          quantity: existingItem.quantity - 1,
+        );
+      } else {
+        // Nếu quantity = 1, xóa khỏi cart
+        updatedFABs.removeAt(existingIndex);
+      }
+    }
 
     final total = _calculateTotal(state.seats, updatedFABs);
 
@@ -80,7 +114,7 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
 
   double _calculateTotal(
     List<SeatShowtime> seats,
-    List<FABProduct> fabs, {
+    List<CartItem> fabs, {
     bool isCoupled = false,
   }) {
     final seatTotal = seats.fold<double>(0.0, (sum, seat) {
@@ -90,7 +124,10 @@ class BookingTicketBloc extends Bloc<BookingTicketEvent, BookingTicketState> {
           (seat.seatType == 'coupled' || isCoupled ? price * 2 : price);
     });
 
-    final fabTotal = fabs.fold<double>(0.0, (sum, f) => sum + f.price);
+    final fabTotal = fabs.fold<double>(
+      0.0,
+      (sum, cartItem) => sum + (cartItem.fABProduct.price * cartItem.quantity),
+    );
 
     return seatTotal + fabTotal;
   }

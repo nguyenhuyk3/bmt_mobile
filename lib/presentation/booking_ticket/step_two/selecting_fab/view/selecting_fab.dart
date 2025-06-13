@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/data/models/product/fab.product.dart';
+import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/widgets/snack_bar.dart';
 
@@ -118,14 +120,21 @@ class _CinemaSelectingFABView extends StatelessWidget {
   }
 
   void _showCart(BuildContext context) {
-    final bloc = context.read<SelectingFABBloc>();
+    final selectingBloc = context.read<SelectingFABBloc>();
+    final bookingBloc = context.read<BookingTicketBloc>();
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return BlocProvider.value(value: bloc, child: const _CartBottomSheet());
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: selectingBloc),
+            BlocProvider.value(value: bookingBloc),
+          ],
+          child: const _CartBottomSheet(),
+        );
       },
     );
   }
@@ -136,14 +145,14 @@ class _CinemaSelectingFABView extends StatelessWidget {
       builder:
           (context) => AlertDialog(
             title: const Text('Đặt hàng thành công!'),
-            content: const Text(
-              'Đơn hàng của bạn đã được ghi nhận. Vui lòng đến quầy để nhận hàng.',
+            content: Text(
+              '${context.read<BookingTicketBloc>().state.totalAmount}',
             ),
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  context.read<SelectingFABBloc>().add(SelectingFABClearCart());
+                  // Navigator.pop(context);
+                  // context.read<SelectingFABBloc>().add(SelectingFABClearCart());
                 },
                 child: const Text('OK'),
               ),
@@ -278,6 +287,10 @@ class _FABItemCard extends StatelessWidget {
                             context.read<SelectingFABBloc>().add(
                               SelectingFABAddToCart(item),
                             );
+                            context.read<BookingTicketBloc>().add(
+                              BookingTicketAddFABToOrder(fAB: item),
+                            );
+
                             customSnackBarWithWidth(
                               context: context,
                               width: 0.000001,
@@ -435,10 +448,10 @@ class _CartBottomSheet extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
-                          context.read<SelectingFABBloc>().add(
-                            SelectingFABProcessOrder(),
-                          );
+                          // Navigator.pop(context);
+                          // context.read<SelectingFABBloc>().add(
+                          //   SelectingFABProcessOrder(),
+                          // );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.amberAccent,
@@ -518,13 +531,19 @@ class _CartItemCard extends StatelessWidget {
                 ],
               ),
             ),
+
             Row(
               children: [
                 IconButton(
-                  onPressed:
-                      () => context.read<SelectingFABBloc>().add(
-                        SelectingFABRemoveFromCart(cartItem),
-                      ),
+                  onPressed: () {
+                    context.read<SelectingFABBloc>().add(
+                      SelectingFABRemoveFromCart(cartItem),
+                    );
+                    context.read<BookingTicketBloc>().add(
+                      BookingTicketRemoveFABFromOrder(fAB: cartItem),
+                    );
+                  },
+
                   icon: const Icon(Icons.remove_circle_outline),
                 ),
                 Text(
@@ -535,10 +554,14 @@ class _CartItemCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed:
-                      () => context.read<SelectingFABBloc>().add(
-                        SelectingFABAddToCart(cartItem.fABProduct),
-                      ),
+                  onPressed: () {
+                    context.read<SelectingFABBloc>().add(
+                      SelectingFABAddToCart(cartItem.fABProduct),
+                    );
+                    context.read<BookingTicketBloc>().add(
+                      BookingTicketAddFABToOrder(fAB: (cartItem.fABProduct)),
+                    );
+                  },
                   icon: const Icon(Icons.add_circle_outline),
                 ),
               ],

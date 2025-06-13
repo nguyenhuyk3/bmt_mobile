@@ -2,7 +2,7 @@ part of 'bloc.dart';
 
 class BookingTicketState extends Equatable {
   final FilmProduct film;
-  final List<FABProduct> fABs;
+  final List<CartItem> fABs;
   final List<SeatShowtime> seats;
   final double totalAmount;
   final String messageError;
@@ -17,7 +17,7 @@ class BookingTicketState extends Equatable {
 
   BookingTicketState copyWith({
     FilmProduct? film,
-    List<FABProduct>? fABs,
+    List<CartItem>? fABs,
     List<SeatShowtime>? seats,
     double? totalAmount,
     String? messageError,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:rt_mobile/core/constants/errors.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/data/models/showtime/seat.showtime.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';

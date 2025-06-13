@@ -52,7 +52,7 @@ class BookingTicketAddFABToOrder extends BookingTicketEvent {
 }
 
 class BookingTicketRemoveFABFromOrder extends BookingTicketEvent {
-  final FABProduct fAB;
+  final CartItem fAB;
 
   const BookingTicketRemoveFABFromOrder({required this.fAB});
 

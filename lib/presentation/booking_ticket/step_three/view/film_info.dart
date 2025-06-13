@@ -1,7 +1,7 @@
 part of 'view.dart';
 
-class _MovieInfoCard extends StatelessWidget {
-  const _MovieInfoCard();
+class _FilmInfoCard extends StatelessWidget {
+  const _FilmInfoCard();
 
   @override
   Widget build(BuildContext context) {

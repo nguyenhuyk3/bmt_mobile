@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:rt_mobile/core/constants/errors.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/core/utils/convetors/map.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
@@ -119,8 +118,6 @@ class _SelectingDateAndTimeContainer extends StatelessWidget {
                 if (times.isNotEmpty && selectedTime.isEmpty) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     context.read<ChangeTabCubit<String>>().changeTab(times[0]);
-                    logger.i(dates[selectedIndex]);
-                    logger.i(extractStartTime(input: times[0]));
                     context.read<BookingTicketBloc>().add(
                       BookingTicketChoseStartTime(
                         showDate: dates[selectedIndex],

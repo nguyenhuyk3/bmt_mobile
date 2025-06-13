@@ -166,10 +166,17 @@ class _FilmReview extends StatelessWidget {
 
         ElevatedButton(
           onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.amberAccent,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
           child: const Text(
             'Xem trailer',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -307,7 +314,7 @@ class _FilmStoryLine extends StatelessWidget {
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final maxWidth = MediaQuery.of(context).size.width;
-            
+
             cubit.checkOverflow(
               value: storyLine,
               textStyle: textStyle,

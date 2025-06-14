@@ -81,7 +81,7 @@ class _FABOrderItemCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Ảnh sản phẩm
+          // fab image
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: Image.network(
@@ -136,7 +136,7 @@ class _FABOrderItemCard extends StatelessWidget {
             ),
           ),
 
-          // Số lượng
+          // quantity
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
@@ -147,7 +147,7 @@ class _FABOrderItemCard extends StatelessWidget {
               'x${cartItem.quantity}',
               style: TextStyle(
                 color: Colors.amberAccent,
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -7,3 +7,5 @@ const EMPTY_CONFIRMED_PASSWORD_ERROR =
 const EMPTY_FULL_NAME_ERROR = 'Họ và tên không được bỏ trống!!';
 const SERVER_ERROR = 'Có lỗi ở phía server!!';
 const NO_SHOWTIME_SEAT = 'Không có lịch chiếu vào ngày bạn đã chọn!!';
+
+const NO_ACCESS_TOKEN = 4044;

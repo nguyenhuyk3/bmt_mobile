@@ -7,12 +7,14 @@ import 'package:rt_mobile/core/constants/others.dart';
 import 'package:rt_mobile/data/repositories/authentication.dart';
 import 'package:rt_mobile/data/repositories/cinema.dart';
 import 'package:rt_mobile/data/repositories/film.dart';
+import 'package:rt_mobile/data/repositories/payment.dart';
 import 'package:rt_mobile/data/repositories/showtime.dart';
 import 'package:rt_mobile/data/services/authentication/login.dart';
 import 'package:rt_mobile/data/services/authentication/register.dart';
 import 'package:rt_mobile/data/services/cinema.dart';
 import 'package:rt_mobile/data/services/film.dart';
 import 'package:rt_mobile/data/services/app_navigator.dart';
+import 'package:rt_mobile/data/services/payment.dart';
 import 'package:rt_mobile/data/services/showtime.dart';
 import 'package:rt_mobile/presentation/authentication/forgot_password/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/authentication/register/bloc/bloc.dart';
@@ -34,6 +36,7 @@ class _MainAppState extends State<MainApp> {
   late final FilmRepository _filmRepository;
   late final CinemaRepository _cinemaRepository;
   late final ShowtimeRepository _showtimeRepository;
+  late final PaymentRepository _paymentRepository;
   // Authorization
   // late final AuthorizationRepository _authorizationRepository;
 
@@ -54,6 +57,9 @@ class _MainAppState extends State<MainApp> {
     _showtimeRepository = ShowtimeRepository(
       showtimeService: ShowtimeService(dio: dioClient),
     );
+    _paymentRepository = PaymentRepository(
+      paymentService: PaymentService(dio: dioClient),
+    );
 
     // _authorizationRepository = AuthorizationRepository();
   }
@@ -71,15 +77,10 @@ class _MainAppState extends State<MainApp> {
         RepositoryProvider.value(value: _filmRepository),
         RepositoryProvider.value(value: _cinemaRepository),
         RepositoryProvider.value(value: _showtimeRepository),
+        RepositoryProvider.value(value: _paymentRepository),
       ],
       child: MultiBlocProvider(
         providers: [
-          // BlocProvider(
-          //   create:
-          //       (_) => AuthorizationBloc(
-          //         authorizationRepository: _authorizationRepository,
-          //       )..add(AuthorizationSubscriptionRequested()),
-          // ),
           BlocProvider(
             create:
                 (_) => RegisterBloc(

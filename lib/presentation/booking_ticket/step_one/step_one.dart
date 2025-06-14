@@ -113,7 +113,7 @@ class StepOneScreen extends StatelessWidget {
 
             SizedBox(height: 12),
 
-            Seats(),
+            SeatsView(),
 
             SizedBox(height: 18),
 
@@ -128,11 +128,11 @@ class StepOneScreen extends StatelessWidget {
 
             SizedBox(height: 18),
 
-            SelectingDateAndTime(),
+            SelectingDateAndTimeView(),
 
             SizedBox(height: 12),
 
-            SelectedSeatSummary(),
+            SelectedSeatSummaryView(),
           ],
         ),
       ),

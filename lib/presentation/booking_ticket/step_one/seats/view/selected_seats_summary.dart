@@ -6,8 +6,8 @@ import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.d
 import 'package:rt_mobile/presentation/booking_ticket/step_two/selecting_fab/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_two/step_two.dart';
 
-class SelectedSeatSummary extends StatelessWidget {
-  const SelectedSeatSummary({super.key});
+class SelectedSeatSummaryView extends StatelessWidget {
+  const SelectedSeatSummaryView({super.key});
 
   @override
   Widget build(BuildContext context) {

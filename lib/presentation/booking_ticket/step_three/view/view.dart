@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rt_mobile/core/constants/others.dart';
 
 import 'package:rt_mobile/core/utils/convetors/color.dart';
 import 'package:rt_mobile/core/utils/convetors/string.dart';
+import 'package:rt_mobile/data/models/product/cart.dart';
 import 'package:rt_mobile/presentation/booking_ticket/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/cubit/change_tab/change_tab.dart';
 

@@ -24,6 +24,6 @@ const REFRESH_TOKEN = 'refresh_token';
 const MINIMUM_LENGTH_FOR_PASSWORD = 8;
 const LENGTH_OF_OTP = 6;
 const TIME_FOR_RESENDING_MAIL = 10;
-const BASE_URL = 'http://192.168.204.1:8000';
+const BASE_URL = 'http://192.168.1.4:8000';
 
 var SCREENS = [HomeScreen(), const LoginScreen()];

@@ -10,8 +10,8 @@ import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.d
 import 'package:rt_mobile/presentation/booking_ticket/step_one/selecting_date_and_time/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
-class SelectingDateAndTime extends StatelessWidget {
-  const SelectingDateAndTime({super.key});
+class SelectingDateAndTimeView extends StatelessWidget {
+  const SelectingDateAndTimeView({super.key});
 
   @override
   Widget build(BuildContext context) {

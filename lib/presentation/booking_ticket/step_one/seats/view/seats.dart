@@ -9,8 +9,8 @@ import 'package:rt_mobile/presentation/booking_ticket/constants.dart';
 import 'package:rt_mobile/presentation/booking_ticket/step_one/seats/bloc/bloc.dart';
 import 'package:rt_mobile/presentation/splash/spash_view.dart';
 
-class Seats extends StatelessWidget {
-  const Seats({super.key});
+class SeatsView extends StatelessWidget {
+  const SeatsView({super.key});
 
   final double seatSize = 36;
   final double seatSpacing = 3;
@@ -76,7 +76,9 @@ class Seats extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.event_busy, size: 64, color: Colors.white70),
+
                       const SizedBox(height: 16),
+                      
                       const Text(
                         NO_SHOWTIME_SEAT,
                         style: TextStyle(
